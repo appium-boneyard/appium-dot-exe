@@ -101,7 +101,7 @@
             // FileMenuExitItem
             // 
             this.FileMenuExitItem.Name = "FileMenuExitItem";
-            this.FileMenuExitItem.Size = new System.Drawing.Size(152, 22);
+            this.FileMenuExitItem.Size = new System.Drawing.Size(92, 22);
             this.FileMenuExitItem.Text = "Exit";
             this.FileMenuExitItem.Click += new System.EventHandler(this.FileMenuExitItem_Click);
             // 
@@ -139,6 +139,7 @@
             this.MainMenuStrip = this.MainMenu;
             this.Name = "MainForm";
             this.Text = "Appium";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).EndInit();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
