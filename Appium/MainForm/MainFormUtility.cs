@@ -37,10 +37,7 @@ namespace Appium
             npmInstallProcessStartInfo.FileName = NPMPath;
             npmInstallProcessStartInfo.Arguments = "install appium";
             npmInstallProcessStartInfo.CreateNoWindow = true;
-            npmInstallProcessStartInfo.UseShellExecute = false;
-            npmInstallProcessStartInfo.RedirectStandardOutput = true;
-            npmInstallProcessStartInfo.RedirectStandardInput = true;
-            npmInstallProcessStartInfo.RedirectStandardError = true;
+            npmInstallProcessStartInfo.UseShellExecute = true;
             var npmInstallProcess = Process.Start(npmInstallProcessStartInfo);
             this.Invoke(new Action(() => LogTextBox.Text = "Installing Appium..."));
             npmInstallProcess.WaitForExit();
