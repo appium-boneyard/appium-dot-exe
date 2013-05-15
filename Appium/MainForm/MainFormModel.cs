@@ -1,11 +1,20 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Appium
 {
     public partial class MainForm : Form
     {
+        /// <summary>process for the appium server</summary>
+        public Process AppiumServerProcess;
+        /// <summary>thread that installs appium and nodejs</summary>
+        private Thread _InstallerThread;
+        /// <summary>thread that monitors if the server is still running</summary>
+        private Thread _ServerExitMonitorThread;
+
         #region Paths
         /// <summary>lazy appium folder path</summary>
         private static Lazy<string> _AppiumFolder = new Lazy<string>(() => Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(MainForm)).Location));

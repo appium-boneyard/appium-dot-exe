@@ -17,15 +17,15 @@ namespace Appium
 
             // download files from node and npm
             var webClient = new WebClient();
-            this.Invoke(new Action(() => LogTextBox.Text = "Downloading NodeJS..."));
+            this.Invoke(new Action(() => StatusBarText.Text = "Downloading NodeJS..."));
             webClient.DownloadFile(Constants.NodeJSWindowsBinaryUrl, NodePath);
             webClient.DownloadFile(Constants.NPMWindowsZipUrl, npmZipPath);
 
             // unzip npm
-            this.Invoke(new Action(() => LogTextBox.Text = "Installing NPM..."));
+            this.Invoke(new Action(() => StatusBarText.Text = "Installing NPM..."));
             FastZip zip = new FastZip();
             zip.ExtractZip(npmZipPath, AppiumRootFolder, null);
-            this.Invoke(new Action(() => LogTextBox.Text = ""));
+            this.Invoke(new Action(() => StatusBarText.Text = ""));
             File.Delete(npmZipPath);
         }
 
@@ -36,12 +36,25 @@ namespace Appium
             npmInstallProcessStartInfo.WorkingDirectory = AppiumRootFolder;
             npmInstallProcessStartInfo.FileName = NPMPath;
             npmInstallProcessStartInfo.Arguments = "install appium";
-            npmInstallProcessStartInfo.CreateNoWindow = true;
             npmInstallProcessStartInfo.UseShellExecute = true;
             var npmInstallProcess = Process.Start(npmInstallProcessStartInfo);
-            this.Invoke(new Action(() => LogTextBox.Text = "Installing Appium..."));
+            this.Invoke(new Action(() => StatusBarText.Text = "Installing Appium..."));
             npmInstallProcess.WaitForExit();
-            this.Invoke(new Action(() => LogTextBox.Text = ""));
+            this.Invoke(new Action(() => StatusBarText.Text = ""));
+        }
+
+        /// <summary>resets appium</summary>
+        private void _ResetAppium()
+        {
+            ProcessStartInfo resetProcessInfo = new ProcessStartInfo();
+            resetProcessInfo.WorkingDirectory = AppiumRootFolder;
+            resetProcessInfo.FileName = Path.Combine(AppiumPackageFolder, "reset.bat");
+            resetProcessInfo.Arguments = "";
+            resetProcessInfo.UseShellExecute = true;
+            var resetProcess = Process.Start(resetProcessInfo);
+            this.Invoke(new Action(() => StatusBarText.Text = "Resetting Appium..."));
+            resetProcess.WaitForExit();
+            this.Invoke(new Action(() => StatusBarText.Text = ""));
         }
     }
 }
