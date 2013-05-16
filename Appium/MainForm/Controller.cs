@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -18,34 +16,69 @@ namespace Appium.MainWindow
             this._Model = model;
         }
 
+        /// <summary>model</summary>
         private Model _Model;
+
+        #region Threads and Processes
+        /// <summary>process for the appium server</summary>
+        private Process _AppiumServerProcess;
+
+        /// <summary>thread that runs setup actions after the form loads</summary>
+        private Thread _LoadActionsThread;
+
+        /// <summary>thread that monitors if the server is still running</summary>
+        private Thread _ServerExitMonitorThread;
+        #endregion
+
+        #region Paths
+        /// <summary>path to android sdk</summary>
+        private string _AndroidSDKPath = Environment.GetEnvironmentVariable("ANDROID_HOME");
+
+        /// <summary>lazy appium folder path</summary>
+        private Lazy<string> __AppiumRootFolder = new Lazy<string>(() => Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(MainForm)).Location));
+
+        /// <summary>appium folder path</summary>
+        private string _AppiumRootFolder { get { return __AppiumRootFolder.Value; } }
+
+        /// <summary>path to the appium package folder</summary>
+        private string _AppiumPackageFolder { get { return Path.Combine(_NodeModulesFolder, "appium"); } }
+
+        /// <summary>path to node.exe</summary>
+        private string _NodePath { get { return Path.Combine(_AppiumRootFolder, "node.exe"); } }
+
+        /// <summary>path to node package manager</summary>
+        private string _NPMPath { get { return Path.Combine(_AppiumRootFolder, "npm.cmd"); } }
+
+        /// <summary>path to the node modules folder</summary>
+        private string _NodeModulesFolder { get { return Path.Combine(_AppiumRootFolder, "node_modules"); } }
+        #endregion
 
         /// <summary>called whenever the form loads</summary>
         /// <param name="sender">sender</param>
         /// <param name="e">event args</param>
         public void MainForm_Load(object sender, System.EventArgs e)
         {
-            this._Model.LoadActionsThread = new Thread(() =>
+            this._LoadActionsThread = new Thread(() =>
             {
                 this._Model.LaunchButtonEnabled = false;
-                if (!File.Exists(this._Model.NodePath) || !File.Exists(this._Model.NPMPath))
+                if (!File.Exists(this._NodePath) || !File.Exists(this._NPMPath))
                 {
                     _DownloadAndInstallNodeJS();
                 }
-                if (!Directory.Exists(this._Model.AppiumPackageFolder))
+                if (!Directory.Exists(this._AppiumPackageFolder))
                 {
                     _NPMInstallAppium();
                 }
-                if (!File.Exists(Path.Combine(this._Model.AppiumPackageFolder, ".appiumconfig")))
+                if (!File.Exists(Path.Combine(this._AppiumPackageFolder, ".appiumconfig")))
                 {
                     _ResetAppium();
                 }
                 this._Model.LaunchButtonEnabled = true;
                 _DetectAVDs();
             });
-            this._Model.LoadActionsThread.Name = "Load Actions";
-            this._Model.LoadActionsThread.Priority = ThreadPriority.AboveNormal;
-            this._Model.LoadActionsThread.Start();
+            this._LoadActionsThread.Name = "Load Actions";
+            this._LoadActionsThread.Priority = ThreadPriority.AboveNormal;
+            this._LoadActionsThread.Start();
         }
 
         #region Menu Handlers
@@ -55,19 +88,19 @@ namespace Appium.MainWindow
         public void FileMenuExitItem_Click(object sender, EventArgs e)
         {
             // terminate appium server if its running
-            if (null != this._Model.AppiumServerProcess && !this._Model.AppiumServerProcess.HasExited)
+            if (null != this._AppiumServerProcess && !this._AppiumServerProcess.HasExited)
             {
-                this._Model.AppiumServerProcess.Kill();
+                this._AppiumServerProcess.Kill();
             }
 
-            if (null != this._Model.LoadActionsThread && this._Model.LoadActionsThread.IsAlive)
+            if (null != this._LoadActionsThread && this._LoadActionsThread.IsAlive)
             {
-                this._Model.LoadActionsThread.Abort();
+                this._LoadActionsThread.Abort();
             }
 
-            if (null != this._Model.ServerExitMonitorThread && this._Model.ServerExitMonitorThread.IsAlive)
+            if (null != this._ServerExitMonitorThread && this._ServerExitMonitorThread.IsAlive)
             {
-                this._Model.ServerExitMonitorThread.Abort();
+                this._ServerExitMonitorThread.Abort();
             }
 
             Application.Exit();
@@ -81,9 +114,9 @@ namespace Appium.MainWindow
         public void LaunchButton_Click(object sender, EventArgs e)
         {
             // kill the process if it's already running
-            if (null != this._Model.AppiumServerProcess && !this._Model.AppiumServerProcess.HasExited)
+            if (null != this._AppiumServerProcess && !this._AppiumServerProcess.HasExited)
             {
-                this._Model.AppiumServerProcess.Kill();
+                this._AppiumServerProcess.Kill();
                 return;
             }
 
@@ -95,8 +128,8 @@ namespace Appium.MainWindow
 
             // setup basic process info
             var appiumServerProcessStartInfo = new ProcessStartInfo();
-            appiumServerProcessStartInfo.WorkingDirectory = this._Model.AppiumPackageFolder;
-            appiumServerProcessStartInfo.FileName = this._Model.NodePath;
+            appiumServerProcessStartInfo.WorkingDirectory = this._AppiumPackageFolder;
+            appiumServerProcessStartInfo.FileName = this._NodePath;
             appiumServerProcessStartInfo.Arguments = "server.js";
             appiumServerProcessStartInfo.UseShellExecute = true;
 
@@ -127,16 +160,16 @@ namespace Appium.MainWindow
             }
 
             // start the process
-            this._Model.AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
-            this._Model.ServerExitMonitorThread = new Thread(() =>
+            this._AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
+            this._ServerExitMonitorThread = new Thread(() =>
             {
                 this._Model.LaunchButtonText = "Stop";
-                this._Model.AppiumServerProcess.WaitForExit();
+                this._AppiumServerProcess.WaitForExit();
                 this._Model.LaunchButtonText = "Launch";
             });
-            this._Model.ServerExitMonitorThread.Name = "Server Exit Monitor";
-            this._Model.ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
-            this._Model.ServerExitMonitorThread.Start();
+            this._ServerExitMonitorThread.Name = "Server Exit Monitor";
+            this._ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
+            this._ServerExitMonitorThread.Start();
         }
 
         public void AppPathBrowseButton_Click(object sender, System.EventArgs e)
@@ -158,18 +191,18 @@ namespace Appium.MainWindow
         private void _DownloadAndInstallNodeJS()
         {
             // determine the paths
-            string npmZipPath = Path.Combine(this._Model.AppiumRootFolder, "npm.zip");
+            string npmZipPath = Path.Combine(this._AppiumRootFolder, "npm.zip");
 
             // download files from node and npm
             var webClient = new WebClient();
             this._Model.StatusBarText = "Downloading NodeJS...";
-            webClient.DownloadFile(Constants.NodeJSWindowsBinaryUrl, this._Model.NodePath);
+            webClient.DownloadFile(Constants.NodeJSWindowsBinaryUrl, this._NodePath);
             webClient.DownloadFile(Constants.NPMWindowsZipUrl, npmZipPath);
 
             // unzip npm
             this._Model.StatusBarText = "Installing NPM...";
             FastZip zip = new FastZip();
-            zip.ExtractZip(npmZipPath, this._Model.AppiumRootFolder, null);
+            zip.ExtractZip(npmZipPath, this._AppiumRootFolder, null);
             this._Model.StatusBarText = "";
             File.Delete(npmZipPath);
         }
@@ -179,8 +212,8 @@ namespace Appium.MainWindow
         {
             // npm install appium
             ProcessStartInfo npmInstallProcessStartInfo = new ProcessStartInfo();
-            npmInstallProcessStartInfo.WorkingDirectory = this._Model.AppiumRootFolder;
-            npmInstallProcessStartInfo.FileName = this._Model.NPMPath;
+            npmInstallProcessStartInfo.WorkingDirectory = this._AppiumRootFolder;
+            npmInstallProcessStartInfo.FileName = this._NPMPath;
             npmInstallProcessStartInfo.Arguments = "install appium";
             npmInstallProcessStartInfo.UseShellExecute = true;
             var npmInstallProcess = Process.Start(npmInstallProcessStartInfo);
@@ -194,8 +227,8 @@ namespace Appium.MainWindow
         {
             // run reset
             ProcessStartInfo resetProcessInfo = new ProcessStartInfo();
-            resetProcessInfo.WorkingDirectory = this._Model.AppiumRootFolder;
-            resetProcessInfo.FileName = Path.Combine(this._Model.AppiumPackageFolder, "reset.bat");
+            resetProcessInfo.WorkingDirectory = this._AppiumRootFolder;
+            resetProcessInfo.FileName = Path.Combine(this._AppiumPackageFolder, "reset.bat");
             if (!File.Exists(resetProcessInfo.FileName))
                 return;
             resetProcessInfo.Arguments = "";
@@ -211,7 +244,7 @@ namespace Appium.MainWindow
         {
             // use the android command to list the avds
             ProcessStartInfo avdDetectionProcessInfo = new ProcessStartInfo();
-            avdDetectionProcessInfo.FileName = Path.Combine(this._Model.AndroidSDKPath, "tools", "android.bat");
+            avdDetectionProcessInfo.FileName = Path.Combine(this._AndroidSDKPath, "tools", "android.bat");
             if (!File.Exists(avdDetectionProcessInfo.FileName))
                 return;
             avdDetectionProcessInfo.Arguments = "list avd -c";

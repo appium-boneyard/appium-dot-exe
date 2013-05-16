@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace Appium.MainWindow
 {
@@ -19,38 +14,6 @@ namespace Appium.MainWindow
 
         /// <summary>main form</summary>
         public MainForm _View;
-
-        /// <summary>process for the appium server</summary>
-        public Process AppiumServerProcess;
-
-        /// <summary>thread that runs setup actions after the form loads</summary>
-        public Thread LoadActionsThread;
-
-        /// <summary>thread that monitors if the server is still running</summary>
-        public Thread ServerExitMonitorThread;
-
-        #region Paths
-        /// <summary>path to android sdk</summary>
-        public string AndroidSDKPath = Environment.GetEnvironmentVariable("ANDROID_HOME");
-
-        /// <summary>lazy appium folder path</summary>
-        private Lazy<string> _AppiumRootFolder = new Lazy<string>(() => Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(MainForm)).Location));
-
-        /// <summary>appium folder path</summary>
-        public string AppiumRootFolder { get { return _AppiumRootFolder.Value; } }
-
-        /// <summary>path to the appium package folder</summary>
-        public string AppiumPackageFolder { get { return Path.Combine(NodeModulesFolder, "appium"); } }
-
-        /// <summary>path to node.exe</summary>
-        public string NodePath { get { return Path.Combine(AppiumRootFolder, "node.exe"); } }
-
-        /// <summary>path to node package manager</summary>
-        public string NPMPath { get { return Path.Combine(AppiumRootFolder, "npm.cmd"); } }
-
-        /// <summary>path to the node modules folder</summary>
-        public string NodeModulesFolder { get { return Path.Combine(AppiumRootFolder, "node_modules"); } }
-        #endregion
 
         #region Server Settings
         /// <summary>android activity</summary>
