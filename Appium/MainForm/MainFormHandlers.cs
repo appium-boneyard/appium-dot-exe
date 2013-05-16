@@ -74,6 +74,12 @@ namespace Appium
                 return;
             }
 
+            // don't launch if a remote server is being used
+            if (this.UseRemoteServer)
+            {
+                return;
+            }
+
             // setup basic process info
             var appiumServerProcessStartInfo = new ProcessStartInfo();
             appiumServerProcessStartInfo.WorkingDirectory = AppiumPackageFolder;
@@ -84,6 +90,18 @@ namespace Appium
             // add more arguments
             appiumServerProcessStartInfo.Arguments += " -a " + IPAddress;
             appiumServerProcessStartInfo.Arguments += " -p " + Port.ToString();
+            if (this.UseApplicationPath)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app " + this.ApplicationPath;
+            }
+            if (this.UseAndroidActivity)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app-activity " + this.AndroidActivity;
+            }
+            if (this.UseAndroidPackage)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app-pkg " + this.AndroidPackage;
+            }
 
             // start the process
             AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
@@ -96,6 +114,20 @@ namespace Appium
             _ServerExitMonitorThread.Name = "Server Exit Monitor";
             _ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
             _ServerExitMonitorThread.Start();
+        }
+
+        private void AppPathBrowseButton_Click(object sender, System.EventArgs e)
+        {
+            OpenFileDialog appPathDialog = new OpenFileDialog();
+            appPathDialog.CheckFileExists = true;
+            appPathDialog.Multiselect = false;
+            appPathDialog.Filter = "Anrdoid apps (*.apk)|*.apk";
+            appPathDialog.Title = "Select Your Android App";
+            var result = appPathDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                this.Invoke(new Action(() => this.ApplicationPath = appPathDialog.FileName ));
+            }
         }
         #endregion
     }

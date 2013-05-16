@@ -56,5 +56,18 @@ namespace Appium
             resetProcess.WaitForExit();
             this.Invoke(new Action(() => StatusBarText.Text = ""));
         }
+
+        /// <summary>enables or disables all form elements</summary>
+        /// <param name="enabled">true if the fields will be enables</param>
+        private void _SetEnabledOnAll(bool enabled)
+        {
+            this.ApplicationPathCheckbox.Enabled = enabled;
+            this.ApplicationPathBrowseButton.Enabled = enabled;
+            this.ApplicationPathTextBox.Enabled = enabled;
+            this.IPAddressTextBox.Enabled = enabled;
+            this.LaunchButton.Enabled = enabled;
+            this.PortTextBox.Enabled = enabled;
+            this.UseRemoteServerCheckbox.Enabled = enabled;
+        }
     }
 }
