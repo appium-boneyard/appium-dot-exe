@@ -19,9 +19,12 @@ namespace Appium.MainWindow
         /// <summary>model</summary>
         private Model _Model;
 
-        #region Threads and Processes
+        #region Windows, Threads. and Processes
         /// <summary>process for the appium server</summary>
         private Process _AppiumServerProcess;
+
+        /// <summary>the preferences window</summary>
+        private PreferencesWindow.PreferencesForm _PreferencesWindow;
 
         /// <summary>thread that runs setup actions after the form loads</summary>
         private Thread _LoadActionsThread;
@@ -53,6 +56,7 @@ namespace Appium.MainWindow
         private string _NodeModulesFolder { get { return Path.Combine(_AppiumRootFolder, "node_modules"); } }
         #endregion
 
+        #region Form Handlers
         /// <summary>called whenever the form loads</summary>
         /// <param name="sender">sender</param>
         /// <param name="e">event args</param>
@@ -80,9 +84,25 @@ namespace Appium.MainWindow
             this._LoadActionsThread.Priority = ThreadPriority.AboveNormal;
             this._LoadActionsThread.Start();
         }
+        #endregion
 
         #region Menu Handlers
-        /// <summary>called when the exit menu item is clicked on the file menu</summary>
+        /// <summary>called when the preferences menu item on the file menu is clicked</summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event args</param>
+        public void FileMenuPreferencesItem_Click(object sender, EventArgs e)
+        {
+            if (null == this._PreferencesWindow || this._PreferencesWindow.IsDisposed)
+            {
+                this._PreferencesWindow = new PreferencesWindow.PreferencesForm(this._Model);
+            }
+            if (!this._PreferencesWindow.Visible)
+            {
+                this._PreferencesWindow.Show();
+            }
+        }
+
+        /// <summary>called when the exit menu item on the file menu is clicked</summary>
         /// <param name="sender">sender</param>
         /// <param name="e">event args</param>
         public void FileMenuExitItem_Click(object sender, EventArgs e)
@@ -130,8 +150,30 @@ namespace Appium.MainWindow
             var appiumServerProcessStartInfo = new ProcessStartInfo();
             appiumServerProcessStartInfo.WorkingDirectory = this._AppiumPackageFolder;
             appiumServerProcessStartInfo.FileName = this._NodePath;
-            appiumServerProcessStartInfo.Arguments = "server.js";
             appiumServerProcessStartInfo.UseShellExecute = true;
+            appiumServerProcessStartInfo.Arguments = "";
+
+            // developer mode arguments
+            if (this._Model.DeveloperMode)
+            {
+                if (this._Model.UseExternalNodeJSBinary)
+                {
+                    appiumServerProcessStartInfo.FileName = this._Model.ExternalNodeJSBinary;
+                }
+                if (this._Model.UseExternalAppiumPackage)
+                {
+                    appiumServerProcessStartInfo.WorkingDirectory = this._Model.ExternalAppiumPackage;
+                }
+                if (this._Model.UseNodeJSDebugging)
+                {
+                    appiumServerProcessStartInfo.Arguments += "--debug=" + this._Model.NodeJSDebugPort.ToString() + " ";
+                }
+                if (this._Model.BreakOnApplicationStart)
+                {
+                    appiumServerProcessStartInfo.Arguments += "--debug-brk ";
+                }
+            }
+            appiumServerProcessStartInfo.Arguments += "server.js";
 
             // add more arguments
             appiumServerProcessStartInfo.Arguments += " --address " + this._Model.IPAddress;
@@ -159,6 +201,24 @@ namespace Appium.MainWindow
                 appiumServerProcessStartInfo.Arguments += " --app-wait-activity " + this._Model.AndroidWaitActivity;
             }
 
+            // preference-related arguments
+            if (this._Model.QuietLogging)
+            {
+                appiumServerProcessStartInfo.Arguments += " --quiet";
+            }
+            if (this._Model.KeepArtifacts)
+            {
+                appiumServerProcessStartInfo.Arguments += " --keep-artifacts";
+            }
+            if (!this._Model.ResetApplicationState)
+            {
+                appiumServerProcessStartInfo.Arguments += " --no-reset";
+            }
+            if (this._Model.PrelaunchApplication)
+            {
+                appiumServerProcessStartInfo.Arguments += " --pre-launch";
+            }
+
             // start the process
             this._AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
             this._ServerExitMonitorThread = new Thread(() =>
@@ -175,9 +235,13 @@ namespace Appium.MainWindow
         public void AppPathBrowseButton_Click(object sender, System.EventArgs e)
         {
             OpenFileDialog appPathDialog = new OpenFileDialog();
+            if (File.Exists(this._Model.ApplicationPath))
+            {
+                appPathDialog.InitialDirectory = Path.GetDirectoryName(this._Model.ApplicationPath);
+            }
             appPathDialog.CheckFileExists = true;
             appPathDialog.Multiselect = false;
-            appPathDialog.Filter = "Anrdoid apps (*.apk)|*.apk";
+            appPathDialog.Filter = "Android apps (*.apk)|*.apk";
             appPathDialog.Title = "Select Your Android App";
             var result = appPathDialog.ShowDialog();
             if (result == DialogResult.OK)
