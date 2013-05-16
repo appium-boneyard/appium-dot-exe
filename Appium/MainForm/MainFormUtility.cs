@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -32,6 +33,7 @@ namespace Appium
         /// <summary>installs appium using npm</summary>
         private void _NPMInstallAppium()
         {
+            // npm install appium
             ProcessStartInfo npmInstallProcessStartInfo = new ProcessStartInfo();
             npmInstallProcessStartInfo.WorkingDirectory = AppiumRootFolder;
             npmInstallProcessStartInfo.FileName = NPMPath;
@@ -46,9 +48,12 @@ namespace Appium
         /// <summary>resets appium</summary>
         private void _ResetAppium()
         {
+            // run reset
             ProcessStartInfo resetProcessInfo = new ProcessStartInfo();
             resetProcessInfo.WorkingDirectory = AppiumRootFolder;
             resetProcessInfo.FileName = Path.Combine(AppiumPackageFolder, "reset.bat");
+            if (!File.Exists(resetProcessInfo.FileName))
+                return;
             resetProcessInfo.Arguments = "";
             resetProcessInfo.UseShellExecute = true;
             var resetProcess = Process.Start(resetProcessInfo);
@@ -57,17 +62,36 @@ namespace Appium
             this.Invoke(new Action(() => StatusBarText.Text = ""));
         }
 
-        /// <summary>enables or disables all form elements</summary>
-        /// <param name="enabled">true if the fields will be enables</param>
-        private void _SetEnabledOnAll(bool enabled)
+        /// <summary>detects available avds</summary>
+        private void _DetectAVDs()
         {
-            this.ApplicationPathCheckbox.Enabled = enabled;
-            this.ApplicationPathBrowseButton.Enabled = enabled;
-            this.ApplicationPathTextBox.Enabled = enabled;
-            this.IPAddressTextBox.Enabled = enabled;
-            this.LaunchButton.Enabled = enabled;
-            this.PortTextBox.Enabled = enabled;
-            this.UseRemoteServerCheckbox.Enabled = enabled;
+            // use the android command to list the avds
+            ProcessStartInfo avdDetectionProcessInfo = new ProcessStartInfo();
+            avdDetectionProcessInfo.FileName = Path.Combine(AndroidSDKPath, "tools", "android.bat");
+            if (!File.Exists(avdDetectionProcessInfo.FileName))
+                return;
+            avdDetectionProcessInfo.Arguments = "list avd -c";
+            avdDetectionProcessInfo.UseShellExecute = false;
+            avdDetectionProcessInfo.CreateNoWindow = true;
+            avdDetectionProcessInfo.RedirectStandardOutput = true;
+            var avdDetectionProcess = Process.Start(avdDetectionProcessInfo);
+            avdDetectionProcess.WaitForExit();
+            
+            // read the output
+            string output = "";
+            using (System.IO.StreamReader myOutput = avdDetectionProcess.StandardOutput)
+            {
+                output = myOutput.ReadToEnd();
+            }
+            List<string> avds = new List<string>();
+            foreach (var line in output.Split(new char [] {'\r', '\n'}))
+            {
+                if (line.Length > 0)
+                {
+                    avds.Add(line);
+                }
+            }
+            this.Invoke(new Action(() => this.AVDs = avds.ToArray()));
         }
     }
 }

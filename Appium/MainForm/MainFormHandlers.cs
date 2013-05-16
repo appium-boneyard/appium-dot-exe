@@ -13,7 +13,7 @@ namespace Appium
         /// <param name="e">event args</param>
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            _InstallerThread = new Thread(() =>
+            _LoadActionsThread = new Thread(() =>
             {
                 this.Invoke(new Action(() => LaunchButton.Enabled = false));
                 if (!File.Exists(NodePath) || !File.Exists(NPMPath))
@@ -29,10 +29,11 @@ namespace Appium
                     _ResetAppium();
                 }
                 this.Invoke(new Action(() => LaunchButton.Enabled = true));
+                _DetectAVDs();
             });
-            _InstallerThread.Name = "NodeJS and Appium Installation";
-            _InstallerThread.Priority = ThreadPriority.AboveNormal;
-            _InstallerThread.Start();
+            _LoadActionsThread.Name = "Load Actions";
+            _LoadActionsThread.Priority = ThreadPriority.AboveNormal;
+            _LoadActionsThread.Start();
         }
 
         #region Menu Handlers
@@ -47,9 +48,9 @@ namespace Appium
                 AppiumServerProcess.Kill();
             }
 
-            if (null != _InstallerThread && _InstallerThread.IsAlive)
+            if (null != _LoadActionsThread && _LoadActionsThread.IsAlive)
             {
-                _InstallerThread.Abort();
+                _LoadActionsThread.Abort();
             }
 
             if (null !=_ServerExitMonitorThread && _ServerExitMonitorThread.IsAlive)
@@ -88,12 +89,14 @@ namespace Appium
             appiumServerProcessStartInfo.UseShellExecute = true;
 
             // add more arguments
-            appiumServerProcessStartInfo.Arguments += " -a " + IPAddress;
-            appiumServerProcessStartInfo.Arguments += " -p " + Port.ToString();
+            appiumServerProcessStartInfo.Arguments += " --address " + IPAddress;
+            appiumServerProcessStartInfo.Arguments += " --port " + Port.ToString();
             if (this.UseApplicationPath)
             {
                 appiumServerProcessStartInfo.Arguments += " --app " + this.ApplicationPath;
             }
+
+            // add android-specific arguments
             if (this.UseAndroidActivity)
             {
                 appiumServerProcessStartInfo.Arguments += " --app-activity " + this.AndroidActivity;
@@ -101,6 +104,14 @@ namespace Appium
             if (this.UseAndroidPackage)
             {
                 appiumServerProcessStartInfo.Arguments += " --app-pkg " + this.AndroidPackage;
+            }
+            if (this.LaunchAVD)
+            {
+                appiumServerProcessStartInfo.Arguments += " --avd " + this.AVDToLaunch;
+            }
+            if (this.UseAndroidWaitActivity)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app-wait-activity " + this.AndroidWaitActivity;
             }
 
             // start the process
