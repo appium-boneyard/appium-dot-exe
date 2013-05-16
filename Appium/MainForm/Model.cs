@@ -27,6 +27,17 @@ namespace Appium.MainWindow
             }
         }
 
+        /// <summary>android activity</summary>
+        public uint AndroidDeviceReadyTimeout
+        {
+            get { return Convert.ToUInt32(this._View.AndroidDeviceReadyTimeoutPicker.Value); }
+            set
+            {
+                Appium.Properties.Settings.Default.AndroidDeviceReadyTimeout = value;
+                Appium.Properties.Settings.Default.Save();
+            }
+        }
+
         /// <summary>android package</summary>
         public string AndroidPackage
         {
@@ -140,6 +151,17 @@ namespace Appium.MainWindow
             set { this._View.Invoke(new Action(() => this._View.LaunchButton.Text = value)); }
         }
 
+        /// <summary>true if a full android reset will be performed</summary>
+        public bool PerformFullAndroidReset
+        {
+            get { return Appium.Properties.Settings.Default.PerformFullAndroidReset; }
+            set
+            {
+                Appium.Properties.Settings.Default.PerformFullAndroidReset = value;
+                Appium.Properties.Settings.Default.Save();
+            }
+        }
+
         /// <summary>port to listen on</summary>
         public uint Port
         {
@@ -158,6 +180,17 @@ namespace Appium.MainWindow
             set
             {
                 Appium.Properties.Settings.Default.UseAndroidActivity = value;
+                Appium.Properties.Settings.Default.Save();
+            }
+        }
+
+        /// <summary>true if the android device ready timeout will be used</summary>
+        public bool UseAndroidDeviceReadyTimeout
+        {
+            get { return this._View.AndroidDeviceReadyTimeoutCheckbox.Checked; }
+            set
+            {
+                Appium.Properties.Settings.Default.UseAndroidDeviceReadyTimeout = value;
                 Appium.Properties.Settings.Default.Save();
             }
         }

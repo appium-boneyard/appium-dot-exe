@@ -29,12 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PreferencesForm));
-            this.CheckForUpdatesCheckbox = new System.Windows.Forms.CheckBox();
-            this.QuietLoggingCheckbox = new System.Windows.Forms.CheckBox();
-            this.KeepArtifactsCheckbox = new System.Windows.Forms.CheckBox();
-            this.ResetApplicationCheckbox = new System.Windows.Forms.CheckBox();
-            this.PreLaunchApplicationCheckbox = new System.Windows.Forms.CheckBox();
-            this.DeveloperModeCheckbox = new System.Windows.Forms.CheckBox();
             this.DeveloperSettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.ExternalAppiumPackageBrowse = new System.Windows.Forms.Button();
             this.ExternalNodeJSBinaryBrowseButton = new System.Windows.Forms.Button();
@@ -45,82 +39,15 @@
             this.NodeJSDebugPortCheckbox = new System.Windows.Forms.CheckBox();
             this.UseExternalAppiumPackageCheckbox = new System.Windows.Forms.CheckBox();
             this.UseExternalNodeJSBinaryCheckbox = new System.Windows.Forms.CheckBox();
+            this.DeveloperModeCheckbox = new System.Windows.Forms.CheckBox();
+            this.PreLaunchApplicationCheckbox = new System.Windows.Forms.CheckBox();
+            this.ResetApplicationCheckbox = new System.Windows.Forms.CheckBox();
+            this.KeepArtifactsCheckbox = new System.Windows.Forms.CheckBox();
+            this.QuietLoggingCheckbox = new System.Windows.Forms.CheckBox();
+            this.CheckForUpdatesCheckbox = new System.Windows.Forms.CheckBox();
             this.DeveloperSettingsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NodeJSDebugPortPicker)).BeginInit();
             this.SuspendLayout();
-            // 
-            // CheckForUpdatesCheckbox
-            // 
-            this.CheckForUpdatesCheckbox.AutoSize = true;
-            this.CheckForUpdatesCheckbox.Checked = global::Appium.Properties.Settings.Default.CheckForUpdates;
-            this.CheckForUpdatesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckForUpdatesCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "CheckForUpdates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CheckForUpdatesCheckbox.Location = new System.Drawing.Point(13, 13);
-            this.CheckForUpdatesCheckbox.Name = "CheckForUpdatesCheckbox";
-            this.CheckForUpdatesCheckbox.Size = new System.Drawing.Size(118, 17);
-            this.CheckForUpdatesCheckbox.TabIndex = 0;
-            this.CheckForUpdatesCheckbox.Text = "Check For Updates";
-            this.CheckForUpdatesCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // QuietLoggingCheckbox
-            // 
-            this.QuietLoggingCheckbox.AutoSize = true;
-            this.QuietLoggingCheckbox.Checked = global::Appium.Properties.Settings.Default.QuietLogging;
-            this.QuietLoggingCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "QuietLogging", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.QuietLoggingCheckbox.Location = new System.Drawing.Point(12, 36);
-            this.QuietLoggingCheckbox.Name = "QuietLoggingCheckbox";
-            this.QuietLoggingCheckbox.Size = new System.Drawing.Size(92, 17);
-            this.QuietLoggingCheckbox.TabIndex = 1;
-            this.QuietLoggingCheckbox.Text = "Quiet Logging";
-            this.QuietLoggingCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // KeepArtifactsCheckbox
-            // 
-            this.KeepArtifactsCheckbox.AutoSize = true;
-            this.KeepArtifactsCheckbox.Checked = global::Appium.Properties.Settings.Default.KeepArtifacts;
-            this.KeepArtifactsCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "KeepArtifacts", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.KeepArtifactsCheckbox.Location = new System.Drawing.Point(13, 59);
-            this.KeepArtifactsCheckbox.Name = "KeepArtifactsCheckbox";
-            this.KeepArtifactsCheckbox.Size = new System.Drawing.Size(92, 17);
-            this.KeepArtifactsCheckbox.TabIndex = 2;
-            this.KeepArtifactsCheckbox.Text = "Keep Artifacts";
-            this.KeepArtifactsCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // ResetApplicationCheckbox
-            // 
-            this.ResetApplicationCheckbox.AutoSize = true;
-            this.ResetApplicationCheckbox.Checked = global::Appium.Properties.Settings.Default.ResetApplicationState;
-            this.ResetApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "ResetApplicationState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.ResetApplicationCheckbox.Location = new System.Drawing.Point(12, 82);
-            this.ResetApplicationCheckbox.Name = "ResetApplicationCheckbox";
-            this.ResetApplicationCheckbox.Size = new System.Drawing.Size(230, 17);
-            this.ResetApplicationCheckbox.TabIndex = 3;
-            this.ResetApplicationCheckbox.Text = "Reset Application State After Each Session";
-            this.ResetApplicationCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // PreLaunchApplicationCheckbox
-            // 
-            this.PreLaunchApplicationCheckbox.AutoSize = true;
-            this.PreLaunchApplicationCheckbox.Checked = global::Appium.Properties.Settings.Default.PrelaunchApplication;
-            this.PreLaunchApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "PrelaunchApplication", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.PreLaunchApplicationCheckbox.Location = new System.Drawing.Point(12, 105);
-            this.PreLaunchApplicationCheckbox.Name = "PreLaunchApplicationCheckbox";
-            this.PreLaunchApplicationCheckbox.Size = new System.Drawing.Size(129, 17);
-            this.PreLaunchApplicationCheckbox.TabIndex = 4;
-            this.PreLaunchApplicationCheckbox.Text = "Prelaunch Application";
-            this.PreLaunchApplicationCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // DeveloperModeCheckbox
-            // 
-            this.DeveloperModeCheckbox.AutoSize = true;
-            this.DeveloperModeCheckbox.Checked = global::Appium.Properties.Settings.Default.DeveloperMode;
-            this.DeveloperModeCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "DeveloperMode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.DeveloperModeCheckbox.Location = new System.Drawing.Point(12, 128);
-            this.DeveloperModeCheckbox.Name = "DeveloperModeCheckbox";
-            this.DeveloperModeCheckbox.Size = new System.Drawing.Size(105, 17);
-            this.DeveloperModeCheckbox.TabIndex = 5;
-            this.DeveloperModeCheckbox.Text = "Developer Mode";
-            this.DeveloperModeCheckbox.UseVisualStyleBackColor = true;
             // 
             // DeveloperSettingsGroupBox
             // 
@@ -148,6 +75,7 @@
             this.ExternalAppiumPackageBrowse.TabIndex = 13;
             this.ExternalAppiumPackageBrowse.Text = "Browse";
             this.ExternalAppiumPackageBrowse.UseVisualStyleBackColor = true;
+            this.ExternalAppiumPackageBrowse.Click += new System.EventHandler(this.ExternalAppiumPackageBrowse_Click);
             // 
             // ExternalNodeJSBinaryBrowseButton
             // 
@@ -157,6 +85,7 @@
             this.ExternalNodeJSBinaryBrowseButton.TabIndex = 0;
             this.ExternalNodeJSBinaryBrowseButton.Text = "Browse";
             this.ExternalNodeJSBinaryBrowseButton.UseVisualStyleBackColor = true;
+            this.ExternalNodeJSBinaryBrowseButton.Click += new System.EventHandler(this.ExternalNodeJSBinaryBrowseButton_Click);
             // 
             // ExternalAppiumPackageTextBox
             // 
@@ -238,6 +167,79 @@
             this.UseExternalNodeJSBinaryCheckbox.Text = "Use External NodeJS Binary";
             this.UseExternalNodeJSBinaryCheckbox.UseVisualStyleBackColor = true;
             // 
+            // DeveloperModeCheckbox
+            // 
+            this.DeveloperModeCheckbox.AutoSize = true;
+            this.DeveloperModeCheckbox.Checked = global::Appium.Properties.Settings.Default.DeveloperMode;
+            this.DeveloperModeCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "DeveloperMode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.DeveloperModeCheckbox.Location = new System.Drawing.Point(12, 128);
+            this.DeveloperModeCheckbox.Name = "DeveloperModeCheckbox";
+            this.DeveloperModeCheckbox.Size = new System.Drawing.Size(105, 17);
+            this.DeveloperModeCheckbox.TabIndex = 5;
+            this.DeveloperModeCheckbox.Text = "Developer Mode";
+            this.DeveloperModeCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // PreLaunchApplicationCheckbox
+            // 
+            this.PreLaunchApplicationCheckbox.AutoSize = true;
+            this.PreLaunchApplicationCheckbox.Checked = global::Appium.Properties.Settings.Default.PrelaunchApplication;
+            this.PreLaunchApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "PrelaunchApplication", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.PreLaunchApplicationCheckbox.Location = new System.Drawing.Point(12, 105);
+            this.PreLaunchApplicationCheckbox.Name = "PreLaunchApplicationCheckbox";
+            this.PreLaunchApplicationCheckbox.Size = new System.Drawing.Size(129, 17);
+            this.PreLaunchApplicationCheckbox.TabIndex = 4;
+            this.PreLaunchApplicationCheckbox.Text = "Prelaunch Application";
+            this.PreLaunchApplicationCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // ResetApplicationCheckbox
+            // 
+            this.ResetApplicationCheckbox.AutoSize = true;
+            this.ResetApplicationCheckbox.Checked = global::Appium.Properties.Settings.Default.ResetApplicationState;
+            this.ResetApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "ResetApplicationState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ResetApplicationCheckbox.Location = new System.Drawing.Point(12, 82);
+            this.ResetApplicationCheckbox.Name = "ResetApplicationCheckbox";
+            this.ResetApplicationCheckbox.Size = new System.Drawing.Size(230, 17);
+            this.ResetApplicationCheckbox.TabIndex = 3;
+            this.ResetApplicationCheckbox.Text = "Reset Application State After Each Session";
+            this.ResetApplicationCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // KeepArtifactsCheckbox
+            // 
+            this.KeepArtifactsCheckbox.AutoSize = true;
+            this.KeepArtifactsCheckbox.Checked = global::Appium.Properties.Settings.Default.KeepArtifacts;
+            this.KeepArtifactsCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "KeepArtifacts", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.KeepArtifactsCheckbox.Location = new System.Drawing.Point(13, 59);
+            this.KeepArtifactsCheckbox.Name = "KeepArtifactsCheckbox";
+            this.KeepArtifactsCheckbox.Size = new System.Drawing.Size(92, 17);
+            this.KeepArtifactsCheckbox.TabIndex = 2;
+            this.KeepArtifactsCheckbox.Text = "Keep Artifacts";
+            this.KeepArtifactsCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // QuietLoggingCheckbox
+            // 
+            this.QuietLoggingCheckbox.AutoSize = true;
+            this.QuietLoggingCheckbox.Checked = global::Appium.Properties.Settings.Default.QuietLogging;
+            this.QuietLoggingCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "QuietLogging", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.QuietLoggingCheckbox.Location = new System.Drawing.Point(12, 36);
+            this.QuietLoggingCheckbox.Name = "QuietLoggingCheckbox";
+            this.QuietLoggingCheckbox.Size = new System.Drawing.Size(92, 17);
+            this.QuietLoggingCheckbox.TabIndex = 1;
+            this.QuietLoggingCheckbox.Text = "Quiet Logging";
+            this.QuietLoggingCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // CheckForUpdatesCheckbox
+            // 
+            this.CheckForUpdatesCheckbox.AutoSize = true;
+            this.CheckForUpdatesCheckbox.Checked = global::Appium.Properties.Settings.Default.CheckForUpdates;
+            this.CheckForUpdatesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CheckForUpdatesCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "CheckForUpdates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CheckForUpdatesCheckbox.Location = new System.Drawing.Point(13, 13);
+            this.CheckForUpdatesCheckbox.Name = "CheckForUpdatesCheckbox";
+            this.CheckForUpdatesCheckbox.Size = new System.Drawing.Size(118, 17);
+            this.CheckForUpdatesCheckbox.TabIndex = 0;
+            this.CheckForUpdatesCheckbox.Text = "Check For Updates";
+            this.CheckForUpdatesCheckbox.UseVisualStyleBackColor = true;
+            // 
             // PreferencesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,20 +265,20 @@
 
         #endregion
 
-        public System.Windows.Forms.CheckBox CheckForUpdatesCheckbox;
-        public System.Windows.Forms.CheckBox QuietLoggingCheckbox;
-        public System.Windows.Forms.CheckBox KeepArtifactsCheckbox;
-        public System.Windows.Forms.CheckBox ResetApplicationCheckbox;
-        public System.Windows.Forms.CheckBox PreLaunchApplicationCheckbox;
-        public System.Windows.Forms.CheckBox DeveloperModeCheckbox;
-        public System.Windows.Forms.GroupBox DeveloperSettingsGroupBox;
-        public System.Windows.Forms.CheckBox NodeJSDebugPortCheckbox;
-        public System.Windows.Forms.CheckBox UseExternalAppiumPackageCheckbox;
-        public System.Windows.Forms.CheckBox UseExternalNodeJSBinaryCheckbox;
-        public System.Windows.Forms.CheckBox BreakOnApplicationStartCheckbox;
-        public System.Windows.Forms.NumericUpDown NodeJSDebugPortPicker;
-        public System.Windows.Forms.TextBox ExternalAppiumPackageTextBox;
-        public System.Windows.Forms.TextBox ExternalNodeJSBinaryTextBox;
+        private System.Windows.Forms.CheckBox CheckForUpdatesCheckbox;
+        private System.Windows.Forms.CheckBox QuietLoggingCheckbox;
+        private System.Windows.Forms.CheckBox KeepArtifactsCheckbox;
+        private System.Windows.Forms.CheckBox ResetApplicationCheckbox;
+        private System.Windows.Forms.CheckBox PreLaunchApplicationCheckbox;
+        private System.Windows.Forms.CheckBox DeveloperModeCheckbox;
+        private System.Windows.Forms.GroupBox DeveloperSettingsGroupBox;
+        private System.Windows.Forms.CheckBox NodeJSDebugPortCheckbox;
+        private System.Windows.Forms.CheckBox UseExternalAppiumPackageCheckbox;
+        private System.Windows.Forms.CheckBox UseExternalNodeJSBinaryCheckbox;
+        private System.Windows.Forms.CheckBox BreakOnApplicationStartCheckbox;
+        private System.Windows.Forms.NumericUpDown NodeJSDebugPortPicker;
+        private System.Windows.Forms.TextBox ExternalAppiumPackageTextBox;
+        private System.Windows.Forms.TextBox ExternalNodeJSBinaryTextBox;
         private System.Windows.Forms.Button ExternalAppiumPackageBrowse;
         private System.Windows.Forms.Button ExternalNodeJSBinaryBrowseButton;
     }

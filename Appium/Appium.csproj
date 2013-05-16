@@ -54,7 +54,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm\Controller.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="MainForm\MainForm.cs">
       <SubType>Form</SubType>
@@ -63,7 +62,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm\Model.cs" />
-    <Compile Include="PreferencesWindow\PreferencesController.cs" />
     <Compile Include="PreferencesWindow\PreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>

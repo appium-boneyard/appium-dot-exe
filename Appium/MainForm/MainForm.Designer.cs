@@ -44,6 +44,9 @@
             this.UseRemoteServerCheckbox = new System.Windows.Forms.CheckBox();
             this.ApplicationPathCheckbox = new System.Windows.Forms.CheckBox();
             this.AndroidGroupBox = new System.Windows.Forms.GroupBox();
+            this.AndroidFullResetCheckbox = new System.Windows.Forms.CheckBox();
+            this.AndroidDeviceReadyTimeoutPicker = new System.Windows.Forms.NumericUpDown();
+            this.AndroidDeviceReadyTimeoutCheckbox = new System.Windows.Forms.CheckBox();
             this.LaunchAVDComboBox = new System.Windows.Forms.ComboBox();
             this.WaitForAndroidActivityTextBox = new System.Windows.Forms.TextBox();
             this.WaitForAndroidActivityCheckbox = new System.Windows.Forms.CheckBox();
@@ -57,6 +60,7 @@
             this.MainMenu.SuspendLayout();
             this.StatusBar.SuspendLayout();
             this.AndroidGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,14 +104,16 @@
             // FileMenuPreferencesItem
             // 
             this.FileMenuPreferencesItem.Name = "FileMenuPreferencesItem";
-            this.FileMenuPreferencesItem.Size = new System.Drawing.Size(135, 22);
+            this.FileMenuPreferencesItem.Size = new System.Drawing.Size(152, 22);
             this.FileMenuPreferencesItem.Text = "Preferences";
+            this.FileMenuPreferencesItem.Click += new System.EventHandler(this.FileMenuPreferencesItem_Click);
             // 
             // FileMenuExitItem
             // 
             this.FileMenuExitItem.Name = "FileMenuExitItem";
-            this.FileMenuExitItem.Size = new System.Drawing.Size(135, 22);
+            this.FileMenuExitItem.Size = new System.Drawing.Size(152, 22);
             this.FileMenuExitItem.Text = "Exit";
+            this.FileMenuExitItem.Click += new System.EventHandler(this.FileMenuExitItem_Click);
             // 
             // LaunchButton
             // 
@@ -117,12 +123,13 @@
             this.LaunchButton.TabIndex = 6;
             this.LaunchButton.Text = "Launch";
             this.LaunchButton.UseVisualStyleBackColor = true;
+            this.LaunchButton.Click += new System.EventHandler(this.LaunchButton_Click);
             // 
             // StatusBar
             // 
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusBarText});
-            this.StatusBar.Location = new System.Drawing.Point(0, 165);
+            this.StatusBar.Location = new System.Drawing.Point(0, 186);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(481, 22);
             this.StatusBar.TabIndex = 7;
@@ -158,6 +165,7 @@
             this.ApplicationPathBrowseButton.TabIndex = 10;
             this.ApplicationPathBrowseButton.Text = "Browse";
             this.ApplicationPathBrowseButton.UseVisualStyleBackColor = true;
+            this.ApplicationPathBrowseButton.Click += new System.EventHandler(this.AppPathBrowseButton_Click);
             // 
             // UseRemoteServerCheckbox
             // 
@@ -185,6 +193,9 @@
             // 
             // AndroidGroupBox
             // 
+            this.AndroidGroupBox.Controls.Add(this.AndroidFullResetCheckbox);
+            this.AndroidGroupBox.Controls.Add(this.AndroidDeviceReadyTimeoutPicker);
+            this.AndroidGroupBox.Controls.Add(this.AndroidDeviceReadyTimeoutCheckbox);
             this.AndroidGroupBox.Controls.Add(this.LaunchAVDComboBox);
             this.AndroidGroupBox.Controls.Add(this.WaitForAndroidActivityTextBox);
             this.AndroidGroupBox.Controls.Add(this.WaitForAndroidActivityCheckbox);
@@ -195,10 +206,48 @@
             this.AndroidGroupBox.Controls.Add(this.AndroidPackageCheckbox);
             this.AndroidGroupBox.Location = new System.Drawing.Point(12, 78);
             this.AndroidGroupBox.Name = "AndroidGroupBox";
-            this.AndroidGroupBox.Size = new System.Drawing.Size(457, 80);
+            this.AndroidGroupBox.Size = new System.Drawing.Size(457, 100);
             this.AndroidGroupBox.TabIndex = 13;
             this.AndroidGroupBox.TabStop = false;
             this.AndroidGroupBox.Text = "Android";
+            // 
+            // AndroidFullResetCheckbox
+            // 
+            this.AndroidFullResetCheckbox.AutoSize = true;
+            this.AndroidFullResetCheckbox.Checked = global::Appium.Properties.Settings.Default.PerformFullAndroidReset;
+            this.AndroidFullResetCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "PerformFullAndroidReset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.AndroidFullResetCheckbox.Location = new System.Drawing.Point(238, 73);
+            this.AndroidFullResetCheckbox.Name = "AndroidFullResetCheckbox";
+            this.AndroidFullResetCheckbox.Size = new System.Drawing.Size(112, 17);
+            this.AndroidFullResetCheckbox.TabIndex = 15;
+            this.AndroidFullResetCheckbox.Text = "Perform Full Reset";
+            this.AndroidFullResetCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // AndroidDeviceReadyTimeoutPicker
+            // 
+            this.AndroidDeviceReadyTimeoutPicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::Appium.Properties.Settings.Default, "AndroidDeviceReadyTimeout", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.AndroidDeviceReadyTimeoutPicker.Location = new System.Drawing.Point(152, 72);
+            this.AndroidDeviceReadyTimeoutPicker.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.AndroidDeviceReadyTimeoutPicker.Name = "AndroidDeviceReadyTimeoutPicker";
+            this.AndroidDeviceReadyTimeoutPicker.Size = new System.Drawing.Size(56, 20);
+            this.AndroidDeviceReadyTimeoutPicker.TabIndex = 14;
+            this.AndroidDeviceReadyTimeoutPicker.Value = global::Appium.Properties.Settings.Default.AndroidDeviceReadyTimeout;
+            // 
+            // AndroidDeviceReadyTimeoutCheckbox
+            // 
+            this.AndroidDeviceReadyTimeoutCheckbox.AutoSize = true;
+            this.AndroidDeviceReadyTimeoutCheckbox.Checked = global::Appium.Properties.Settings.Default.UseAndroidDeviceReadyTimeout;
+            this.AndroidDeviceReadyTimeoutCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Appium.Properties.Settings.Default, "UseAndroidDeviceReadyTimeout", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.AndroidDeviceReadyTimeoutCheckbox.Location = new System.Drawing.Point(8, 73);
+            this.AndroidDeviceReadyTimeoutCheckbox.Name = "AndroidDeviceReadyTimeoutCheckbox";
+            this.AndroidDeviceReadyTimeoutCheckbox.Size = new System.Drawing.Size(138, 17);
+            this.AndroidDeviceReadyTimeoutCheckbox.TabIndex = 9;
+            this.AndroidDeviceReadyTimeoutCheckbox.Text = "Device Ready Timeout:";
+            this.AndroidDeviceReadyTimeoutCheckbox.UseVisualStyleBackColor = true;
             // 
             // LaunchAVDComboBox
             // 
@@ -313,7 +362,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 187);
+            this.ClientSize = new System.Drawing.Size(481, 208);
             this.Controls.Add(this.AndroidGroupBox);
             this.Controls.Add(this.ApplicationPathCheckbox);
             this.Controls.Add(this.UseRemoteServerCheckbox);
@@ -331,12 +380,14 @@
             this.MainMenuStrip = this.MainMenu;
             this.Name = "MainForm";
             this.Text = "Appium";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.StatusBar.ResumeLayout(false);
             this.StatusBar.PerformLayout();
             this.AndroidGroupBox.ResumeLayout(false);
             this.AndroidGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -369,7 +420,10 @@
         public System.Windows.Forms.TextBox WaitForAndroidActivityTextBox;
         public System.Windows.Forms.CheckBox WaitForAndroidActivityCheckbox;
         public System.Windows.Forms.CheckBox LaunchAVDCheckbox;
-        private System.Windows.Forms.ToolStripMenuItem FileMenuPreferencesItem;
+        public System.Windows.Forms.ToolStripMenuItem FileMenuPreferencesItem;
+        public System.Windows.Forms.CheckBox AndroidDeviceReadyTimeoutCheckbox;
+        public System.Windows.Forms.NumericUpDown AndroidDeviceReadyTimeoutPicker;
+        public System.Windows.Forms.CheckBox AndroidFullResetCheckbox;
     }
 }
 

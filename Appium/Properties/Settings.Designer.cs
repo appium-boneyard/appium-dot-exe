@@ -334,5 +334,41 @@ namespace Appium.Properties {
                 this["UseRemoteServer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PerformFullAndroidReset {
+            get {
+                return ((bool)(this["PerformFullAndroidReset"]));
+            }
+            set {
+                this["PerformFullAndroidReset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public decimal AndroidDeviceReadyTimeout {
+            get {
+                return ((decimal)(this["AndroidDeviceReadyTimeout"]));
+            }
+            set {
+                this["AndroidDeviceReadyTimeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseAndroidDeviceReadyTimeout {
+            get {
+                return ((bool)(this["UseAndroidDeviceReadyTimeout"]));
+            }
+            set {
+                this["UseAndroidDeviceReadyTimeout"] = value;
+            }
+        }
     }
 }
