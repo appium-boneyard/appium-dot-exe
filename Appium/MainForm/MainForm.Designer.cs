@@ -1,4 +1,4 @@
-﻿namespace Appium
+﻿namespace Appium.MainWindow
 {
     partial class MainForm
     {
@@ -126,7 +126,7 @@
             this.FileMenuExitItem.Name = "FileMenuExitItem";
             this.FileMenuExitItem.Size = new System.Drawing.Size(92, 22);
             this.FileMenuExitItem.Text = "Exit";
-            this.FileMenuExitItem.Click += new System.EventHandler(this.FileMenuExitItem_Click);
+            this.FileMenuExitItem.Click += new System.EventHandler(this._Controller.FileMenuExitItem_Click);
             // 
             // LaunchButton
             // 
@@ -136,7 +136,7 @@
             this.LaunchButton.TabIndex = 6;
             this.LaunchButton.Text = "Launch";
             this.LaunchButton.UseVisualStyleBackColor = true;
-            this.LaunchButton.Click += new System.EventHandler(this.LaunchButton_Click);
+            this.LaunchButton.Click += new System.EventHandler(this._Controller.LaunchButton_Click);
             // 
             // StatusBar
             // 
@@ -176,7 +176,7 @@
             this.ApplicationPathBrowseButton.TabIndex = 10;
             this.ApplicationPathBrowseButton.Text = "Browse";
             this.ApplicationPathBrowseButton.UseVisualStyleBackColor = true;
-            this.ApplicationPathBrowseButton.Click += new System.EventHandler(this.AppPathBrowseButton_Click);
+            this.ApplicationPathBrowseButton.Click += new System.EventHandler(this._Controller.AppPathBrowseButton_Click);
             // 
             // UseRemoteServerCheckbox
             // 
@@ -306,7 +306,7 @@
             this.MainMenuStrip = this.MainMenu;
             this.Name = "MainForm";
             this.Text = "Appium";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Load += new System.EventHandler(this._Controller.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).EndInit();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
@@ -321,30 +321,30 @@
 
         #endregion
 
-        private System.Windows.Forms.Label IPAddressLabel;
-        private System.Windows.Forms.TextBox IPAddressTextBox;
-        private System.Windows.Forms.Label PortLabel;
-        private System.Windows.Forms.NumericUpDown PortTextBox;
-        private System.Windows.Forms.MenuStrip MainMenu;
-        private System.Windows.Forms.ToolStripMenuItem FileMenu;
-        private System.Windows.Forms.ToolStripMenuItem FileMenuExitItem;
-        private System.Windows.Forms.Button LaunchButton;
-        private System.Windows.Forms.StatusStrip StatusBar;
-        private System.Windows.Forms.ToolStripStatusLabel StatusBarText;
-        private System.Windows.Forms.TextBox ApplicationPathTextBox;
-        private System.Windows.Forms.Label AppPathLabel;
-        private System.Windows.Forms.Button ApplicationPathBrowseButton;
-        private System.Windows.Forms.CheckBox UseRemoteServerCheckbox;
-        private System.Windows.Forms.CheckBox ApplicationPathCheckbox;
-        private System.Windows.Forms.GroupBox AndroidGroupBox;
-        private System.Windows.Forms.CheckBox AndroidPackageCheckbox;
-        private System.Windows.Forms.TextBox AndroidActivityTextBox;
-        private System.Windows.Forms.CheckBox AndroidActivityCheckbox;
-        private System.Windows.Forms.TextBox AndroidPackageTextBox;
-        private System.Windows.Forms.ComboBox LaunchAVDComboBox;
-        private System.Windows.Forms.TextBox WaitForAndroidActivityTextBox;
-        private System.Windows.Forms.CheckBox WaitForAndroidActivityCheckbox;
-        private System.Windows.Forms.CheckBox LaunchAVDCheckbox;
+        public System.Windows.Forms.Label IPAddressLabel;
+        public System.Windows.Forms.TextBox IPAddressTextBox;
+        public System.Windows.Forms.Label PortLabel;
+        public System.Windows.Forms.NumericUpDown PortTextBox;
+        public System.Windows.Forms.MenuStrip MainMenu;
+        public System.Windows.Forms.ToolStripMenuItem FileMenu;
+        public System.Windows.Forms.ToolStripMenuItem FileMenuExitItem;
+        public System.Windows.Forms.Button LaunchButton;
+        public System.Windows.Forms.StatusStrip StatusBar;
+        public System.Windows.Forms.ToolStripStatusLabel StatusBarText;
+        public System.Windows.Forms.TextBox ApplicationPathTextBox;
+        public System.Windows.Forms.Label AppPathLabel;
+        public System.Windows.Forms.Button ApplicationPathBrowseButton;
+        public System.Windows.Forms.CheckBox UseRemoteServerCheckbox;
+        public System.Windows.Forms.CheckBox ApplicationPathCheckbox;
+        public System.Windows.Forms.GroupBox AndroidGroupBox;
+        public System.Windows.Forms.CheckBox AndroidPackageCheckbox;
+        public System.Windows.Forms.TextBox AndroidActivityTextBox;
+        public System.Windows.Forms.CheckBox AndroidActivityCheckbox;
+        public System.Windows.Forms.TextBox AndroidPackageTextBox;
+        public System.Windows.Forms.ComboBox LaunchAVDComboBox;
+        public System.Windows.Forms.TextBox WaitForAndroidActivityTextBox;
+        public System.Windows.Forms.CheckBox WaitForAndroidActivityCheckbox;
+        public System.Windows.Forms.CheckBox LaunchAVDCheckbox;
     }
 }
 
