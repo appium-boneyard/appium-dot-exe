@@ -54,25 +54,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm\Constants.cs" />
-    <Compile Include="MainForm\MainFormUtility.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm\MainFormHandlers.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MainForm\Controller.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="MainForm\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm\MainFormModel.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MainForm\Model.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm\MainForm.resx">
