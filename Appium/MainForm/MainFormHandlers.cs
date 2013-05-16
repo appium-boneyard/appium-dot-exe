@@ -8,24 +8,31 @@ namespace Appium
 {
     public partial class MainForm : Form
     {
-
         /// <summary>called whenever the form loads</summary>
         /// <param name="sender">sender</param>
         /// <param name="e">event args</param>
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            new Thread(() =>
+            _InstallerThread = new Thread(() =>
             {
+                this.Invoke(new Action(() => LaunchButton.Enabled = false));
                 if (!File.Exists(NodePath) || !File.Exists(NPMPath))
                 {
                     _DownloadAndInstallNodeJS();
                 }
-
                 if (!Directory.Exists(AppiumPackageFolder))
                 {
                     _NPMInstallAppium();
                 }
-            }).Start();
+                if (!File.Exists(Path.Combine(AppiumPackageFolder, ".appiumconfig")))
+                {
+                    _ResetAppium();
+                }
+                this.Invoke(new Action(() => LaunchButton.Enabled = true));
+            });
+            _InstallerThread.Name = "NodeJS and Appium Installation";
+            _InstallerThread.Priority = ThreadPriority.AboveNormal;
+            _InstallerThread.Start();
         }
 
         #region Menu Handlers
@@ -34,6 +41,22 @@ namespace Appium
         /// <param name="e">event args</param>
         private void FileMenuExitItem_Click(object sender, EventArgs e)
         {
+            // terminate appium server if its running
+            if (null != AppiumServerProcess && !AppiumServerProcess.HasExited)
+            {
+                AppiumServerProcess.Kill();
+            }
+
+            if (null != _InstallerThread && _InstallerThread.IsAlive)
+            {
+                _InstallerThread.Abort();
+            }
+
+            if (null !=_ServerExitMonitorThread && _ServerExitMonitorThread.IsAlive)
+            {
+                _ServerExitMonitorThread.Abort();
+            }
+
             Application.Exit();
         }
         #endregion
@@ -44,23 +67,67 @@ namespace Appium
         /// <param name="e">event args</param>
         private void LaunchButton_Click(object sender, EventArgs e)
         {
+            // kill the process if it's already running
+            if (null != AppiumServerProcess && !AppiumServerProcess.HasExited)
+            {
+                AppiumServerProcess.Kill();
+                return;
+            }
+
+            // don't launch if a remote server is being used
+            if (this.UseRemoteServer)
+            {
+                return;
+            }
+
             // setup basic process info
             var appiumServerProcessStartInfo = new ProcessStartInfo();
-            appiumServerProcessStartInfo.WorkingDirectory = AppiumRootFolder;
+            appiumServerProcessStartInfo.WorkingDirectory = AppiumPackageFolder;
             appiumServerProcessStartInfo.FileName = NodePath;
-            appiumServerProcessStartInfo.Arguments = Path.Combine(AppiumPackageFolder, "server.js");
-            appiumServerProcessStartInfo.CreateNoWindow = true;
-            appiumServerProcessStartInfo.UseShellExecute = false;
-            appiumServerProcessStartInfo.RedirectStandardOutput = true;
-            appiumServerProcessStartInfo.RedirectStandardInput = true;
-            appiumServerProcessStartInfo.RedirectStandardError = true;
+            appiumServerProcessStartInfo.Arguments = "server.js";
+            appiumServerProcessStartInfo.UseShellExecute = true;
 
             // add more arguments
             appiumServerProcessStartInfo.Arguments += " -a " + IPAddress;
             appiumServerProcessStartInfo.Arguments += " -p " + Port.ToString();
+            if (this.UseApplicationPath)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app " + this.ApplicationPath;
+            }
+            if (this.UseAndroidActivity)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app-activity " + this.AndroidActivity;
+            }
+            if (this.UseAndroidPackage)
+            {
+                appiumServerProcessStartInfo.Arguments += " --app-pkg " + this.AndroidPackage;
+            }
 
             // start the process
-            var appiumServerProcess = Process.Start(appiumServerProcessStartInfo);
+            AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
+            _ServerExitMonitorThread = new Thread(() =>
+            {
+                this.Invoke(new Action(() => LaunchButtonText = "Stop"));
+                AppiumServerProcess.WaitForExit();
+                this.Invoke(new Action(() => LaunchButtonText = "Launch"));
+            });
+            _ServerExitMonitorThread.Name = "Server Exit Monitor";
+            _ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
+            _ServerExitMonitorThread.Start();
+        }
+
+        private void AppPathBrowseButton_Click(object sender, System.EventArgs e)
+        {
+            OpenFileDialog appPathDialog = new OpenFileDialog();
+            appPathDialog.CheckFileExists = true;
+            appPathDialog.Multiselect = false;
+            appPathDialog.Filter = "Anrdoid apps (*.apk)|*.apk";
+            appPathDialog.Title = "Select Your Android App";
+            var result = appPathDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                this.Invoke(new Action(() => this.ApplicationPath = appPathDialog.FileName ));
+            }
         }
         #endregion
     }
