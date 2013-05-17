@@ -40,20 +40,20 @@
             // 
             this.DOMTreeView.Location = new System.Drawing.Point(13, 13);
             this.DOMTreeView.Name = "DOMTreeView";
-            this.DOMTreeView.Size = new System.Drawing.Size(248, 365);
+            this.DOMTreeView.Size = new System.Drawing.Size(298, 490);
             this.DOMTreeView.TabIndex = 0;
             // 
             // DetailsTextBox
             // 
-            this.DetailsTextBox.Location = new System.Drawing.Point(268, 244);
+            this.DetailsTextBox.Location = new System.Drawing.Point(317, 367);
             this.DetailsTextBox.Multiline = true;
             this.DetailsTextBox.Name = "DetailsTextBox";
-            this.DetailsTextBox.Size = new System.Drawing.Size(258, 134);
+            this.DetailsTextBox.Size = new System.Drawing.Size(240, 136);
             this.DetailsTextBox.TabIndex = 1;
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Location = new System.Drawing.Point(268, 13);
+            this.RefreshButton.Location = new System.Drawing.Point(317, 13);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(75, 23);
             this.RefreshButton.TabIndex = 2;
@@ -63,9 +63,10 @@
             // 
             // ScreenshotPictureBox
             // 
-            this.ScreenshotPictureBox.Location = new System.Drawing.Point(268, 43);
+            this.ScreenshotPictureBox.Location = new System.Drawing.Point(317, 41);
             this.ScreenshotPictureBox.Name = "ScreenshotPictureBox";
-            this.ScreenshotPictureBox.Size = new System.Drawing.Size(258, 195);
+            this.ScreenshotPictureBox.Size = new System.Drawing.Size(240, 320);
+            this.ScreenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ScreenshotPictureBox.TabIndex = 3;
             this.ScreenshotPictureBox.TabStop = false;
             // 
@@ -73,14 +74,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(538, 390);
+            this.ClientSize = new System.Drawing.Size(567, 611);
             this.Controls.Add(this.ScreenshotPictureBox);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.DetailsTextBox);
             this.Controls.Add(this.DOMTreeView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "InpsectorForm";
-            this.Text = "Inpsector";
+            this.Text = "Inspector";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Inpsector_FormClosing);
             this.Load += new System.EventHandler(this.Inpsector_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ScreenshotPictureBox)).EndInit();
