@@ -39,6 +39,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="InspectorWindow\InpsectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspectorWindow\InpsectorForm.Designer.cs">
+      <DependentUpon>InpsectorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="InspectorWindow\InpsectorForm.resx">
+      <DependentUpon>InpsectorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
