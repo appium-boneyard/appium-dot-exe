@@ -23,12 +23,15 @@ namespace Appium.MainWindow
             this.FormClosing += new FormClosingEventHandler(this.FileMenuExitItem_Click);
         }
 
-        #region Windows, Threads. and Processes
+        #region Windows, Threads, and Processes
         /// <summary>process for the appium server</summary>
         private Process _AppiumServerProcess;
 
         /// <summary>the preferences window</summary>
         private PreferencesWindow.PreferencesForm _PreferencesWindow;
+
+        /// <summary>the inspector window</summary>
+        private InspectorWindow.InpsectorForm _InspectorWindow;
 
         /// <summary>thread that runs setup actions after the form loads</summary>
         private Thread _LoadActionsThread;
@@ -91,6 +94,21 @@ namespace Appium.MainWindow
         #endregion
 
         #region Menu Handlers
+        /// <summary>called when the inspector menu item on the file menu is clicked</summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event args</param>
+        private void FileMenuInspectorItem_Click(object sender, EventArgs e)
+        {
+            if (null == this._InspectorWindow || this._InspectorWindow.IsDisposed)
+            {
+                this._InspectorWindow = new InspectorWindow.InpsectorForm(this._Model);
+            }
+            if (!this._InspectorWindow.Visible)
+            {
+                this._InspectorWindow.Show();
+            }
+        }
+
         /// <summary>called when the preferences menu item on the file menu is clicked</summary>
         /// <param name="sender">sender</param>
         /// <param name="e">event args</param>
