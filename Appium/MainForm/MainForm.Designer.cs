@@ -57,6 +57,7 @@
             this.AndroidPackageCheckbox = new System.Windows.Forms.CheckBox();
             this.PortTextBox = new System.Windows.Forms.NumericUpDown();
             this.IPAddressTextBox = new System.Windows.Forms.TextBox();
+            this.FileMenuInspectorItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.StatusBar.SuspendLayout();
             this.AndroidGroupBox.SuspendLayout();
@@ -88,13 +89,14 @@
             this.FileMenu});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(481, 24);
+            this.MainMenu.Size = new System.Drawing.Size(486, 24);
             this.MainMenu.TabIndex = 5;
             this.MainMenu.Text = "menuStrip1";
             // 
             // FileMenu
             // 
             this.FileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileMenuInspectorItem,
             this.FileMenuPreferencesItem,
             this.FileMenuExitItem});
             this.FileMenu.Name = "FileMenu";
@@ -131,7 +133,7 @@
             this.StatusBarText});
             this.StatusBar.Location = new System.Drawing.Point(0, 186);
             this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(481, 22);
+            this.StatusBar.Size = new System.Drawing.Size(486, 22);
             this.StatusBar.TabIndex = 7;
             this.StatusBar.Text = "statusStrip1";
             // 
@@ -358,11 +360,18 @@
             this.IPAddressTextBox.TabIndex = 2;
             this.IPAddressTextBox.Text = global::Appium.Properties.Settings.Default.ServerAddress;
             // 
+            // FileMenuInspectorItem
+            // 
+            this.FileMenuInspectorItem.Name = "FileMenuInspectorItem";
+            this.FileMenuInspectorItem.Size = new System.Drawing.Size(152, 22);
+            this.FileMenuInspectorItem.Text = "Inspector";
+            this.FileMenuInspectorItem.Click += new System.EventHandler(this.FileMenuInspectorItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 208);
+            this.ClientSize = new System.Drawing.Size(486, 208);
             this.Controls.Add(this.AndroidGroupBox);
             this.Controls.Add(this.ApplicationPathCheckbox);
             this.Controls.Add(this.UseRemoteServerCheckbox);
@@ -424,6 +433,7 @@
         public System.Windows.Forms.CheckBox AndroidDeviceReadyTimeoutCheckbox;
         public System.Windows.Forms.NumericUpDown AndroidDeviceReadyTimeoutPicker;
         public System.Windows.Forms.CheckBox AndroidFullResetCheckbox;
+        private System.Windows.Forms.ToolStripMenuItem FileMenuInspectorItem;
     }
 }
 
