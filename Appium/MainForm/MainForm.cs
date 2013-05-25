@@ -337,32 +337,37 @@ namespace Appium.MainWindow
         /// <summary>detects available avds</summary>
         private void _DetectAVDs()
         {
-            // use the android command to list the avds
-            ProcessStartInfo avdDetectionProcessInfo = new ProcessStartInfo();
-            avdDetectionProcessInfo.FileName = Path.Combine(this._AndroidSDKPath, "tools", "android.bat");
-            if (!File.Exists(avdDetectionProcessInfo.FileName))
-                return;
-            avdDetectionProcessInfo.Arguments = "list avd -c";
-            avdDetectionProcessInfo.UseShellExecute = false;
-            avdDetectionProcessInfo.CreateNoWindow = true;
-            avdDetectionProcessInfo.RedirectStandardOutput = true;
-            var avdDetectionProcess = Process.Start(avdDetectionProcessInfo);
-            avdDetectionProcess.WaitForExit();
-
-            // read the output
-            string output = "";
-            using (System.IO.StreamReader myOutput = avdDetectionProcess.StandardOutput)
-            {
-                output = myOutput.ReadToEnd();
-            }
             List<string> avds = new List<string>();
-            foreach (var line in output.Split(new char[] { '\r', '\n' }))
+            try
             {
-                if (line.Length > 0)
+                // use the android command to list the avds
+                ProcessStartInfo avdDetectionProcessInfo = new ProcessStartInfo();
+                avdDetectionProcessInfo.FileName = Path.Combine(this._AndroidSDKPath, "tools", "android.bat");
+                if (!File.Exists(avdDetectionProcessInfo.FileName))
+                    return;
+                avdDetectionProcessInfo.Arguments = "list avd -c";
+                avdDetectionProcessInfo.UseShellExecute = false;
+                avdDetectionProcessInfo.CreateNoWindow = true;
+                avdDetectionProcessInfo.RedirectStandardOutput = true;
+                var avdDetectionProcess = Process.Start(avdDetectionProcessInfo);
+                avdDetectionProcess.WaitForExit();
+
+                // read the output
+                string output = "";
+                using (System.IO.StreamReader myOutput = avdDetectionProcess.StandardOutput)
                 {
-                    avds.Add(line);
+                    output = myOutput.ReadToEnd();
                 }
+                foreach (var line in output.Split(new char[] { '\r', '\n' }))
+                {
+                    if (line.Length > 0)
+                    {
+                        avds.Add(line);
+                    }
+                }
+
             }
+            catch { }
             this._Model.AVDs = avds.ToArray();
         }
         #endregion
