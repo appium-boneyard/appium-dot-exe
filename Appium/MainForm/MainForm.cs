@@ -78,6 +78,10 @@ namespace Appium.MainWindow
                 }
                 if (!Directory.Exists(this._AppiumPackageFolder))
                 {
+                    if (!Directory.Exists(this._NodeModulesFolder))
+                    {
+                        Directory.CreateDirectory(this._NodeModulesFolder);
+                    }
                     _NPMInstallAppium();
                 }
                 if (!File.Exists(Path.Combine(this._AppiumPackageFolder, ".appiumconfig")))
