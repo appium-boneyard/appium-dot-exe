@@ -19,7 +19,7 @@ namespace Appium.MainWindow
         /// <summary>android activity</summary>
         public string AndroidActivity
         {
-            get { return this._View.AndroidActivityCheckbox.Text; }
+            get { return this._View.AndroidActivityTextBox.Text; }
             set
             {
                 Appium.Properties.Settings.Default.AndroidActivity = value;
