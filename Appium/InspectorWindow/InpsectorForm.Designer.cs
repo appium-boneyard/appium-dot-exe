@@ -42,6 +42,7 @@
             this.DOMTreeView.Name = "DOMTreeView";
             this.DOMTreeView.Size = new System.Drawing.Size(298, 490);
             this.DOMTreeView.TabIndex = 0;
+            this.DOMTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this._AfterNodeSelect);
             // 
             // DetailsTextBox
             // 
@@ -66,7 +67,7 @@
             this.ScreenshotPictureBox.Location = new System.Drawing.Point(317, 41);
             this.ScreenshotPictureBox.Name = "ScreenshotPictureBox";
             this.ScreenshotPictureBox.Size = new System.Drawing.Size(240, 320);
-            this.ScreenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ScreenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.ScreenshotPictureBox.TabIndex = 3;
             this.ScreenshotPictureBox.TabStop = false;
             // 
