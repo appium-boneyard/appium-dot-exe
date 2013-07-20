@@ -34,9 +34,7 @@ namespace Appium.InspectorWindow
         private void RefreshButton_Click(object sender, EventArgs e)
         {
             DOMTreeView.Nodes.Clear();
-            Image image = Image.FromStream(new MemoryStream(((ITakesScreenshot)_Driver).GetScreenshot().AsByteArray));
-            image = image.GetThumbnailImage(240, 320, null, IntPtr.Zero);
-            ScreenshotPictureBox.Image = image;
+            _SetScreenshot();
             string pagesource = _Driver.PageSource;
             Node rootNode = JsonConvert.DeserializeObject<Node>(pagesource);
             PopulateTree(rootNode, DOMTreeView.Nodes);
@@ -55,6 +53,13 @@ namespace Appium.InspectorWindow
         {
             Node n = (Node)e.Node.Tag;
             DetailsTextBox.Text = n.GetDetails();
+        }
+
+        private void _SetScreenshot()
+        {
+            Image image = Image.FromStream(new MemoryStream(((ITakesScreenshot)_Driver).GetScreenshot().AsByteArray));
+            image = image.GetThumbnailImage(240, 320, null, IntPtr.Zero);
+            ScreenshotPictureBox.Image = image;
         }
 
         public class Node
