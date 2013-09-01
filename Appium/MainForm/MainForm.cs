@@ -244,7 +244,7 @@ namespace Appium.MainWindow
             {
                 appiumServerProcessStartInfo.Arguments += " --keep-artifacts";
             }
-            if (!this._Model.ResetApplicationState)
+			if (!this._Model.ResetApplicationState && !this._Model.PerformFullAndroidReset)
             {
                 appiumServerProcessStartInfo.Arguments += " --no-reset";
             }
