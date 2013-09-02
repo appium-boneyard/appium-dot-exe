@@ -18,8 +18,10 @@ namespace Appium.MainWindow
         public MainForm()
         {
             // initialize
-            _Model = new Model(this);
+			_Model = new Model(this, new Models.DefaultAppiumServerSettings());
+			//_Model = new Model(this);
             InitializeComponent();
+			this.modelBindingSource.DataSource = _Model;
             this.FormClosing += new FormClosingEventHandler(this.FileMenuExitItem_Click);
         }
 
@@ -375,5 +377,11 @@ namespace Appium.MainWindow
             this._Model.AVDs = avds.ToArray();
         }
         #endregion
+
+		private void LaunchAVDComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
     }
 }
