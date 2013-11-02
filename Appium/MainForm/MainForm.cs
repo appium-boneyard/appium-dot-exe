@@ -201,7 +201,7 @@ namespace Appium.MainWindow
                     appiumServerProcessStartInfo.Arguments += "--debug-brk ";
                 }
             }
-            appiumServerProcessStartInfo.Arguments += "server.js";
+            appiumServerProcessStartInfo.Arguments += "lib\\server\\main.js";
 
             // add more arguments
             appiumServerProcessStartInfo.Arguments += " --address " + this._Model.IPAddress;
