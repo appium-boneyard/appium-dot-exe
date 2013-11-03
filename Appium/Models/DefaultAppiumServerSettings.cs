@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 
 namespace Appium.Models
 {
@@ -36,16 +37,38 @@ namespace Appium.Models
 
 		public bool UseRemoteServer { get; set; }
 
+		public bool BreakOnApplicationStart { get; set; }
+
+		public bool CheckForUpdates { get; set; }
+
+		public string ExternalNodeJSBinary { get; set; }
+
+		public string ExternalAppiumPackage { get; set; }
+
+		public bool KeepArtifacts { get; set; }
+
+		public uint NodeJSDebugPort { get; set; }
+
+		public bool PrelaunchApplication { get; set; }
+
+		public bool QuietLogging { get; set; }
+
+		public bool ResetApplicationState { get; set; }
+
+		public bool UseDeveloperMode { get; set; }
+
+		public bool UseExternalNodeJSBinary { get; set; }
+
+		public bool UseExternalAppiumPackage { get; set; }
+
+		public bool UseNodeJSDebugging { get; set; }
+
 		/// <summary>
 		/// Saves Appium Server settings into default settings file
 		/// </summary>
 		public void Save()
 		{
-			Appium.Properties.Settings.Default.ServerAddress = IPAddress;
-			Appium.Properties.Settings.Default.ServerPort = Port;
-			Appium.Properties.Settings.Default.UseRemoteServer = UseRemoteServer;
-			Appium.Properties.Settings.Default.LaunchAVD = LaunchAVD;
-
+			Mapper.Map<IAppiumServerSettings, Appium.Properties.Settings>(this, Appium.Properties.Settings.Default);
 			Appium.Properties.Settings.Default.Save();
 		}
 
@@ -54,33 +77,7 @@ namespace Appium.Models
 		/// </summary>
 		public void Load()
 		{
-			// use automapper here?
-
-			ApplicationPath = Appium.Properties.Settings.Default.ApplicationPath;
-			AndroidActivity = Appium.Properties.Settings.Default.AndroidActivity;
-
-			AndroidDeviceReadyTimeout = Appium.Properties.Settings.Default.AndroidDeviceReadyTimeout;
-
-			AndroidPackage = Appium.Properties.Settings.Default.AndroidPackage;
-
-			AndroidWaitActivity = Appium.Properties.Settings.Default.AndroidWaitActivity;
-			AVDToLaunch = Appium.Properties.Settings.Default.AVD;
-			LaunchAVD = Appium.Properties.Settings.Default.LaunchAVD;
-			PerformFullAndroidReset = Appium.Properties.Settings.Default.PerformFullAndroidReset;
-			UseAndroidActivity = Appium.Properties.Settings.Default.UseAndroidActivity;
-			UseAndroidDeviceReadyTimeout = Appium.Properties.Settings.Default.UseAndroidDeviceReadyTimeout;
-			UseAndroidPackage = Appium.Properties.Settings.Default.UseAndroidPackage;
-			UseAndroidWaitActivity = Appium.Properties.Settings.Default.UseAndroidWaitActivity;
-			UseApplicationPath = Appium.Properties.Settings.Default.UseApplicationPath;
-
-
-			IPAddress = Appium.Properties.Settings.Default.ServerAddress;
-			Port = Appium.Properties.Settings.Default.ServerPort;
-			UseRemoteServer = Appium.Properties.Settings.Default.UseRemoteServer;
-			LaunchAVD = Appium.Properties.Settings.Default.LaunchAVD;
+			Mapper.Map<Appium.Properties.Settings,IAppiumServerSettings>(Appium.Properties.Settings.Default,this);
 		}
-
-
-
 	}
 }

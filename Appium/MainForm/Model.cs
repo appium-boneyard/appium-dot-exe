@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Appium.Models;
+using Appium.PreferencesWindow;
 
 namespace Appium.MainWindow
 {
@@ -17,6 +18,8 @@ namespace Appium.MainWindow
 		}
 
 		private IAppiumServerSettings _Settings;
+		//TODO this is here just to test currently refactored functionality in steps, in the future, we should not allow direct access to settings
+		public IAppiumServerSettings Settings { get { return _Settings; } }
 
 		/// <summary>main form</summary>
 		public MainForm _View;
@@ -26,11 +29,11 @@ namespace Appium.MainWindow
 		public string AndroidActivity
 		{
 			get { return _Settings.AndroidActivity; }
-			set 
-			{ 
+			set
+			{
 				_Settings.AndroidActivity = value;
 				// autocheck UseAndroidActivity checkbox
-				UseAndroidActivity = !String.IsNullOrEmpty(value); 
+				UseAndroidActivity = !String.IsNullOrEmpty(value);
 			}
 		}
 
@@ -45,11 +48,11 @@ namespace Appium.MainWindow
 		public string AndroidPackage
 		{
 			get { return _Settings.AndroidPackage; }
-			set	
-			{ 
-				_Settings.AndroidPackage = value; 
+			set
+			{
+				_Settings.AndroidPackage = value;
 				// automatically check UseAndroidPackage checkbox
-				UseAndroidPackage = !String.IsNullOrEmpty(value); 	
+				UseAndroidPackage = !String.IsNullOrEmpty(value);
 			}
 		}
 
@@ -57,9 +60,9 @@ namespace Appium.MainWindow
 		public string AndroidWaitActivity
 		{
 			get { return _Settings.AndroidWaitActivity; }
-			set 
-			{ 
-				_Settings.AndroidWaitActivity = value; 
+			set
+			{
+				_Settings.AndroidWaitActivity = value;
 				// automatically check UseAndroidWaitActivity checkbox
 				UseAndroidWaitActivity = !String.IsNullOrEmpty(value);
 			}
@@ -69,7 +72,7 @@ namespace Appium.MainWindow
 		public string AVDToLaunch
 		{
 			get { return _Settings.AVDToLaunch; }
-			set 
+			set
 			{
 				_Settings.AVDToLaunch = value;
 				// check launch AVD checkbox automatically when value selected.
@@ -178,13 +181,13 @@ namespace Appium.MainWindow
 		public bool UseApplicationPath
 		{
 			get { return _Settings.UseApplicationPath; }
-			set { _Settings.UseApplicationPath = value; }			
+			set { _Settings.UseApplicationPath = value; }
 		}
 
 		/// <summary>true if a remote server will be used</summary>
-		public bool UseRemoteServer 
-		{ 
-			get { return _Settings.UseRemoteServer; } 
+		public bool UseRemoteServer
+		{
+			get { return _Settings.UseRemoteServer; }
 			set { _Settings.UseRemoteServer = value; }
 		}
 
@@ -192,149 +195,18 @@ namespace Appium.MainWindow
 		public string StatusBarText { get { return this._View.StatusBarText.Text; } set { this._View.Invoke(new Action(() => this._View.StatusBarText.Text = value)); } }
 		#endregion
 
-		#region Preferences
-		/// <summary>true if the nodejs debugger will break on application start</summary>
-		public bool BreakOnApplicationStart
+		/// <summary>
+		/// Invokes saving of all the settings to the underlying datastore
+		/// </summary>
+		public void SaveSettings()
 		{
-			get { return Appium.Properties.Settings.Default.BreakOnApplicationStart; }
-			set
-			{
-				Appium.Properties.Settings.Default.BreakOnApplicationStart = value;
-				Appium.Properties.Settings.Default.Save();
-			}
+			_Settings.Save();
 		}
 
-		/// <summary>true if appium should check for updates</summary>
-		public bool CheckForUpdates
+		public void OpenPreferences()
 		{
-			get { return Appium.Properties.Settings.Default.CheckForUpdates; }
-			set
-			{
-				Appium.Properties.Settings.Default.CheckForUpdates = value;
-				Appium.Properties.Settings.Default.Save();
-			}
+			PreferencesPModel preferences = new PreferencesPModel(_Settings, new PreferencesForm());
+			preferences.OpenWindow();
 		}
-
-		/// <summary>true if developer mode is enabled</summary>
-		public bool DeveloperMode
-		{
-			get { return Appium.Properties.Settings.Default.DeveloperMode; }
-			set
-			{
-				Appium.Properties.Settings.Default.DeveloperMode = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>path to external node.exe</summary>
-		public string ExternalNodeJSBinary
-		{
-			get { return Appium.Properties.Settings.Default.ExternalNodeJSBinary; }
-			set
-			{
-				Appium.Properties.Settings.Default.ExternalNodeJSBinary = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>pack to external appium node js package</summary>
-		public string ExternalAppiumPackage
-		{
-			get { return Appium.Properties.Settings.Default.ExternalAppiumPackage; }
-			set
-			{
-				Appium.Properties.Settings.Default.ExternalAppiumPackage = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if artifacts will be kept after a session</summary>
-		public bool KeepArtifacts
-		{
-			get { return Appium.Properties.Settings.Default.KeepArtifacts; }
-			set
-			{
-				Appium.Properties.Settings.Default.KeepArtifacts = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>port on which the nodejs debugger will run</summary>
-		public uint NodeJSDebugPort
-		{
-			get { return Convert.ToUInt32(Appium.Properties.Settings.Default.NodeJSDebugPort); }
-			set
-			{
-				Appium.Properties.Settings.Default.NodeJSDebugPort = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if appium should prelaunch the application</summary>
-		public bool PrelaunchApplication
-		{
-			get { return Appium.Properties.Settings.Default.PrelaunchApplication; }
-			set
-			{
-				Appium.Properties.Settings.Default.PrelaunchApplication = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if quiet logging should be used</summary>
-		public bool QuietLogging
-		{
-			get { return Appium.Properties.Settings.Default.QuietLogging; }
-			set
-			{
-				Appium.Properties.Settings.Default.QuietLogging = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if application state should be reset between sessions</summary>
-		public bool ResetApplicationState
-		{
-			get { return Appium.Properties.Settings.Default.ResetApplicationState; }
-			set
-			{
-				Appium.Properties.Settings.Default.ResetApplicationState = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if an external node js binary will be used</summary>
-		public bool UseExternalNodeJSBinary
-		{
-			get { return Appium.Properties.Settings.Default.UseExternalNodeJSBinary; }
-			set
-			{
-				Appium.Properties.Settings.Default.UseExternalNodeJSBinary = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if an external appium package will be used</summary>
-		public bool UseExternalAppiumPackage
-		{
-			get { return Appium.Properties.Settings.Default.UseExternalAppiumPackage; }
-			set
-			{
-				Appium.Properties.Settings.Default.UseExternalAppiumPackage = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-
-		/// <summary>true if nodejs debugging will be used</summary>
-		public bool UseNodeJSDebugging
-		{
-			get { return Appium.Properties.Settings.Default.UseNodeJSDebugging; }
-			set
-			{
-				Appium.Properties.Settings.Default.UseNodeJSDebugging = value;
-				Appium.Properties.Settings.Default.Save();
-			}
-		}
-		#endregion
 	}
 }

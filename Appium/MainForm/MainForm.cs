@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using Appium.Models.Server;
 
 namespace Appium.MainWindow
 {
@@ -120,14 +121,7 @@ namespace Appium.MainWindow
         /// <param name="e">event args</param>
         public void FileMenuPreferencesItem_Click(object sender, EventArgs e)
         {
-            if (null == this._PreferencesWindow || this._PreferencesWindow.IsDisposed)
-            {
-                this._PreferencesWindow = new PreferencesWindow.PreferencesForm(this._Model);
-            }
-            if (!this._PreferencesWindow.Visible)
-            {
-                this._PreferencesWindow.Show();
-            }
+			this._Model.OpenPreferences();
         }
 
         /// <summary>called when the exit menu item on the file menu is clicked</summary>
@@ -174,87 +168,16 @@ namespace Appium.MainWindow
                 return;
             }
 
+			//setup runner
+			AppiumServerRunner setup = new AppiumServerRunner(this._NodePath, this._AppiumPackageFolder, _Model.Settings);
+
             // setup basic process info
             var appiumServerProcessStartInfo = new ProcessStartInfo();
-            appiumServerProcessStartInfo.WorkingDirectory = this._AppiumPackageFolder;
-            appiumServerProcessStartInfo.FileName = this._NodePath;
+            appiumServerProcessStartInfo.WorkingDirectory = setup.WorkingDirectory;
+            appiumServerProcessStartInfo.FileName = setup.Filename;
             appiumServerProcessStartInfo.UseShellExecute = true;
-            appiumServerProcessStartInfo.Arguments = "";
-
-            // developer mode arguments
-            if (this._Model.DeveloperMode)
-            {
-                if (this._Model.UseExternalNodeJSBinary)
-                {
-                    appiumServerProcessStartInfo.FileName = this._Model.ExternalNodeJSBinary;
-                }
-                if (this._Model.UseExternalAppiumPackage)
-                {
-                    appiumServerProcessStartInfo.WorkingDirectory = this._Model.ExternalAppiumPackage;
-                }
-                if (this._Model.UseNodeJSDebugging)
-                {
-                    appiumServerProcessStartInfo.Arguments += "--debug=" + this._Model.NodeJSDebugPort.ToString() + " ";
-                }
-                if (this._Model.BreakOnApplicationStart)
-                {
-                    appiumServerProcessStartInfo.Arguments += "--debug-brk ";
-                }
-            }
-            appiumServerProcessStartInfo.Arguments += "lib\\server\\main.js";
-
-            // add more arguments
-            appiumServerProcessStartInfo.Arguments += " --address " + this._Model.IPAddress;
-            appiumServerProcessStartInfo.Arguments += " --port " + this._Model.Port.ToString();
-            if (this._Model.UseApplicationPath)
-            {
-                appiumServerProcessStartInfo.Arguments += " --app " + this._Model.ApplicationPath;
-            }
-
-            // add android-specific arguments
-            if (this._Model.UseAndroidActivity)
-            {
-                appiumServerProcessStartInfo.Arguments += " --app-activity " + this._Model.AndroidActivity;
-            }
-            if (this._Model.UseAndroidPackage)
-            {
-                appiumServerProcessStartInfo.Arguments += " --app-pkg " + this._Model.AndroidPackage;
-            }
-            if (this._Model.LaunchAVD)
-            {
-                appiumServerProcessStartInfo.Arguments += " --avd " + this._Model.AVDToLaunch;
-            }
-            if (this._Model.UseAndroidWaitActivity)
-            {
-                appiumServerProcessStartInfo.Arguments += " --app-wait-activity " + this._Model.AndroidWaitActivity;
-            }
-            if (this._Model.UseAndroidDeviceReadyTimeout)
-            {
-                appiumServerProcessStartInfo.Arguments += " --device-ready-timeout " + this._Model.AndroidDeviceReadyTimeout.ToString();
-            }
-            if (this._Model.PerformFullAndroidReset)
-            {
-                appiumServerProcessStartInfo.Arguments += " --full-reset";
-            }
-
-            // preference-related arguments
-            if (this._Model.QuietLogging)
-            {
-                appiumServerProcessStartInfo.Arguments += " --quiet";
-            }
-            if (this._Model.KeepArtifacts)
-            {
-                appiumServerProcessStartInfo.Arguments += " --keep-artifacts";
-            }
-			if (!this._Model.ResetApplicationState && !this._Model.PerformFullAndroidReset)
-            {
-                appiumServerProcessStartInfo.Arguments += " --no-reset";
-            }
-            if (this._Model.PrelaunchApplication)
-            {
-                appiumServerProcessStartInfo.Arguments += " --pre-launch";
-            }
-
+            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine();
+			
             // start the process
             this._AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
             this._ServerExitMonitorThread = new Thread(() =>

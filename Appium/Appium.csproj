@@ -38,6 +38,12 @@
     <ApplicationIcon>appium.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -59,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomapperConfiguration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="InspectorWindow\InpsectorForm.cs">
       <SubType>Form</SubType>
@@ -73,14 +80,37 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm\Model.cs" />
+    <Compile Include="Models\Server\AppiumServerArgument.cs" />
+    <Compile Include="Models\AppiumServerRunner.cs" />
     <Compile Include="Models\DefaultAppiumServerSettings.cs" />
+    <Compile Include="Models\Server\BreakOnAppStartArgument.cs" />
+    <Compile Include="Models\Server\AppiumServerStringArgument.cs" />
+    <Compile Include="Models\Server\ApplicationPathArgument.cs" />
+    <Compile Include="Models\Server\AndroidActivityArgument.cs" />
+    <Compile Include="Models\Server\AndroidPackageArgument.cs" />
+    <Compile Include="Models\Server\AVDToLaunchArgument.cs" />
+    <Compile Include="Models\Server\AndroidWaitActivityArgument.cs" />
+    <Compile Include="Models\Server\AppiumServerUintArgument.cs" />
+    <Compile Include="Models\Server\AndroidDeviceReadyTimeoutArgument.cs" />
+    <Compile Include="Models\Server\PrelauchApplicationArgument.cs" />
+    <Compile Include="Models\Server\NoResetArgument.cs" />
+    <Compile Include="Models\Server\QuietLoggingArgument.cs" />
+    <Compile Include="Models\Server\FullResetArgument.cs" />
+    <Compile Include="Models\Server\ServerPortArgument.cs" />
+    <Compile Include="Models\Server\ServerAddressArgument.cs" />
+    <Compile Include="Models\Server\NodeJSDebugArgument.cs" />
+    <Compile Include="Models\Server\IAppiumServerArgument.cs" />
     <Compile Include="Models\IAppiumServerSettings.cs" />
+    <Compile Include="Models\Server\KeepArtifactsArgument.cs" />
+    <Compile Include="Models\Server\ServerRunnerArgument.cs" />
+    <Compile Include="PreferencesWindow\IPreferencesView.cs" />
     <Compile Include="PreferencesWindow\PreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PreferencesWindow\PreferencesForm.Designer.cs">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PreferencesWindow\PreferencesPModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="InspectorWindow\InpsectorForm.resx">
@@ -102,8 +132,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Appium.MainWindow.Model.datasource" />
+    <None Include="Appium.MainWindow.Model.datasource">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Appium.PreferencesWindow.PreferencesPModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

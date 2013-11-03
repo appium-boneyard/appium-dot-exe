@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A411EE
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appium.Tests", "Appium.Tests\Appium.Tests.csproj", "{A4B15464-298A-4319-A3DD-6DD75E979665}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{6B4415B5-3FB6-4758-AF71-700B369A6498}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B4415B5-3FB6-4758-AF71-700B369A6498}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B4415B5-3FB6-4758-AF71-700B369A6498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B15464-298A-4319-A3DD-6DD75E979665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B15464-298A-4319-A3DD-6DD75E979665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B15464-298A-4319-A3DD-6DD75E979665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B15464-298A-4319-A3DD-6DD75E979665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

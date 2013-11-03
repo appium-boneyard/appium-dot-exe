@@ -11,7 +11,10 @@ namespace Appium
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
+            // configure automapper
+			AutomapperConfiguration.Configure();
+			// UI startup
+			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow.MainForm());
         }

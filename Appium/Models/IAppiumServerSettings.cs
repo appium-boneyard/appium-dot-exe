@@ -7,6 +7,8 @@ namespace Appium.Models
 {
 	public interface IAppiumServerSettings
 	{
+		#region Core Server Settings Properties
+				
 		/// <summary>path to the application</summary>
 		string ApplicationPath { get; set; }
 
@@ -54,6 +56,51 @@ namespace Appium.Models
 
 		/// <summary>true if a remote server will be used</summary>
 		bool UseRemoteServer { get; set; }
+
+		#endregion
+		
+		#region Preferences Properties
+
+		/// <summary>true if the nodejs debugger will break on application start</summary>
+		bool BreakOnApplicationStart { get; set; }
+
+		/// <summary>true if appium should check for updates</summary>
+		bool CheckForUpdates { get; set; }
+
+		/// <summary>path to external node.exe</summary>
+		string ExternalNodeJSBinary { get; set; }
+
+		/// <summary>pack to external appium node js package</summary>
+		string ExternalAppiumPackage { get; set; }
+
+		/// <summary>true if artifacts will be kept after a session</summary>
+		bool KeepArtifacts { get; set; }
+
+		/// <summary>port on which the nodejs debugger will run</summary>
+		uint NodeJSDebugPort { get; set; }
+
+		/// <summary>true if appium should prelaunch the application</summary>
+		bool PrelaunchApplication { get; set; }
+
+		/// <summary>true if quiet logging should be used</summary>
+		bool QuietLogging { get; set; }
+
+		/// <summary>true if application state should be reset between sessions</summary>
+		bool ResetApplicationState { get; set; }
+
+		/// <summary>true if developer mode is enabled</summary>
+		bool UseDeveloperMode { get; set; }
+
+		/// <summary>true if an external node js binary will be used</summary>
+		bool UseExternalNodeJSBinary { get; set; }
+
+		/// <summary>true if an external appium package will be used</summary>
+		bool UseExternalAppiumPackage { get; set; }
+
+		/// <summary>true if nodejs debugging will be used</summary>
+		bool UseNodeJSDebugging { get; set; }
+
+		#endregion
 
 		/// <summary>
 		/// Saves settings to underlying data store
