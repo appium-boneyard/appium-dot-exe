@@ -277,7 +277,23 @@ namespace Appium.Tests
 			Assert.That(setup.ContainsArgument<PrelauchApplicationArgument>(), Is.True);
 		}
 
+		[Test]
+		public void TestAppiumServerBaseSetup()
+		{
+			string ipAddr = "1.0.0.0";
+			uint port = 1234;
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			settings.IPAddress = ipAddr;
+			settings.Port = port;
 
+			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
+
+			Assert.That(setup.ContainsArgument<ServerRunnerArgument>(),Is.True);
+			Assert.That(setup.ContainsArgument<ServerAddressArgument>(),Is.True);
+			Assert.That(setup.GetArgumentForTest<ServerAddressArgument>().Value, Is.EqualTo(ipAddr));
+			Assert.That(setup.ContainsArgument<ServerPortArgument>(),Is.True);
+			Assert.That(setup.GetArgumentForTest<ServerPortArgument>().Value, Is.EqualTo(port));			
+		}
 
 	}
 }
