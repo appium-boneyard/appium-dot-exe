@@ -58,6 +58,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Mocks\AppiumServerRunnerMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAppiumServerConfiguration.cs" />
     <Compile Include="TestAutomapperConfiguration.cs" />

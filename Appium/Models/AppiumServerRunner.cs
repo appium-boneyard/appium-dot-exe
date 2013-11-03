@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -9,7 +10,13 @@ namespace Appium.Models.Server
 	{
 		private string _defaultFilename;
 		private string _defaultWorkingDir;
+
 		private List<IAppiumServerArgument> _args;
+		/// <summary>
+		/// Read only collection of Appium server arguments. As there is specific logic behind setting up
+		/// the arguments, if you want to change them, use <see cref="Setup"/> method instead.
+		/// </summary>
+		public ReadOnlyCollection<IAppiumServerArgument> Arguments { get { return _args.AsReadOnly(); } }
 
 		private string _filename;
 		/// <summary>
@@ -134,9 +141,24 @@ namespace Appium.Models.Server
 			return String.Join<IAppiumServerArgument>(" ", _args);
 		}
 
+		/// <summary>
+		/// Checks that argument of a specific type is present.
+		/// </summary>
+		/// <typeparam name="T">Type of argument to look for.</typeparam>
+		/// <returns><value>True</value> when the arguments of given type is present, <value>False</value> otherwise.</returns>
 		public bool ContainsArgument<T>() where T : IAppiumServerArgument
 		{
-			return _args.Find(i => i.GetType().Equals(typeof(T))) != null;
+			return GetArgument<T>() != null;
+		}
+
+		/// <summary>
+		/// Gets argument of specified type
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		protected T GetArgument<T>() where T : IAppiumServerArgument
+		{
+			return (T)_args.Find(i => i.GetType().Equals(typeof(T)));
 		}
 	}
 }

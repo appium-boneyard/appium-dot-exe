@@ -8,6 +8,7 @@ namespace Appium.Models.Server
 	public abstract class AppiumServerStringArgument : AppiumServerArgument
 	{
 		protected string _value;
+		public string Value { get { return _value; } }
 		
 		protected void Init(string cmdSwitch, string value)
 		{
