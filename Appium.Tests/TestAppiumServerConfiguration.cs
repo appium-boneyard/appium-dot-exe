@@ -63,6 +63,11 @@ namespace Appium.Tests
 			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
 
 			Assert.That(setup.Filename, Is.EqualTo(testNodeJs));
+
+			//reset for negative case
+			settings.UseExternalNodeJSBinary = false;
+			setup.Setup(settings);
+			Assert.That(setup.Filename, Is.EqualTo(NODE_RUNNER));
 		}
 
 		[Test]
@@ -77,10 +82,15 @@ namespace Appium.Tests
 			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
 
 			Assert.That(setup.WorkingDirectory, Is.EqualTo(test));
+
+			// reset for negative case
+			settings.UseExternalAppiumPackage = false;
+			setup.Setup(settings);
+			Assert.That(setup.WorkingDirectory, Is.EqualTo(WORKING_DIR));
 		}
 
 		[Test]
-		public void TestDeveloperModeNodeJsDebuggingPortIsUsed()
+		public void TestDeveloperModeNodeJsDebuggingPortUsage()
 		{
 			uint port = 1234;
 			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
@@ -91,12 +101,16 @@ namespace Appium.Tests
 			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
 
 			Assert.That(setup.ContainsArgument<NodeJSDebugArgument>(), Is.True);
-			NodeJSDebugArgument arg = setup.GetArgumentForTest<NodeJSDebugArgument>();
-			Assert.That(arg.Value, Is.EqualTo(port));
+			Assert.That(setup.GetArgumentForTest<NodeJSDebugArgument>().Value, Is.EqualTo(port));
+
+			// reset for negative case
+			settings.UseNodeJSDebugging = false;
+			setup.Setup(settings);
+			Assert.That(setup.ContainsArgument<NodeJSDebugArgument>(), Is.False);
 		}
 
 		[Test]
-		public void TestDeveloperModeBreakOnAppStartIsUsed()
+		public void TestDeveloperModeBreakOnAppStartUsage()
 		{
 			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
 			settings.UseDeveloperMode = true;
@@ -105,8 +119,163 @@ namespace Appium.Tests
 			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
 
 			Assert.That(setup.ContainsArgument<BreakOnAppStartArgument>(), Is.True);
+			
+			// reset for negative case
+			settings.BreakOnApplicationStart = false;
+			setup.Setup(settings);
+			Assert.That(setup.ContainsArgument<BreakOnAppStartArgument>(), Is.False);
 		}
 
+		[Test]
+		public void TestAndroidActivityUsage()
+		{
+			string test = "testActivity";
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			settings.AndroidActivity = test;
+
+			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
+			
+			// activity not enabled by default
+			Assert.That(setup.ContainsArgument<AndroidActivityArgument>(),Is.False);
+
+			// activity enabled
+			settings.UseAndroidActivity = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<AndroidActivityArgument>(),Is.True);
+			Assert.That(setup.GetArgumentForTest<AndroidActivityArgument>().Value, Is.EqualTo(test));
+		}
+
+		[Test]
+		public void TestAndroidPackageUsage()
+		{
+			string test = "testPackage";
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			settings.AndroidPackage = test;
+
+			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
+
+			// package not enabled by default
+			Assert.That(setup.ContainsArgument<AndroidPackageArgument>(), Is.False);
+
+			// package enabled
+			settings.UseAndroidPackage = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<AndroidPackageArgument>(), Is.True);
+			Assert.That(setup.GetArgumentForTest<AndroidPackageArgument>().Value, Is.EqualTo(test));
+		}
+
+		[Test]
+		public void TestLaunchAVDUsage()
+		{
+			string test = "AVD";
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			settings.AVDToLaunch = test;
+
+			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
+
+			// avd not enabled by default
+			Assert.That(setup.ContainsArgument<AVDToLaunchArgument>(), Is.False);
+
+			// avd enabled
+			settings.LaunchAVD = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<AVDToLaunchArgument>(), Is.True);
+			Assert.That(setup.GetArgumentForTest<AVDToLaunchArgument>().Value, Is.EqualTo(test));
+		}
+
+		[Test]
+		public void TestAndroidWaitActivityUsage()
+		{
+			string test = "wait";
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			settings.AndroidWaitActivity = test;
+
+			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
+
+			// activity not enabled by default
+			Assert.That(setup.ContainsArgument<AndroidWaitActivityArgument>(), Is.False);
+
+			// activity enabled
+			settings.UseAndroidWaitActivity = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<AndroidWaitActivityArgument>(), Is.True);
+			Assert.That(setup.GetArgumentForTest<AndroidWaitActivityArgument>().Value, Is.EqualTo(test));
+		}
+
+		[Test]
+		public void TestAndroidDeviceReadyTimeoutUsage()
+		{
+			uint test = 1234;
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			settings.AndroidDeviceReadyTimeout = test;
+
+			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
+
+			// timeout not enabled by default
+			Assert.That(setup.ContainsArgument<AndroidDeviceReadyTimeoutArgument>(), Is.False);
+
+			// timeout enabled
+			settings.UseAndroidDeviceReadyTimeout = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<AndroidDeviceReadyTimeoutArgument>(), Is.True);
+			Assert.That(setup.GetArgumentForTest<AndroidDeviceReadyTimeoutArgument>().Value, Is.EqualTo(test));
+		}
+
+		[Test]
+		public void TestQuietLoggingUsage()
+		{
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+
+			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
+
+			// quiet logging not enabled by default
+			Assert.That(setup.ContainsArgument<QuietLoggingArgument>(), Is.False);
+
+			// quiet logging enabled
+			settings.QuietLogging = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<QuietLoggingArgument>(), Is.True);
+		}
+
+		[Test]
+		public void TestKeepArtifactsUsage()
+		{
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+
+			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
+
+			// keep artifacts not enabled by default
+			Assert.That(setup.ContainsArgument<KeepArtifactsArgument>(), Is.False);
+
+			// keep artifacts enabled
+			settings.KeepArtifacts = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<KeepArtifactsArgument>(), Is.True);
+		}
+
+		[Test]
+		public void TestPrelauchApplicationUsage()
+		{
+			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+
+			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
+
+			// keep artifacts not enabled by default
+			Assert.That(setup.ContainsArgument<PrelauchApplicationArgument>(), Is.False);
+
+			// keep artifacts enabled
+			settings.PrelaunchApplication = true;
+			setup.Setup(settings);
+
+			Assert.That(setup.ContainsArgument<PrelauchApplicationArgument>(), Is.True);
+		}
 
 
 
