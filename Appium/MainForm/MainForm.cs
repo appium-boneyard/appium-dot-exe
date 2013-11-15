@@ -109,7 +109,7 @@ namespace Appium.MainWindow
             }
             if (!this._InspectorWindow.Visible)
             {
-				if (this._InspectorWindow.Load())
+				if (this._InspectorWindow.Connect())
 				{
 					this._InspectorWindow.Show();
 				}

@@ -22,7 +22,7 @@ namespace Appium.InspectorWindow
             InitializeComponent();
         }
 
-		public bool Load()
+		public bool Connect()
 		{
 			try
 			{
