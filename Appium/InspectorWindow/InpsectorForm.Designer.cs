@@ -84,7 +84,6 @@
             this.Name = "InpsectorForm";
             this.Text = "Inspector";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Inpsector_FormClosing);
-            this.Load += new System.EventHandler(this.Inpsector_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ScreenshotPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
