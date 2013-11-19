@@ -14,17 +14,28 @@ namespace Appium.InspectorWindow
         private MainWindow.Model _Model;
         private RemoteWebDriver _Driver;
 
+		public string LastMessage { get; set; }
+
         public InpsectorForm(MainWindow.Model model)
         {
             this._Model = model;
             InitializeComponent();
         }
 
-        private void Inpsector_Load(object sender, EventArgs e)
-        {
-            ICapabilities capabilities = new DesiredCapabilities();
-            _Driver = new ScreenshotRemoteWebDriver(new Uri("http://" + this._Model.IPAddress + ":" + this._Model.Port.ToString() + "/wd/hub"), capabilities);
-        }
+		public bool Connect()
+		{
+			try
+			{
+				ICapabilities capabilities = new DesiredCapabilities();
+				_Driver = new ScreenshotRemoteWebDriver(new Uri("http://" + this._Model.IPAddress + ":" + this._Model.Port.ToString() + "/wd/hub"), capabilities);
+			}
+			catch (Exception e)
+			{
+				LastMessage = e.Message;
+				return false;
+			}
+			return true;
+		}
 
         private void Inpsector_FormClosing(object sender, FormClosingEventArgs e)
         {
