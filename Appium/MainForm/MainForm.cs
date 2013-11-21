@@ -109,7 +109,14 @@ namespace Appium.MainWindow
             }
             if (!this._InspectorWindow.Visible)
             {
-                this._InspectorWindow.Show();
+				if (this._InspectorWindow.Connect())
+				{
+					this._InspectorWindow.Show();
+				}
+				else
+				{
+					MessageBox.Show(String.Format("Failed to connect to appium: {0}", this._InspectorWindow.LastMessage));
+				}
             }
         }
 
