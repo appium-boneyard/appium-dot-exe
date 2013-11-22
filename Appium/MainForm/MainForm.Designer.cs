@@ -1,33 +1,33 @@
 ﻿namespace Appium.MainWindow
 {
-    partial class MainForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class MainForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.IPAddressLabel = new System.Windows.Forms.Label();
@@ -40,38 +40,38 @@
 			this.LaunchButton = new System.Windows.Forms.Button();
 			this.StatusBar = new System.Windows.Forms.StatusStrip();
 			this.StatusBarText = new System.Windows.Forms.ToolStripStatusLabel();
+			this.ApplicationPathTextBox = new System.Windows.Forms.TextBox();
+			this.modelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.AppPathLabel = new System.Windows.Forms.Label();
 			this.ApplicationPathBrowseButton = new System.Windows.Forms.Button();
-			this.AndroidGroupBox = new System.Windows.Forms.GroupBox();
-			this.IPAddressTextBox = new System.Windows.Forms.TextBox();
-			this.PortTextBox = new System.Windows.Forms.NumericUpDown();
 			this.UseRemoteServerCheckbox = new System.Windows.Forms.CheckBox();
+			this.ApplicationPathCheckbox = new System.Windows.Forms.CheckBox();
+			this.AndroidGroupBox = new System.Windows.Forms.GroupBox();
 			this.AndroidFullResetCheckbox = new System.Windows.Forms.CheckBox();
+			this.AndroidDeviceReadyTimeoutPicker = new System.Windows.Forms.NumericUpDown();
 			this.AndroidDeviceReadyTimeoutCheckbox = new System.Windows.Forms.CheckBox();
 			this.LaunchAVDComboBox = new System.Windows.Forms.ComboBox();
+			this.WaitForAndroidActivityTextBox = new System.Windows.Forms.TextBox();
 			this.WaitForAndroidActivityCheckbox = new System.Windows.Forms.CheckBox();
+			this.LaunchAVDCheckbox = new System.Windows.Forms.CheckBox();
 			this.AndroidActivityTextBox = new System.Windows.Forms.TextBox();
 			this.AndroidActivityCheckbox = new System.Windows.Forms.CheckBox();
 			this.AndroidPackageTextBox = new System.Windows.Forms.TextBox();
 			this.AndroidPackageCheckbox = new System.Windows.Forms.CheckBox();
-			this.ApplicationPathCheckbox = new System.Windows.Forms.CheckBox();
-			this.AndroidDeviceReadyTimeoutPicker = new System.Windows.Forms.NumericUpDown();
-			this.WaitForAndroidActivityTextBox = new System.Windows.Forms.TextBox();
-			this.LaunchAVDCheckbox = new System.Windows.Forms.CheckBox();
-			this.ApplicationPathTextBox = new System.Windows.Forms.TextBox();
-			this.modelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.PortTextBox = new System.Windows.Forms.NumericUpDown();
+			this.IPAddressTextBox = new System.Windows.Forms.TextBox();
 			this.MainMenu.SuspendLayout();
 			this.StatusBar.SuspendLayout();
-			this.AndroidGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).BeginInit();
+			this.AndroidGroupBox.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// IPAddressLabel
 			// 
 			this.IPAddressLabel.AutoSize = true;
-			this.IPAddressLabel.Location = new System.Drawing.Point(19, 29);
+			this.IPAddressLabel.Location = new System.Drawing.Point(31, 33);
 			this.IPAddressLabel.Name = "IPAddressLabel";
 			this.IPAddressLabel.Size = new System.Drawing.Size(61, 13);
 			this.IPAddressLabel.TabIndex = 0;
@@ -80,7 +80,7 @@
 			// PortLabel
 			// 
 			this.PortLabel.AutoSize = true;
-			this.PortLabel.Location = new System.Drawing.Point(166, 29);
+			this.PortLabel.Location = new System.Drawing.Point(191, 33);
 			this.PortLabel.Name = "PortLabel";
 			this.PortLabel.Size = new System.Drawing.Size(29, 13);
 			this.PortLabel.TabIndex = 3;
@@ -92,7 +92,7 @@
             this.FileMenu});
 			this.MainMenu.Location = new System.Drawing.Point(0, 0);
 			this.MainMenu.Name = "MainMenu";
-			this.MainMenu.Size = new System.Drawing.Size(486, 24);
+			this.MainMenu.Size = new System.Drawing.Size(520, 24);
 			this.MainMenu.TabIndex = 5;
 			this.MainMenu.Text = "menuStrip1";
 			// 
@@ -109,27 +109,27 @@
 			// FileMenuInspectorItem
 			// 
 			this.FileMenuInspectorItem.Name = "FileMenuInspectorItem";
-			this.FileMenuInspectorItem.Size = new System.Drawing.Size(135, 22);
+			this.FileMenuInspectorItem.Size = new System.Drawing.Size(152, 22);
 			this.FileMenuInspectorItem.Text = "Inspector";
 			this.FileMenuInspectorItem.Click += new System.EventHandler(this.FileMenuInspectorItem_Click);
 			// 
 			// FileMenuPreferencesItem
 			// 
 			this.FileMenuPreferencesItem.Name = "FileMenuPreferencesItem";
-			this.FileMenuPreferencesItem.Size = new System.Drawing.Size(135, 22);
+			this.FileMenuPreferencesItem.Size = new System.Drawing.Size(152, 22);
 			this.FileMenuPreferencesItem.Text = "Preferences";
 			this.FileMenuPreferencesItem.Click += new System.EventHandler(this.FileMenuPreferencesItem_Click);
 			// 
 			// FileMenuExitItem
 			// 
 			this.FileMenuExitItem.Name = "FileMenuExitItem";
-			this.FileMenuExitItem.Size = new System.Drawing.Size(135, 22);
+			this.FileMenuExitItem.Size = new System.Drawing.Size(152, 22);
 			this.FileMenuExitItem.Text = "Exit";
 			this.FileMenuExitItem.Click += new System.EventHandler(this.FileMenuExitItem_Click);
 			// 
 			// LaunchButton
 			// 
-			this.LaunchButton.Location = new System.Drawing.Point(388, 24);
+			this.LaunchButton.Location = new System.Drawing.Point(427, 29);
 			this.LaunchButton.Name = "LaunchButton";
 			this.LaunchButton.Size = new System.Drawing.Size(81, 49);
 			this.LaunchButton.TabIndex = 6;
@@ -141,9 +141,10 @@
 			// 
 			this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusBarText});
-			this.StatusBar.Location = new System.Drawing.Point(0, 186);
+			this.StatusBar.Location = new System.Drawing.Point(0, 199);
 			this.StatusBar.Name = "StatusBar";
-			this.StatusBar.Size = new System.Drawing.Size(486, 22);
+			this.StatusBar.Size = new System.Drawing.Size(520, 22);
+			this.StatusBar.SizingGrip = false;
 			this.StatusBar.TabIndex = 7;
 			this.StatusBar.Text = "statusStrip1";
 			// 
@@ -152,23 +153,57 @@
 			this.StatusBarText.Name = "StatusBarText";
 			this.StatusBarText.Size = new System.Drawing.Size(0, 17);
 			// 
+			// ApplicationPathTextBox
+			// 
+			this.ApplicationPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "ApplicationPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.ApplicationPathTextBox.Location = new System.Drawing.Point(117, 57);
+			this.ApplicationPathTextBox.Name = "ApplicationPathTextBox";
+			this.ApplicationPathTextBox.Size = new System.Drawing.Size(215, 20);
+			this.ApplicationPathTextBox.TabIndex = 8;
+			// 
+			// modelBindingSource
+			// 
+			this.modelBindingSource.DataSource = typeof(Appium.MainWindow.Model);
+			// 
 			// AppPathLabel
 			// 
 			this.AppPathLabel.AutoSize = true;
-			this.AppPathLabel.Location = new System.Drawing.Point(19, 55);
+			this.AppPathLabel.Location = new System.Drawing.Point(12, 61);
 			this.AppPathLabel.Name = "AppPathLabel";
 			this.AppPathLabel.Size = new System.Drawing.Size(0, 13);
 			this.AppPathLabel.TabIndex = 9;
 			// 
 			// ApplicationPathBrowseButton
 			// 
-			this.ApplicationPathBrowseButton.Location = new System.Drawing.Point(307, 50);
+			this.ApplicationPathBrowseButton.Location = new System.Drawing.Point(346, 56);
 			this.ApplicationPathBrowseButton.Name = "ApplicationPathBrowseButton";
 			this.ApplicationPathBrowseButton.Size = new System.Drawing.Size(75, 23);
 			this.ApplicationPathBrowseButton.TabIndex = 10;
 			this.ApplicationPathBrowseButton.Text = "Browse";
 			this.ApplicationPathBrowseButton.UseVisualStyleBackColor = true;
 			this.ApplicationPathBrowseButton.Click += new System.EventHandler(this.AppPathBrowseButton_Click);
+			// 
+			// UseRemoteServerCheckbox
+			// 
+			this.UseRemoteServerCheckbox.AutoSize = true;
+			this.UseRemoteServerCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseRemoteServer", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.UseRemoteServerCheckbox.Location = new System.Drawing.Point(302, 34);
+			this.UseRemoteServerCheckbox.Name = "UseRemoteServerCheckbox";
+			this.UseRemoteServerCheckbox.Size = new System.Drawing.Size(119, 17);
+			this.UseRemoteServerCheckbox.TabIndex = 11;
+			this.UseRemoteServerCheckbox.Text = "Use Remote Server";
+			this.UseRemoteServerCheckbox.UseVisualStyleBackColor = true;
+			// 
+			// ApplicationPathCheckbox
+			// 
+			this.ApplicationPathCheckbox.AutoSize = true;
+			this.ApplicationPathCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseApplicationPath", true));
+			this.ApplicationPathCheckbox.Location = new System.Drawing.Point(20, 59);
+			this.ApplicationPathCheckbox.Name = "ApplicationPathCheckbox";
+			this.ApplicationPathCheckbox.Size = new System.Drawing.Size(73, 17);
+			this.ApplicationPathCheckbox.TabIndex = 12;
+			this.ApplicationPathCheckbox.Text = "App Path:";
+			this.ApplicationPathCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// AndroidGroupBox
 			// 
@@ -183,68 +218,42 @@
 			this.AndroidGroupBox.Controls.Add(this.AndroidActivityCheckbox);
 			this.AndroidGroupBox.Controls.Add(this.AndroidPackageTextBox);
 			this.AndroidGroupBox.Controls.Add(this.AndroidPackageCheckbox);
-			this.AndroidGroupBox.Location = new System.Drawing.Point(12, 78);
+			this.AndroidGroupBox.Location = new System.Drawing.Point(12, 84);
 			this.AndroidGroupBox.Name = "AndroidGroupBox";
 			this.AndroidGroupBox.Size = new System.Drawing.Size(457, 100);
 			this.AndroidGroupBox.TabIndex = 13;
 			this.AndroidGroupBox.TabStop = false;
 			this.AndroidGroupBox.Text = "Android";
 			// 
-			// IPAddressTextBox
-			// 
-			this.IPAddressTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "IPAddress", true));
-			this.IPAddressTextBox.Location = new System.Drawing.Point(86, 26);
-			this.IPAddressTextBox.Multiline = true;
-			this.IPAddressTextBox.Name = "IPAddressTextBox";
-			this.IPAddressTextBox.Size = new System.Drawing.Size(74, 20);
-			this.IPAddressTextBox.TabIndex = 2;
-			this.IPAddressTextBox.Text = "127.0.0.1";
-			// 
-			// PortTextBox
-			// 
-			this.PortTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.modelBindingSource, "Port", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "0", "N0"));
-			this.PortTextBox.Location = new System.Drawing.Point(201, 26);
-			this.PortTextBox.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-			this.PortTextBox.Name = "PortTextBox";
-			this.PortTextBox.Size = new System.Drawing.Size(56, 20);
-			this.PortTextBox.TabIndex = 4;
-			this.PortTextBox.Value = new decimal(new int[] {
-            4723,
-            0,
-            0,
-            0});
-			// 
-			// UseRemoteServerCheckbox
-			// 
-			this.UseRemoteServerCheckbox.AutoSize = true;
-			this.UseRemoteServerCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseRemoteServer", true));
-			this.UseRemoteServerCheckbox.Location = new System.Drawing.Point(263, 27);
-			this.UseRemoteServerCheckbox.Name = "UseRemoteServerCheckbox";
-			this.UseRemoteServerCheckbox.Size = new System.Drawing.Size(119, 17);
-			this.UseRemoteServerCheckbox.TabIndex = 11;
-			this.UseRemoteServerCheckbox.Text = "Use Remote Server";
-			this.UseRemoteServerCheckbox.UseVisualStyleBackColor = true;
-			// 
 			// AndroidFullResetCheckbox
 			// 
 			this.AndroidFullResetCheckbox.AutoSize = true;
 			this.AndroidFullResetCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "PerformFullAndroidReset", true));
-			this.AndroidFullResetCheckbox.Location = new System.Drawing.Point(238, 74);
+			this.AndroidFullResetCheckbox.Location = new System.Drawing.Point(238, 73);
 			this.AndroidFullResetCheckbox.Name = "AndroidFullResetCheckbox";
 			this.AndroidFullResetCheckbox.Size = new System.Drawing.Size(112, 17);
 			this.AndroidFullResetCheckbox.TabIndex = 15;
 			this.AndroidFullResetCheckbox.Text = "Perform Full Reset";
 			this.AndroidFullResetCheckbox.UseVisualStyleBackColor = true;
 			// 
+			// AndroidDeviceReadyTimeoutPicker
+			// 
+			this.AndroidDeviceReadyTimeoutPicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.modelBindingSource, "AndroidDeviceReadyTimeout", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.AndroidDeviceReadyTimeoutPicker.Location = new System.Drawing.Point(152, 72);
+			this.AndroidDeviceReadyTimeoutPicker.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.AndroidDeviceReadyTimeoutPicker.Name = "AndroidDeviceReadyTimeoutPicker";
+			this.AndroidDeviceReadyTimeoutPicker.Size = new System.Drawing.Size(56, 20);
+			this.AndroidDeviceReadyTimeoutPicker.TabIndex = 14;
+			// 
 			// AndroidDeviceReadyTimeoutCheckbox
 			// 
 			this.AndroidDeviceReadyTimeoutCheckbox.AutoSize = true;
 			this.AndroidDeviceReadyTimeoutCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseAndroidDeviceReadyTimeout", true));
-			this.AndroidDeviceReadyTimeoutCheckbox.Location = new System.Drawing.Point(8, 74);
+			this.AndroidDeviceReadyTimeoutCheckbox.Location = new System.Drawing.Point(8, 73);
 			this.AndroidDeviceReadyTimeoutCheckbox.Name = "AndroidDeviceReadyTimeoutCheckbox";
 			this.AndroidDeviceReadyTimeoutCheckbox.Size = new System.Drawing.Size(138, 17);
 			this.AndroidDeviceReadyTimeoutCheckbox.TabIndex = 9;
@@ -260,7 +269,14 @@
 			this.LaunchAVDComboBox.Name = "LaunchAVDComboBox";
 			this.LaunchAVDComboBox.Size = new System.Drawing.Size(84, 21);
 			this.LaunchAVDComboBox.TabIndex = 8;
-			this.LaunchAVDComboBox.SelectedIndexChanged += new System.EventHandler(this.LaunchAVDComboBox_SelectedIndexChanged);
+			// 
+			// WaitForAndroidActivityTextBox
+			// 
+			this.WaitForAndroidActivityTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "AndroidWaitActivity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.WaitForAndroidActivityTextBox.Location = new System.Drawing.Point(307, 46);
+			this.WaitForAndroidActivityTextBox.Name = "WaitForAndroidActivityTextBox";
+			this.WaitForAndroidActivityTextBox.Size = new System.Drawing.Size(139, 20);
+			this.WaitForAndroidActivityTextBox.TabIndex = 7;
 			// 
 			// WaitForAndroidActivityCheckbox
 			// 
@@ -272,6 +288,17 @@
 			this.WaitForAndroidActivityCheckbox.TabIndex = 6;
 			this.WaitForAndroidActivityCheckbox.Text = "Wait For Activity:";
 			this.WaitForAndroidActivityCheckbox.UseVisualStyleBackColor = true;
+			// 
+			// LaunchAVDCheckbox
+			// 
+			this.LaunchAVDCheckbox.AutoSize = true;
+			this.LaunchAVDCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "LaunchAVD", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.LaunchAVDCheckbox.Location = new System.Drawing.Point(8, 48);
+			this.LaunchAVDCheckbox.Name = "LaunchAVDCheckbox";
+			this.LaunchAVDCheckbox.Size = new System.Drawing.Size(90, 17);
+			this.LaunchAVDCheckbox.TabIndex = 4;
+			this.LaunchAVDCheckbox.Text = "Launch AVD:";
+			this.LaunchAVDCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// AndroidActivityTextBox
 			// 
@@ -311,70 +338,33 @@
 			this.AndroidPackageCheckbox.Text = "Package:";
 			this.AndroidPackageCheckbox.UseVisualStyleBackColor = true;
 			// 
-			// ApplicationPathCheckbox
+			// PortTextBox
 			// 
-			this.ApplicationPathCheckbox.AutoSize = true;
-			this.ApplicationPathCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseApplicationPath", true));
-			this.ApplicationPathCheckbox.Location = new System.Drawing.Point(12, 54);
-			this.ApplicationPathCheckbox.Name = "ApplicationPathCheckbox";
-			this.ApplicationPathCheckbox.Size = new System.Drawing.Size(73, 17);
-			this.ApplicationPathCheckbox.TabIndex = 12;
-			this.ApplicationPathCheckbox.Text = "App Path:";
-			this.ApplicationPathCheckbox.UseVisualStyleBackColor = true;
-			// 
-			// AndroidDeviceReadyTimeoutPicker
-			// 
-			this.AndroidDeviceReadyTimeoutPicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.modelBindingSource, "AndroidDeviceReadyTimeout", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N0"));
-			this.AndroidDeviceReadyTimeoutPicker.Location = new System.Drawing.Point(152, 72);
-			this.AndroidDeviceReadyTimeoutPicker.Maximum = new decimal(new int[] {
+			this.PortTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.modelBindingSource, "Port", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.PortTextBox.Location = new System.Drawing.Point(238, 31);
+			this.PortTextBox.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-			this.AndroidDeviceReadyTimeoutPicker.Name = "AndroidDeviceReadyTimeoutPicker";
-			this.AndroidDeviceReadyTimeoutPicker.Size = new System.Drawing.Size(56, 20);
-			this.AndroidDeviceReadyTimeoutPicker.TabIndex = 14;
-			this.AndroidDeviceReadyTimeoutPicker.Value = global::Appium.Properties.Settings.Default.AndroidDeviceReadyTimeout;
+			this.PortTextBox.Name = "PortTextBox";
+			this.PortTextBox.Size = new System.Drawing.Size(56, 20);
+			this.PortTextBox.TabIndex = 4;
 			// 
-			// WaitForAndroidActivityTextBox
+			// IPAddressTextBox
 			// 
-			this.WaitForAndroidActivityTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "AndroidWaitActivity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.WaitForAndroidActivityTextBox.Location = new System.Drawing.Point(307, 46);
-			this.WaitForAndroidActivityTextBox.Name = "WaitForAndroidActivityTextBox";
-			this.WaitForAndroidActivityTextBox.Size = new System.Drawing.Size(139, 20);
-			this.WaitForAndroidActivityTextBox.TabIndex = 7;
-			this.WaitForAndroidActivityTextBox.Text = global::Appium.Properties.Settings.Default.AndroidWaitActivity;
-			// 
-			// LaunchAVDCheckbox
-			// 
-			this.LaunchAVDCheckbox.AutoSize = true;
-			this.LaunchAVDCheckbox.Checked = global::Appium.Properties.Settings.Default.LaunchAVD;
-			this.LaunchAVDCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "LaunchAVD", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.LaunchAVDCheckbox.Location = new System.Drawing.Point(8, 48);
-			this.LaunchAVDCheckbox.Name = "LaunchAVDCheckbox";
-			this.LaunchAVDCheckbox.Size = new System.Drawing.Size(90, 17);
-			this.LaunchAVDCheckbox.TabIndex = 4;
-			this.LaunchAVDCheckbox.Text = "Launch AVD:";
-			this.LaunchAVDCheckbox.UseVisualStyleBackColor = true;
-			// 
-			// ApplicationPathTextBox
-			// 
-			this.ApplicationPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "ApplicationPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.ApplicationPathTextBox.Location = new System.Drawing.Point(86, 52);
-			this.ApplicationPathTextBox.Name = "ApplicationPathTextBox";
-			this.ApplicationPathTextBox.Size = new System.Drawing.Size(215, 20);
-			this.ApplicationPathTextBox.TabIndex = 8;
-			this.ApplicationPathTextBox.Text = global::Appium.Properties.Settings.Default.ApplicationPath;
-			// 
-			// modelBindingSource
-			// 
-			this.modelBindingSource.DataSource = typeof(Appium.MainWindow.Model);
+			this.IPAddressTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "IPAddress", true));
+			this.IPAddressTextBox.Location = new System.Drawing.Point(98, 30);
+			this.IPAddressTextBox.Multiline = true;
+			this.IPAddressTextBox.Name = "IPAddressTextBox";
+			this.IPAddressTextBox.Size = new System.Drawing.Size(74, 20);
+			this.IPAddressTextBox.TabIndex = 2;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(486, 208);
+			this.ClientSize = new System.Drawing.Size(520, 221);
 			this.Controls.Add(this.AndroidGroupBox);
 			this.Controls.Add(this.ApplicationPathCheckbox);
 			this.Controls.Add(this.UseRemoteServerCheckbox);
@@ -388,6 +378,7 @@
 			this.Controls.Add(this.IPAddressTextBox);
 			this.Controls.Add(this.IPAddressLabel);
 			this.Controls.Add(this.MainMenu);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.MainMenu;
 			this.Name = "MainForm";
@@ -397,48 +388,48 @@
 			this.MainMenu.PerformLayout();
 			this.StatusBar.ResumeLayout(false);
 			this.StatusBar.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).EndInit();
 			this.AndroidGroupBox.ResumeLayout(false);
 			this.AndroidGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        public System.Windows.Forms.Label IPAddressLabel;
-        public System.Windows.Forms.TextBox IPAddressTextBox;
-        public System.Windows.Forms.Label PortLabel;
-        public System.Windows.Forms.NumericUpDown PortTextBox;
-        public System.Windows.Forms.MenuStrip MainMenu;
-        public System.Windows.Forms.ToolStripMenuItem FileMenu;
-        public System.Windows.Forms.ToolStripMenuItem FileMenuExitItem;
-        public System.Windows.Forms.Button LaunchButton;
-        public System.Windows.Forms.StatusStrip StatusBar;
-        public System.Windows.Forms.ToolStripStatusLabel StatusBarText;
-        public System.Windows.Forms.TextBox ApplicationPathTextBox;
-        public System.Windows.Forms.Label AppPathLabel;
-        public System.Windows.Forms.Button ApplicationPathBrowseButton;
-        public System.Windows.Forms.CheckBox UseRemoteServerCheckbox;
-        public System.Windows.Forms.CheckBox ApplicationPathCheckbox;
-        public System.Windows.Forms.GroupBox AndroidGroupBox;
-        public System.Windows.Forms.CheckBox AndroidPackageCheckbox;
-        public System.Windows.Forms.TextBox AndroidActivityTextBox;
-        public System.Windows.Forms.CheckBox AndroidActivityCheckbox;
-        public System.Windows.Forms.TextBox AndroidPackageTextBox;
-        public System.Windows.Forms.ComboBox LaunchAVDComboBox;
-        public System.Windows.Forms.TextBox WaitForAndroidActivityTextBox;
-        public System.Windows.Forms.CheckBox WaitForAndroidActivityCheckbox;
-        public System.Windows.Forms.CheckBox LaunchAVDCheckbox;
-        public System.Windows.Forms.ToolStripMenuItem FileMenuPreferencesItem;
-        public System.Windows.Forms.CheckBox AndroidDeviceReadyTimeoutCheckbox;
-        public System.Windows.Forms.NumericUpDown AndroidDeviceReadyTimeoutPicker;
-        public System.Windows.Forms.CheckBox AndroidFullResetCheckbox;
-        private System.Windows.Forms.ToolStripMenuItem FileMenuInspectorItem;
+		public System.Windows.Forms.Label IPAddressLabel;
+		public System.Windows.Forms.TextBox IPAddressTextBox;
+		public System.Windows.Forms.Label PortLabel;
+		public System.Windows.Forms.NumericUpDown PortTextBox;
+		public System.Windows.Forms.MenuStrip MainMenu;
+		public System.Windows.Forms.ToolStripMenuItem FileMenu;
+		public System.Windows.Forms.ToolStripMenuItem FileMenuExitItem;
+		public System.Windows.Forms.Button LaunchButton;
+		public System.Windows.Forms.StatusStrip StatusBar;
+		public System.Windows.Forms.ToolStripStatusLabel StatusBarText;
+		public System.Windows.Forms.TextBox ApplicationPathTextBox;
+		public System.Windows.Forms.Label AppPathLabel;
+		public System.Windows.Forms.Button ApplicationPathBrowseButton;
+		public System.Windows.Forms.CheckBox UseRemoteServerCheckbox;
+		public System.Windows.Forms.CheckBox ApplicationPathCheckbox;
+		public System.Windows.Forms.GroupBox AndroidGroupBox;
+		public System.Windows.Forms.CheckBox AndroidPackageCheckbox;
+		public System.Windows.Forms.TextBox AndroidActivityTextBox;
+		public System.Windows.Forms.CheckBox AndroidActivityCheckbox;
+		public System.Windows.Forms.TextBox AndroidPackageTextBox;
+		public System.Windows.Forms.ComboBox LaunchAVDComboBox;
+		public System.Windows.Forms.TextBox WaitForAndroidActivityTextBox;
+		public System.Windows.Forms.CheckBox WaitForAndroidActivityCheckbox;
+		public System.Windows.Forms.CheckBox LaunchAVDCheckbox;
+		public System.Windows.Forms.ToolStripMenuItem FileMenuPreferencesItem;
+		public System.Windows.Forms.CheckBox AndroidDeviceReadyTimeoutCheckbox;
+		public System.Windows.Forms.NumericUpDown AndroidDeviceReadyTimeoutPicker;
+		public System.Windows.Forms.CheckBox AndroidFullResetCheckbox;
+		private System.Windows.Forms.ToolStripMenuItem FileMenuInspectorItem;
 		private System.Windows.Forms.BindingSource modelBindingSource;
-    }
+	}
 }
 

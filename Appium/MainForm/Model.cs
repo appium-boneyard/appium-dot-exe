@@ -120,7 +120,7 @@ namespace Appium.MainWindow
 			get { return _Settings.LaunchAVD; }
 			set { _Settings.LaunchAVD = value; }
 		}
-
+		
 		/// <summary>sets whether the launch button is enabled</summary>
 		public bool LaunchButtonEnabled
 		{
@@ -203,6 +203,9 @@ namespace Appium.MainWindow
 			_Settings.Save();
 		}
 
+		/// <summary>
+		/// Opens window with preferences options
+		/// </summary>
 		public void OpenPreferences()
 		{
 			PreferencesPModel preferences = new PreferencesPModel(_Settings, new PreferencesForm());

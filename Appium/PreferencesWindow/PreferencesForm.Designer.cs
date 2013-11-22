@@ -120,7 +120,6 @@
 			this.NodeJSDebugPortPicker.Name = "NodeJSDebugPortPicker";
 			this.NodeJSDebugPortPicker.Size = new System.Drawing.Size(59, 20);
 			this.NodeJSDebugPortPicker.TabIndex = 7;
-			this.NodeJSDebugPortPicker.Value = global::Appium.Properties.Settings.Default.NodeJSDebugPort;
 			// 
 			// BreakOnApplicationStartCheckbox
 			// 

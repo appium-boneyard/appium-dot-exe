@@ -30,9 +30,6 @@ namespace Appium.MainWindow
         /// <summary>process for the appium server</summary>
         private Process _AppiumServerProcess;
 
-        /// <summary>the preferences window</summary>
-        private PreferencesWindow.PreferencesForm _PreferencesWindow;
-
         /// <summary>the inspector window</summary>
         private InspectorWindow.InpsectorForm _InspectorWindow;
 
@@ -112,7 +109,14 @@ namespace Appium.MainWindow
             }
             if (!this._InspectorWindow.Visible)
             {
-                this._InspectorWindow.Show();
+				if (this._InspectorWindow.Connect())
+				{
+					this._InspectorWindow.Show();
+				}
+				else
+				{
+					MessageBox.Show(String.Format("Failed to connect to appium: {0}", this._InspectorWindow.LastMessage));
+				}
             }
         }
 
@@ -300,11 +304,5 @@ namespace Appium.MainWindow
             this._Model.AVDs = avds.ToArray();
         }
         #endregion
-
-		private void LaunchAVDComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-		}
-
-    }
+	}
 }
