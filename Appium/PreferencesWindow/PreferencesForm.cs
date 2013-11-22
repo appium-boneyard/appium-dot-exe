@@ -3,18 +3,12 @@ using System.Windows.Forms;
 
 namespace Appium.PreferencesWindow
 {
-    public partial class PreferencesForm : Form
+    public partial class PreferencesForm : Form, IPreferencesView
     {
-        /// <summary>model</summary>
-        private MainWindow.Model _Model;
-
-        /// <summary>constructor</summary>
-        /// <param name="model">model</param>
-        public PreferencesForm(MainWindow.Model model)
-        {
-            this._Model = model;
-            InitializeComponent();
-        }
+		public PreferencesForm()
+		{
+			InitializeComponent();
+		}
 
         /// <summary>called when the browse button for external nodejs binary is clicked</summary>
         /// <param name="sender"></param>
@@ -22,9 +16,9 @@ namespace Appium.PreferencesWindow
         public void ExternalNodeJSBinaryBrowseButton_Click(object sender, System.EventArgs e)
         {
             OpenFileDialog chooseNodeJSBinaryDialog = new OpenFileDialog();
-            if (File.Exists(this._Model.ExternalNodeJSBinary))
+            if (File.Exists(this.ExternalNodeJSBinaryTextBox.Text))
             {
-                chooseNodeJSBinaryDialog.InitialDirectory = Path.GetDirectoryName(this._Model.ExternalNodeJSBinary);
+				chooseNodeJSBinaryDialog.InitialDirectory = Path.GetDirectoryName(this.ExternalNodeJSBinaryTextBox.Text);
             }
             chooseNodeJSBinaryDialog.CheckFileExists = true;
             chooseNodeJSBinaryDialog.Multiselect = false;
@@ -33,7 +27,7 @@ namespace Appium.PreferencesWindow
             var result = chooseNodeJSBinaryDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                this._Model.ExternalNodeJSBinary = chooseNodeJSBinaryDialog.FileName;
+				this.ExternalNodeJSBinaryTextBox.Text = chooseNodeJSBinaryDialog.FileName;
             }
         }
 
@@ -43,9 +37,9 @@ namespace Appium.PreferencesWindow
         public void ExternalAppiumPackageBrowse_Click(object sender, System.EventArgs e)
         {
             OpenFileDialog chooseAppiumPackageDialog = new OpenFileDialog();
-            if (Directory.Exists(this._Model.ExternalAppiumPackage))
+            if (Directory.Exists(this.ExternalAppiumPackageTextBox.Text))
             {
-                chooseAppiumPackageDialog.InitialDirectory = this._Model.ExternalAppiumPackage;
+				chooseAppiumPackageDialog.InitialDirectory = this.ExternalAppiumPackageTextBox.Text;
             }
             chooseAppiumPackageDialog.CheckPathExists = true;
             chooseAppiumPackageDialog.Multiselect = false;
@@ -53,8 +47,32 @@ namespace Appium.PreferencesWindow
             var result = chooseAppiumPackageDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                this._Model.ExternalAppiumPackage = chooseAppiumPackageDialog.FileName;
+				this.ExternalAppiumPackageTextBox.Text = chooseAppiumPackageDialog.FileName;
             }
         }
-    }
+
+		private void ResetApplicationCheckbox_CheckedChanged(object sender, System.EventArgs e)
+		{
+
+		}
+
+		private void CheckForUpdatesCheckbox_CheckedChanged(object sender, System.EventArgs e)
+		{
+
+		}
+
+		public void BindPresentationModel(PreferencesPModel pModel)
+		{
+			if (preferencesPModelBindingSource.Count > 0)
+				preferencesPModelBindingSource.Clear();
+
+			preferencesPModelBindingSource.Add(pModel); 
+		}
+
+		public void Open()
+		{
+			if (!this.Visible) 
+				this.Show();
+		}
+	}
 }

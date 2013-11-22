@@ -20,7 +20,7 @@
     <Setting Name="KeepArtifacts" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="NodeJSDebugPort" Type="System.Decimal" Scope="User">
+    <Setting Name="NodeJSDebugPort" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">5858</Value>
     </Setting>
     <Setting Name="PrelaunchApplication" Type="System.Boolean" Scope="User">
@@ -44,7 +44,7 @@
     <Setting Name="ServerAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
-    <Setting Name="ServerPort" Type="System.Decimal" Scope="User">
+    <Setting Name="ServerPort" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">4723</Value>
     </Setting>
     <Setting Name="UseApplicationPath" Type="System.Boolean" Scope="User">
@@ -83,7 +83,7 @@
     <Setting Name="PerformFullAndroidReset" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AndroidDeviceReadyTimeout" Type="System.Decimal" Scope="User">
+    <Setting Name="AndroidDeviceReadyTimeout" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="UseAndroidDeviceReadyTimeout" Type="System.Boolean" Scope="User">
