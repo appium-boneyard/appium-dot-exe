@@ -209,7 +209,7 @@ namespace Appium.MainWindow
             var result = appPathDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                this._Model.ApplicationPath = appPathDialog.FileName;
+				_Model.SetupNewApplicationPath(appPathDialog.FileName);
             }
         }
         #endregion
