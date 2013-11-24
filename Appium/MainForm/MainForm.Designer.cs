@@ -41,7 +41,6 @@
 			this.StatusBar = new System.Windows.Forms.StatusStrip();
 			this.StatusBarText = new System.Windows.Forms.ToolStripStatusLabel();
 			this.ApplicationPathTextBox = new System.Windows.Forms.TextBox();
-			this.modelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.AppPathLabel = new System.Windows.Forms.Label();
 			this.ApplicationPathBrowseButton = new System.Windows.Forms.Button();
 			this.UseRemoteServerCheckbox = new System.Windows.Forms.CheckBox();
@@ -60,12 +59,13 @@
 			this.AndroidPackageCheckbox = new System.Windows.Forms.CheckBox();
 			this.PortTextBox = new System.Windows.Forms.NumericUpDown();
 			this.IPAddressTextBox = new System.Windows.Forms.TextBox();
+			this.modelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.MainMenu.SuspendLayout();
 			this.StatusBar.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).BeginInit();
 			this.AndroidGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// IPAddressLabel
@@ -109,21 +109,21 @@
 			// FileMenuInspectorItem
 			// 
 			this.FileMenuInspectorItem.Name = "FileMenuInspectorItem";
-			this.FileMenuInspectorItem.Size = new System.Drawing.Size(152, 22);
+			this.FileMenuInspectorItem.Size = new System.Drawing.Size(135, 22);
 			this.FileMenuInspectorItem.Text = "Inspector";
 			this.FileMenuInspectorItem.Click += new System.EventHandler(this.FileMenuInspectorItem_Click);
 			// 
 			// FileMenuPreferencesItem
 			// 
 			this.FileMenuPreferencesItem.Name = "FileMenuPreferencesItem";
-			this.FileMenuPreferencesItem.Size = new System.Drawing.Size(152, 22);
+			this.FileMenuPreferencesItem.Size = new System.Drawing.Size(135, 22);
 			this.FileMenuPreferencesItem.Text = "Preferences";
 			this.FileMenuPreferencesItem.Click += new System.EventHandler(this.FileMenuPreferencesItem_Click);
 			// 
 			// FileMenuExitItem
 			// 
 			this.FileMenuExitItem.Name = "FileMenuExitItem";
-			this.FileMenuExitItem.Size = new System.Drawing.Size(152, 22);
+			this.FileMenuExitItem.Size = new System.Drawing.Size(135, 22);
 			this.FileMenuExitItem.Text = "Exit";
 			this.FileMenuExitItem.Click += new System.EventHandler(this.FileMenuExitItem_Click);
 			// 
@@ -161,10 +161,6 @@
 			this.ApplicationPathTextBox.Size = new System.Drawing.Size(215, 20);
 			this.ApplicationPathTextBox.TabIndex = 8;
 			// 
-			// modelBindingSource
-			// 
-			this.modelBindingSource.DataSource = typeof(Appium.MainWindow.Model);
-			// 
 			// AppPathLabel
 			// 
 			this.AppPathLabel.AutoSize = true;
@@ -197,7 +193,7 @@
 			// ApplicationPathCheckbox
 			// 
 			this.ApplicationPathCheckbox.AutoSize = true;
-			this.ApplicationPathCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseApplicationPath", true));
+			this.ApplicationPathCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.modelBindingSource, "UseApplicationPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.ApplicationPathCheckbox.Location = new System.Drawing.Point(20, 59);
 			this.ApplicationPathCheckbox.Name = "ApplicationPathCheckbox";
 			this.ApplicationPathCheckbox.Size = new System.Drawing.Size(73, 17);
@@ -360,6 +356,10 @@
 			this.IPAddressTextBox.Size = new System.Drawing.Size(74, 20);
 			this.IPAddressTextBox.TabIndex = 2;
 			// 
+			// modelBindingSource
+			// 
+			this.modelBindingSource.DataSource = typeof(Appium.MainWindow.Model);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -388,11 +388,11 @@
 			this.MainMenu.PerformLayout();
 			this.StatusBar.ResumeLayout(false);
 			this.StatusBar.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).EndInit();
 			this.AndroidGroupBox.ResumeLayout(false);
 			this.AndroidGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AndroidDeviceReadyTimeoutPicker)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.PortTextBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using Appium.Models;
 using Appium.PreferencesWindow;
+using System.ComponentModel;
 
 namespace Appium.MainWindow
 {
-	public class Model
+	public class Model : INotifyPropertyChanged
 	{
 		/// <summary>constructor</summary>
 		/// <param name="form">main form</param>
@@ -23,6 +24,16 @@ namespace Appium.MainWindow
 
 		/// <summary>main form</summary>
 		public MainForm _View;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged(String arg)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(arg));
+			}
+		}
 
 		#region Server Settings
 		/// <summary>android activity</summary>
@@ -104,7 +115,11 @@ namespace Appium.MainWindow
 		public string ApplicationPath
 		{
 			get { return _Settings.ApplicationPath; }
-			set { _Settings.ApplicationPath = value; }
+			set 
+			{ 
+				_Settings.ApplicationPath = value;
+				NotifyPropertyChanged("ApplicationPath");
+			}
 		}
 
 		/// <summary>ip address to listen on</summary>
@@ -181,7 +196,11 @@ namespace Appium.MainWindow
 		public bool UseApplicationPath
 		{
 			get { return _Settings.UseApplicationPath; }
-			set { _Settings.UseApplicationPath = value; }
+			set 
+			{ 
+				_Settings.UseApplicationPath = value;
+				NotifyPropertyChanged("UseApplicationPath");
+			}
 		}
 
 		/// <summary>true if a remote server will be used</summary>
@@ -210,6 +229,16 @@ namespace Appium.MainWindow
 		{
 			PreferencesPModel preferences = new PreferencesPModel(_Settings, new PreferencesForm());
 			preferences.OpenWindow();
+		}
+
+		/// <summary>
+		/// Sets up new application path with automatic check of UseApplicationPath as well.
+		/// </summary>
+		/// <param name="appPath">Absolute path to the application</param>
+		public void SetupNewApplicationPath(string appPath)
+		{
+			ApplicationPath = appPath;
+			UseApplicationPath = true;
 		}
 	}
 }
