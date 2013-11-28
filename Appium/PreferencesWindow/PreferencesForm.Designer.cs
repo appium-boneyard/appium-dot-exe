@@ -54,6 +54,9 @@
 			// 
 			// DeveloperSettingsGroupBox
 			// 
+			this.DeveloperSettingsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.DeveloperSettingsGroupBox.Controls.Add(this.ExternalAppiumPackageBrowse);
 			this.DeveloperSettingsGroupBox.Controls.Add(this.ExternalNodeJSBinaryBrowseButton);
 			this.DeveloperSettingsGroupBox.Controls.Add(this.ExternalAppiumPackageTextBox);
@@ -74,6 +77,7 @@
 			// 
 			// ExternalAppiumPackageBrowse
 			// 
+			this.ExternalAppiumPackageBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ExternalAppiumPackageBrowse.Location = new System.Drawing.Point(356, 46);
 			this.ExternalAppiumPackageBrowse.Name = "ExternalAppiumPackageBrowse";
 			this.ExternalAppiumPackageBrowse.Size = new System.Drawing.Size(75, 23);
@@ -84,6 +88,7 @@
 			// 
 			// ExternalNodeJSBinaryBrowseButton
 			// 
+			this.ExternalNodeJSBinaryBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ExternalNodeJSBinaryBrowseButton.Location = new System.Drawing.Point(356, 17);
 			this.ExternalNodeJSBinaryBrowseButton.Name = "ExternalNodeJSBinaryBrowseButton";
 			this.ExternalNodeJSBinaryBrowseButton.Size = new System.Drawing.Size(75, 23);
@@ -94,7 +99,9 @@
 			// 
 			// ExternalAppiumPackageTextBox
 			// 
-			this.ExternalAppiumPackageTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.preferencesPModelBindingSource, "UseExternalAppiumPackage", true));
+			this.ExternalAppiumPackageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ExternalAppiumPackageTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.preferencesPModelBindingSource, "ExternalAppiumPackage", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.ExternalAppiumPackageTextBox.Location = new System.Drawing.Point(183, 45);
 			this.ExternalAppiumPackageTextBox.Name = "ExternalAppiumPackageTextBox";
 			this.ExternalAppiumPackageTextBox.Size = new System.Drawing.Size(167, 20);
@@ -102,7 +109,9 @@
 			// 
 			// ExternalNodeJSBinaryTextBox
 			// 
-			this.ExternalNodeJSBinaryTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.preferencesPModelBindingSource, "ExternalNodeJSBinary", true));
+			this.ExternalNodeJSBinaryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ExternalNodeJSBinaryTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.preferencesPModelBindingSource, "ExternalNodeJSBinary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.ExternalNodeJSBinaryTextBox.Location = new System.Drawing.Point(182, 19);
 			this.ExternalNodeJSBinaryTextBox.Name = "ExternalNodeJSBinaryTextBox";
 			this.ExternalNodeJSBinaryTextBox.Size = new System.Drawing.Size(167, 20);
@@ -124,7 +133,7 @@
 			// BreakOnApplicationStartCheckbox
 			// 
 			this.BreakOnApplicationStartCheckbox.AutoSize = true;
-			this.BreakOnApplicationStartCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "BreakOnApplicationStart", true));
+			this.BreakOnApplicationStartCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "BreakOnApplicationStart", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.BreakOnApplicationStartCheckbox.Location = new System.Drawing.Point(6, 96);
 			this.BreakOnApplicationStartCheckbox.Name = "BreakOnApplicationStartCheckbox";
 			this.BreakOnApplicationStartCheckbox.Size = new System.Drawing.Size(151, 17);
@@ -135,7 +144,7 @@
 			// NodeJSDebugPortCheckbox
 			// 
 			this.NodeJSDebugPortCheckbox.AutoSize = true;
-			this.NodeJSDebugPortCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "UseNodeJSDebugging", true));
+			this.NodeJSDebugPortCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "UseNodeJSDebugging", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.NodeJSDebugPortCheckbox.Location = new System.Drawing.Point(6, 73);
 			this.NodeJSDebugPortCheckbox.Name = "NodeJSDebugPortCheckbox";
 			this.NodeJSDebugPortCheckbox.Size = new System.Drawing.Size(121, 17);
@@ -146,8 +155,8 @@
 			// UseExternalAppiumPackageCheckbox
 			// 
 			this.UseExternalAppiumPackageCheckbox.AutoSize = true;
-			this.UseExternalAppiumPackageCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "UseExternalAppiumPackage", true));
-			this.UseExternalAppiumPackageCheckbox.Location = new System.Drawing.Point(6, 50);
+			this.UseExternalAppiumPackageCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "UseExternalAppiumPackage", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.UseExternalAppiumPackageCheckbox.Location = new System.Drawing.Point(6, 47);
 			this.UseExternalAppiumPackageCheckbox.Name = "UseExternalAppiumPackageCheckbox";
 			this.UseExternalAppiumPackageCheckbox.Size = new System.Drawing.Size(170, 17);
 			this.UseExternalAppiumPackageCheckbox.TabIndex = 8;
@@ -157,7 +166,7 @@
 			// UseExternalNodeJSBinaryCheckbox
 			// 
 			this.UseExternalNodeJSBinaryCheckbox.AutoSize = true;
-			this.UseExternalNodeJSBinaryCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "UseExternalNodeJSBinary", true));
+			this.UseExternalNodeJSBinaryCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "UseExternalNodeJSBinary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.UseExternalNodeJSBinaryCheckbox.Location = new System.Drawing.Point(6, 21);
 			this.UseExternalNodeJSBinaryCheckbox.Name = "UseExternalNodeJSBinaryCheckbox";
 			this.UseExternalNodeJSBinaryCheckbox.Size = new System.Drawing.Size(159, 17);
@@ -179,7 +188,7 @@
 			// PreLaunchApplicationCheckbox
 			// 
 			this.PreLaunchApplicationCheckbox.AutoSize = true;
-			this.PreLaunchApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "PrelaunchApplication", true));
+			this.PreLaunchApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "PrelaunchApplication", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.PreLaunchApplicationCheckbox.Location = new System.Drawing.Point(12, 105);
 			this.PreLaunchApplicationCheckbox.Name = "PreLaunchApplicationCheckbox";
 			this.PreLaunchApplicationCheckbox.Size = new System.Drawing.Size(129, 17);
@@ -190,7 +199,7 @@
 			// ResetApplicationCheckbox
 			// 
 			this.ResetApplicationCheckbox.AutoSize = true;
-			this.ResetApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "ResetApplicationState", true));
+			this.ResetApplicationCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "ResetApplicationState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.ResetApplicationCheckbox.Location = new System.Drawing.Point(12, 82);
 			this.ResetApplicationCheckbox.Name = "ResetApplicationCheckbox";
 			this.ResetApplicationCheckbox.Size = new System.Drawing.Size(230, 17);
@@ -202,7 +211,7 @@
 			// KeepArtifactsCheckbox
 			// 
 			this.KeepArtifactsCheckbox.AutoSize = true;
-			this.KeepArtifactsCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "KeepArtifacts", true));
+			this.KeepArtifactsCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "KeepArtifacts", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.KeepArtifactsCheckbox.Location = new System.Drawing.Point(13, 59);
 			this.KeepArtifactsCheckbox.Name = "KeepArtifactsCheckbox";
 			this.KeepArtifactsCheckbox.Size = new System.Drawing.Size(92, 17);
@@ -213,7 +222,7 @@
 			// QuietLoggingCheckbox
 			// 
 			this.QuietLoggingCheckbox.AutoSize = true;
-			this.QuietLoggingCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "QuietLogging", true));
+			this.QuietLoggingCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "QuietLogging", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.QuietLoggingCheckbox.Location = new System.Drawing.Point(12, 36);
 			this.QuietLoggingCheckbox.Name = "QuietLoggingCheckbox";
 			this.QuietLoggingCheckbox.Size = new System.Drawing.Size(92, 17);
@@ -226,7 +235,7 @@
 			this.CheckForUpdatesCheckbox.AutoSize = true;
 			this.CheckForUpdatesCheckbox.Checked = true;
 			this.CheckForUpdatesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.CheckForUpdatesCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "CheckForUpdates", true));
+			this.CheckForUpdatesCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.preferencesPModelBindingSource, "CheckForUpdates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.CheckForUpdatesCheckbox.Location = new System.Drawing.Point(13, 13);
 			this.CheckForUpdatesCheckbox.Name = "CheckForUpdatesCheckbox";
 			this.CheckForUpdatesCheckbox.Size = new System.Drawing.Size(118, 17);
