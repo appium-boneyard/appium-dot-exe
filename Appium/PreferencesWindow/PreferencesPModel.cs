@@ -99,7 +99,7 @@ namespace Appium.PreferencesWindow
 		public bool UseExternalAppiumPackage
 		{
 			get { return _Settings.UseExternalAppiumPackage; }
-			set	{ _Settings.UseExternalAppiumPackage = true; }
+			set	{ _Settings.UseExternalAppiumPackage = value; }
 		}
 
 		/// <summary>true if nodejs debugging will be used</summary>
