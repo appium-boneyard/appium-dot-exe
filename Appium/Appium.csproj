@@ -80,6 +80,8 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm\Model.cs" />
+    <Compile Include="Models\Inspector\INode.cs" />
+    <Compile Include="Models\Inspector\UIAutomatorNode.cs" />
     <Compile Include="Models\Server\AppiumServerArgument.cs" />
     <Compile Include="Models\AppiumServerRunner.cs" />
     <Compile Include="Models\DefaultAppiumServerSettings.cs" />
