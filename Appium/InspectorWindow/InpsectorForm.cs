@@ -7,6 +7,9 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Appium.Models.Inspector;
+using System.Drawing.Drawing2D;
 
 namespace Appium.InspectorWindow
 {
@@ -14,6 +17,9 @@ namespace Appium.InspectorWindow
 	{
 		private MainWindow.Model _Model;
 		private RemoteWebDriver _Driver;
+		private Graphics _ScreenShotGraphics;
+		private Size _OriginalScreenshotSize;
+		private const int _OutlineThickness = 3;
 
 		public string LastMessage { get; set; }
 
@@ -52,80 +58,68 @@ namespace Appium.InspectorWindow
 			DOMTreeView.Nodes.Clear();
 			_SetScreenshot();
 			string pagesource = _Driver.PageSource;
-			Node rootNode = JsonConvert.DeserializeObject<Node>(pagesource);
-			PopulateTree(rootNode, DOMTreeView.Nodes);
+			Root rootNode = JsonConvert.DeserializeObject<Root>(pagesource);
+			PopulateTree(rootNode.Hierarchy, DOMTreeView.Nodes);
 		}
 
-		private void PopulateTree(Node currentNode, TreeNodeCollection parentsNodes)
+		private void PopulateTree(INode currentNode, TreeNodeCollection parentsNodes)
 		{
-			TreeNode newNode = new TreeNode("[ " + currentNode.Type + "] " + currentNode.Value);
+			TreeNode newNode = new TreeNode(currentNode.GetDisplayName());
 			newNode.Tag = currentNode;
 			parentsNodes.Add(newNode);
-			if (currentNode.Children != null)
+			foreach (INode child in currentNode.GetChildren())
 			{
-				foreach (Node child in currentNode.Children)
-					PopulateTree(child, newNode.Nodes);
+				PopulateTree(child, newNode.Nodes);
 			}
 		}
 
 		private void _AfterNodeSelect(object sender, TreeViewEventArgs e)
 		{
-			Node n = (Node)e.Node.Tag;
+			INode n = (INode)e.Node.Tag;
 			DetailsTextBox.Text = n.GetDetails();
+			Rectangle outlines = n.GetOutline();
+			// correct outlines rectangle to have right and bottom line of the outline in the image
+			if (outlines.Width > _OutlineThickness && outlines.Height > _OutlineThickness)
+			{
+				outlines.Width -= _OutlineThickness;
+				outlines.Height-= _OutlineThickness;
+			}
+			if (_ScreenShotGraphics == null)
+			{
+				_ScreenShotGraphics = ScreenshotPictureBox.CreateGraphics();
+			}
+			else
+			{
+				// redraw to the original screenshot
+				_ScreenShotGraphics.DrawImage(ScreenshotPictureBox.Image, 0, 0);
+			}
+			// draw rectangle
+			using (Brush b = new SolidBrush(Color.Red))
+			{
+				using (Pen p = new Pen(Color.Red, _OutlineThickness))
+				{
+					GraphicsContainer prevStateContainer = _ScreenShotGraphics.BeginContainer();
+					_ScreenShotGraphics.ScaleTransform((float)ScreenshotPictureBox.Image.Width/(float)_OriginalScreenshotSize.Width,
+						(float)ScreenshotPictureBox.Image.Height/(float)_OriginalScreenshotSize.Height);
+					_ScreenShotGraphics.DrawRectangle(p, outlines);
+					_ScreenShotGraphics.EndContainer(prevStateContainer);
+				}
+			}
 		}
 
 		private void _SetScreenshot()
 		{
 			Image image = Image.FromStream(new MemoryStream(((ITakesScreenshot)_Driver).GetScreenshot().AsByteArray));
+			_OriginalScreenshotSize = new Size(image.Width, image.Height);
 			image = image.GetThumbnailImage(240, 320, null, IntPtr.Zero);
 			ScreenshotPictureBox.Image = image;
 		}
 
-		public class Node
+		public class Root
 		{
-			public string Name;
-			public string Type;
-			public string Label;
-			public string Value;
-			public bool Enabled;
-			public bool Valid;
-			public RectInfo Rect;
-			public string Dom;
-			public bool Visible;
-			public Node[] Children;
-
-			public class RectInfo
-			{
-				public OriginInfo Origin;
-				public SizeInfo Size;
-
-				public class OriginInfo
-				{
-					public float X;
-					public float Y;
-				}
-				public class SizeInfo
-				{
-					public float Width;
-					public float Height;
-				}
-			}
-
-			public string GetDetails()
-			{
-				StringBuilder sb = new StringBuilder();
-				sb.AppendLine("Name: " + this.Name ?? "");
-				sb.AppendLine("Type: " + this.Type ?? "");
-				sb.AppendLine("Label: " + this.Label ?? "");
-				sb.AppendLine("Value: " + this.Value ?? "");
-				sb.AppendLine("Enabled: " + (this.Enabled ? "true" : "false"));
-				sb.AppendLine("Visible: " + (this.Visible ? "true" : "false"));
-				sb.AppendLine("Valid: " + (this.Valid ? "true" : "false"));
-				sb.AppendLine("Location: " + (this.Rect != null ? "(" + Rect.Origin.X.ToString() + ", " + Rect.Origin.Y.ToString() + ")" : ""));
-				sb.AppendLine("Size: " + (this.Rect != null ? "(" + Rect.Size.Width.ToString() + ", " + Rect.Size.Height.ToString() + ")" : ""));
-				return sb.ToString();
-			}
+			public UIAutomatorNode Hierarchy;
 		}
+
 
 		/// <summary>overrides remotewebdriver in order to allow screenshots</summary>
 		public class ScreenshotRemoteWebDriver : RemoteWebDriver, ITakesScreenshot
