@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Appium.Models.Inspector;
+using System.Drawing.Drawing2D;
 
 namespace Appium.InspectorWindow
 {
@@ -16,6 +17,9 @@ namespace Appium.InspectorWindow
 	{
 		private MainWindow.Model _Model;
 		private RemoteWebDriver _Driver;
+		private Graphics _ScreenShotGraphics;
+		private Size _OriginalScreenshotSize;
+		private const int _OutlineThickness = 3;
 
 		public string LastMessage { get; set; }
 
@@ -73,11 +77,40 @@ namespace Appium.InspectorWindow
 		{
 			INode n = (INode)e.Node.Tag;
 			DetailsTextBox.Text = n.GetDetails();
+			Rectangle outlines = n.GetOutline();
+			// correct outlines rectangle to have right and bottom line of the outline in the image
+			if (outlines.Width > _OutlineThickness && outlines.Height > _OutlineThickness)
+			{
+				outlines.Width -= _OutlineThickness;
+				outlines.Height-= _OutlineThickness;
+			}
+			if (_ScreenShotGraphics == null)
+			{
+				_ScreenShotGraphics = ScreenshotPictureBox.CreateGraphics();
+			}
+			else
+			{
+				// redraw to the original screenshot
+				_ScreenShotGraphics.DrawImage(ScreenshotPictureBox.Image, 0, 0);
+			}
+			// draw rectangle
+			using (Brush b = new SolidBrush(Color.Red))
+			{
+				using (Pen p = new Pen(Color.Red, _OutlineThickness))
+				{
+					GraphicsContainer prevStateContainer = _ScreenShotGraphics.BeginContainer();
+					_ScreenShotGraphics.ScaleTransform((float)ScreenshotPictureBox.Image.Width/(float)_OriginalScreenshotSize.Width,
+						(float)ScreenshotPictureBox.Image.Height/(float)_OriginalScreenshotSize.Height);
+					_ScreenShotGraphics.DrawRectangle(p, outlines);
+					_ScreenShotGraphics.EndContainer(prevStateContainer);
+				}
+			}
 		}
 
 		private void _SetScreenshot()
 		{
 			Image image = Image.FromStream(new MemoryStream(((ITakesScreenshot)_Driver).GetScreenshot().AsByteArray));
+			_OriginalScreenshotSize = new Size(image.Width, image.Height);
 			image = image.GetThumbnailImage(240, 320, null, IntPtr.Zero);
 			ScreenshotPictureBox.Image = image;
 		}
@@ -87,7 +120,7 @@ namespace Appium.InspectorWindow
 			public UIAutomatorNode Hierarchy;
 		}
 
-			
+
 		/// <summary>overrides remotewebdriver in order to allow screenshots</summary>
 		public class ScreenshotRemoteWebDriver : RemoteWebDriver, ITakesScreenshot
 		{

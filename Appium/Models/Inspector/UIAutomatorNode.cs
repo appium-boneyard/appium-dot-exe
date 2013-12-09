@@ -27,12 +27,11 @@ namespace Appium.Models.Inspector
 		public string Package;
 		[JsonProperty(PropertyName = "@enabled")]
 		public bool IsEnabled;
-
-		public bool IsValid;
-		//public RectInfo Rect;
-		public string Rect;
-		public string Dom;
-		public bool IsVisible;
+		[JsonProperty(PropertyName = "@selected")]
+		public bool IsSelected;
+		[JsonProperty(PropertyName = "@focused")]
+		public bool IsFocused;
+		
 		/// <summary>
 		/// Only for parsing purposes, use <see cref="UIAutomatorNode.Children" /> instead.
 		/// </summary>
@@ -65,6 +64,34 @@ namespace Appium.Models.Inspector
 			}
 		}
 
+		private Lazy<Rectangle> _Outline;
+
+		public UIAutomatorNode()
+		{
+			_Outline = new Lazy<Rectangle>(() =>
+			{
+				if (String.IsNullOrEmpty(Bounds))
+					return new Rectangle();
+
+				// parse bounds [0,0][480,800]
+				Regex reg = new Regex(@"\[(\d+),(\d+)\]");
+				MatchCollection mc = reg.Matches(Bounds);
+
+				// failed to match bounds definition
+				if (mc.Count != 2)
+					return new Rectangle();
+
+				// we have valid outline definition
+				Point topLeft = new Point(Int32.Parse(mc[0].Groups[1].Value),
+					Int32.Parse(mc[0].Groups[2].Value));
+				Point bottomRight = new Point(Int32.Parse(mc[1].Groups[1].Value),
+					Int32.Parse(mc[1].Groups[2].Value));
+				
+				return new Rectangle(topLeft, new Size(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y));
+			});
+
+		}
+
 		/// <summary>
 		/// Returns name to be displayed in the tree view
 		/// </summary>
@@ -82,10 +109,12 @@ namespace Appium.Models.Inspector
 			sb.AppendLine("class: " + Class ?? "");
 			sb.AppendLine("package: " + Package ?? "");
 			sb.AppendLine("enabled: " + IsEnabled.ToString().ToLower());
-			sb.AppendLine("visible: " + IsVisible.ToString().ToLower());
-			sb.AppendLine("valid: " + IsValid.ToString().ToLower());
-			//sb.AppendLine("location: " + (this.Rect != null ? "(" + Rect.Origin.X.ToString() + ", " + Rect.Origin.Y.ToString() + ")" : ""));
-			//sb.AppendLine("size: " + (this.Rect != null ? "(" + Rect.Size.Width.ToString() + ", " + Rect.Size.Height.ToString() + ")" : ""));
+			sb.AppendLine("focused: " + IsFocused.ToString().ToLower());
+			sb.AppendLine("selected: " + IsSelected.ToString().ToLower());
+			sb.AppendFormat("location: [{0},{1}]", _Outline.Value.Location.X, _Outline.Value.Location.Y);
+			sb.AppendLine();
+			sb.AppendFormat("size: {0}x{1}", _Outline.Value.Width, _Outline.Value.Height);
+			sb.AppendLine();
 			return sb.ToString();
 		}
 
@@ -96,7 +125,7 @@ namespace Appium.Models.Inspector
 
 		public System.Drawing.Rectangle GetOutline()
 		{
-			throw new NotImplementedException();
+			return _Outline.Value;
 		}
 	}
 }

@@ -40,21 +40,21 @@
 			// 
 			this.DOMTreeView.Location = new System.Drawing.Point(13, 13);
 			this.DOMTreeView.Name = "DOMTreeView";
-			this.DOMTreeView.Size = new System.Drawing.Size(298, 490);
+			this.DOMTreeView.Size = new System.Drawing.Size(329, 501);
 			this.DOMTreeView.TabIndex = 0;
 			this.DOMTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this._AfterNodeSelect);
 			// 
 			// DetailsTextBox
 			// 
-			this.DetailsTextBox.Location = new System.Drawing.Point(317, 367);
+			this.DetailsTextBox.Location = new System.Drawing.Point(348, 368);
 			this.DetailsTextBox.Multiline = true;
 			this.DetailsTextBox.Name = "DetailsTextBox";
-			this.DetailsTextBox.Size = new System.Drawing.Size(271, 136);
+			this.DetailsTextBox.Size = new System.Drawing.Size(240, 146);
 			this.DetailsTextBox.TabIndex = 1;
 			// 
 			// RefreshButton
 			// 
-			this.RefreshButton.Location = new System.Drawing.Point(317, 13);
+			this.RefreshButton.Location = new System.Drawing.Point(348, 13);
 			this.RefreshButton.Name = "RefreshButton";
 			this.RefreshButton.Size = new System.Drawing.Size(75, 23);
 			this.RefreshButton.TabIndex = 2;
@@ -64,9 +64,9 @@
 			// 
 			// ScreenshotPictureBox
 			// 
-			this.ScreenshotPictureBox.Location = new System.Drawing.Point(317, 41);
+			this.ScreenshotPictureBox.Location = new System.Drawing.Point(348, 42);
 			this.ScreenshotPictureBox.Name = "ScreenshotPictureBox";
-			this.ScreenshotPictureBox.Size = new System.Drawing.Size(271, 320);
+			this.ScreenshotPictureBox.Size = new System.Drawing.Size(240, 320);
 			this.ScreenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.ScreenshotPictureBox.TabIndex = 3;
 			this.ScreenshotPictureBox.TabStop = false;
