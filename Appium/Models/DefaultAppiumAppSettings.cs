@@ -1,9 +1,10 @@
 ﻿using System;
 using AutoMapper;
+using Appium.Models.Capability;
 
 namespace Appium.Models
 {
-	public class DefaultAppiumServerSettings : IAppiumServerSettings
+	public class DefaultAppiumAppSettings : IAppiumAppSettings
 	{
 		public string ApplicationPath { get; set; }
 
@@ -63,12 +64,14 @@ namespace Appium.Models
 
 		public bool UseNodeJSDebugging { get; set; }
 
+		public Device InspectorDeviceCapability { get; set; }
+
 		/// <summary>
 		/// Saves Appium Server settings into default settings file
 		/// </summary>
 		public void Save()
 		{
-			Mapper.Map<IAppiumServerSettings, Appium.Properties.Settings>(this, Appium.Properties.Settings.Default);
+			Mapper.Map<IAppiumAppSettings, Appium.Properties.Settings>(this, Appium.Properties.Settings.Default);
 			Appium.Properties.Settings.Default.Save();
 		}
 
@@ -77,7 +80,7 @@ namespace Appium.Models
 		/// </summary>
 		public void Load()
 		{
-			Mapper.Map<Appium.Properties.Settings,IAppiumServerSettings>(Appium.Properties.Settings.Default,this);
+			Mapper.Map<Appium.Properties.Settings,IAppiumAppSettings>(Appium.Properties.Settings.Default,this);
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace Appium.Tests
 		[Test]
 		public void TestFullResetNoResetMutualExclusivity()
 		{
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.PerformFullAndroidReset = true;
 			settings.ResetApplicationState = false;
 
@@ -33,7 +33,7 @@ namespace Appium.Tests
 		[Test]
 		public void TestAllDeveloperSettingsIgnoredWhenDevModeDisabled()
 		{
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.UseDeveloperMode = false;
 			settings.UseExternalNodeJSBinary = true;
 			settings.ExternalNodeJSBinary = "testNodeJs";
@@ -55,7 +55,7 @@ namespace Appium.Tests
 		public void TestDeveloperModeExternalNodeJsLibraryIsUsed()
 		{
 			string testNodeJs = "testNodeJs"; 
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.UseDeveloperMode = true;
 			settings.UseExternalNodeJSBinary = true;
 			settings.ExternalNodeJSBinary = testNodeJs;
@@ -74,7 +74,7 @@ namespace Appium.Tests
 		public void TestDeveloperModeExternalAppiumPackageIsUsed()
 		{
 			string test = "app";
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.UseDeveloperMode = true;
 			settings.UseExternalAppiumPackage = true;
 			settings.ExternalAppiumPackage = test;
@@ -93,7 +93,7 @@ namespace Appium.Tests
 		public void TestDeveloperModeNodeJsDebuggingPortUsage()
 		{
 			uint port = 1234;
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.UseDeveloperMode = true;
 			settings.UseNodeJSDebugging = true;
 			settings.NodeJSDebugPort = port;
@@ -112,7 +112,7 @@ namespace Appium.Tests
 		[Test]
 		public void TestDeveloperModeBreakOnAppStartUsage()
 		{
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.UseDeveloperMode = true;
 			settings.BreakOnApplicationStart = true;
 
@@ -130,7 +130,7 @@ namespace Appium.Tests
 		public void TestAndroidActivityUsage()
 		{
 			string test = "testActivity";
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.AndroidActivity = test;
 
 			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
@@ -150,7 +150,7 @@ namespace Appium.Tests
 		public void TestAndroidPackageUsage()
 		{
 			string test = "testPackage";
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.AndroidPackage = test;
 
 			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
@@ -170,7 +170,7 @@ namespace Appium.Tests
 		public void TestLaunchAVDUsage()
 		{
 			string test = "AVD";
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.AVDToLaunch = test;
 
 			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
@@ -190,7 +190,7 @@ namespace Appium.Tests
 		public void TestAndroidWaitActivityUsage()
 		{
 			string test = "wait";
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.AndroidWaitActivity = test;
 
 			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
@@ -210,7 +210,7 @@ namespace Appium.Tests
 		public void TestAndroidDeviceReadyTimeoutUsage()
 		{
 			uint test = 1234;
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.AndroidDeviceReadyTimeout = test;
 
 			AppiumServerRunnerMock setup = new AppiumServerRunnerMock(NODE_RUNNER, WORKING_DIR, settings);
@@ -229,7 +229,7 @@ namespace Appium.Tests
 		[Test]
 		public void TestQuietLoggingUsage()
 		{
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 
 			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
 
@@ -246,7 +246,7 @@ namespace Appium.Tests
 		[Test]
 		public void TestKeepArtifactsUsage()
 		{
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 
 			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
 
@@ -263,7 +263,7 @@ namespace Appium.Tests
 		[Test]
 		public void TestPrelauchApplicationUsage()
 		{
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 
 			AppiumServerRunner setup = new AppiumServerRunner(NODE_RUNNER, WORKING_DIR, settings);
 
@@ -282,7 +282,7 @@ namespace Appium.Tests
 		{
 			string ipAddr = "1.0.0.0";
 			uint port = 1234;
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			settings.IPAddress = ipAddr;
 			settings.Port = port;
 

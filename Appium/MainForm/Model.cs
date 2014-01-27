@@ -10,7 +10,7 @@ namespace Appium.MainWindow
 	{
 		/// <summary>constructor</summary>
 		/// <param name="form">main form</param>
-		public Model(MainForm form, IAppiumServerSettings settings)
+		public Model(MainForm form, IAppiumAppSettings settings)
 		{
 			this._View = form;
 			_Settings = settings;
@@ -18,9 +18,9 @@ namespace Appium.MainWindow
 			_Settings.Load();
 		}
 
-		private IAppiumServerSettings _Settings;
+		private IAppiumAppSettings _Settings;
 		//TODO this is here just to test currently refactored functionality in steps, in the future, we should not allow direct access to settings
-		public IAppiumServerSettings Settings { get { return _Settings; } }
+		public IAppiumAppSettings Settings { get { return _Settings; } }
 
 		/// <summary>main form</summary>
 		public MainForm _View;
