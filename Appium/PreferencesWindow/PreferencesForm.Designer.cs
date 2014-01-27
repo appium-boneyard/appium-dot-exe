@@ -1,4 +1,6 @@
-﻿namespace Appium.PreferencesWindow
+﻿using Appium.Models.Capability;
+using System;
+namespace Appium.PreferencesWindow
 {
     partial class PreferencesForm
     {
@@ -34,6 +36,7 @@
 			this.ExternalAppiumPackageBrowse = new System.Windows.Forms.Button();
 			this.ExternalNodeJSBinaryBrowseButton = new System.Windows.Forms.Button();
 			this.ExternalAppiumPackageTextBox = new System.Windows.Forms.TextBox();
+			this.preferencesPModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.ExternalNodeJSBinaryTextBox = new System.Windows.Forms.TextBox();
 			this.NodeJSDebugPortPicker = new System.Windows.Forms.NumericUpDown();
 			this.BreakOnApplicationStartCheckbox = new System.Windows.Forms.CheckBox();
@@ -46,10 +49,13 @@
 			this.KeepArtifactsCheckbox = new System.Windows.Forms.CheckBox();
 			this.QuietLoggingCheckbox = new System.Windows.Forms.CheckBox();
 			this.CheckForUpdatesCheckbox = new System.Windows.Forms.CheckBox();
-			this.preferencesPModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.InspectorSettingsGroupbox = new System.Windows.Forms.GroupBox();
+			this.CapabilityDeviceLabel = new System.Windows.Forms.Label();
+			this.InspectorDeviceCapabilityCombo = new System.Windows.Forms.ComboBox();
 			this.DeveloperSettingsGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NodeJSDebugPortPicker)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.preferencesPModelBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.NodeJSDebugPortPicker)).BeginInit();
+			this.InspectorSettingsGroupbox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// DeveloperSettingsGroupBox
@@ -106,6 +112,10 @@
 			this.ExternalAppiumPackageTextBox.Name = "ExternalAppiumPackageTextBox";
 			this.ExternalAppiumPackageTextBox.Size = new System.Drawing.Size(167, 20);
 			this.ExternalAppiumPackageTextBox.TabIndex = 12;
+			// 
+			// preferencesPModelBindingSource
+			// 
+			this.preferencesPModelBindingSource.DataSource = typeof(Appium.PreferencesWindow.PreferencesPModel);
 			// 
 			// ExternalNodeJSBinaryTextBox
 			// 
@@ -244,15 +254,44 @@
 			this.CheckForUpdatesCheckbox.UseVisualStyleBackColor = true;
 			this.CheckForUpdatesCheckbox.CheckedChanged += new System.EventHandler(this.CheckForUpdatesCheckbox_CheckedChanged);
 			// 
-			// preferencesPModelBindingSource
+			// InspectorSettingsGroupbox
 			// 
-			this.preferencesPModelBindingSource.DataSource = typeof(Appium.PreferencesWindow.PreferencesPModel);
+			this.InspectorSettingsGroupbox.Controls.Add(this.CapabilityDeviceLabel);
+			this.InspectorSettingsGroupbox.Controls.Add(this.InspectorDeviceCapabilityCombo);
+			this.InspectorSettingsGroupbox.Location = new System.Drawing.Point(19, 283);
+			this.InspectorSettingsGroupbox.Name = "InspectorSettingsGroupbox";
+			this.InspectorSettingsGroupbox.Size = new System.Drawing.Size(431, 47);
+			this.InspectorSettingsGroupbox.TabIndex = 7;
+			this.InspectorSettingsGroupbox.TabStop = false;
+			this.InspectorSettingsGroupbox.Text = "Inspector Settings";
+			// 
+			// CapabilityDeviceLabel
+			// 
+			this.CapabilityDeviceLabel.AutoSize = true;
+			this.CapabilityDeviceLabel.Location = new System.Drawing.Point(7, 20);
+			this.CapabilityDeviceLabel.Name = "CapabilityDeviceLabel";
+			this.CapabilityDeviceLabel.Size = new System.Drawing.Size(129, 13);
+			this.CapabilityDeviceLabel.TabIndex = 1;
+			this.CapabilityDeviceLabel.Text = "Capability \"device\" to use";
+			// 
+			// InspectorDeviceCapabilityCombo
+			// 
+			this.InspectorDeviceCapabilityCombo.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.preferencesPModelBindingSource, "InspectorDeviceCapability", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.InspectorDeviceCapabilityCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.InspectorDeviceCapabilityCombo.FormattingEnabled = true;
+			this.InspectorDeviceCapabilityCombo.Location = new System.Drawing.Point(177, 17);
+			this.InspectorDeviceCapabilityCombo.Name = "InspectorDeviceCapabilityCombo";
+			this.InspectorDeviceCapabilityCombo.Size = new System.Drawing.Size(121, 21);
+			this.InspectorDeviceCapabilityCombo.TabIndex = 0;
+
+			CustomInits();
 			// 
 			// PreferencesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(463, 282);
+			this.ClientSize = new System.Drawing.Size(463, 332);
+			this.Controls.Add(this.InspectorSettingsGroupbox);
 			this.Controls.Add(this.DeveloperSettingsGroupBox);
 			this.Controls.Add(this.DeveloperModeCheckbox);
 			this.Controls.Add(this.PreLaunchApplicationCheckbox);
@@ -265,12 +304,19 @@
 			this.Text = "Appium Preferences";
 			this.DeveloperSettingsGroupBox.ResumeLayout(false);
 			this.DeveloperSettingsGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NodeJSDebugPortPicker)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.preferencesPModelBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.NodeJSDebugPortPicker)).EndInit();
+			this.InspectorSettingsGroupbox.ResumeLayout(false);
+			this.InspectorSettingsGroupbox.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
         }
+
+		private void CustomInits()
+		{
+			this.InspectorDeviceCapabilityCombo.Items.AddRange(Enum.GetNames(typeof(Device)));
+		}
 
         #endregion
 
@@ -291,5 +337,8 @@
         private System.Windows.Forms.Button ExternalAppiumPackageBrowse;
         private System.Windows.Forms.Button ExternalNodeJSBinaryBrowseButton;
 		private System.Windows.Forms.BindingSource preferencesPModelBindingSource;
+		private System.Windows.Forms.GroupBox InspectorSettingsGroupbox;
+		private System.Windows.Forms.Label CapabilityDeviceLabel;
+		private System.Windows.Forms.ComboBox InspectorDeviceCapabilityCombo;
     }
 }

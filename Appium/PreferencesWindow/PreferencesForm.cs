@@ -7,7 +7,7 @@ namespace Appium.PreferencesWindow
     {
 		public PreferencesForm()
 		{
-			InitializeComponent();
+			InitializeComponent();			
 		}
 
         /// <summary>called when the browse button for external nodejs binary is clicked</summary>

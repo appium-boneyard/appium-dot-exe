@@ -1,5 +1,6 @@
 ﻿using System;
 using Appium.Models;
+using Appium.Models.Capability;
 
 
 namespace Appium.PreferencesWindow
@@ -9,10 +10,10 @@ namespace Appium.PreferencesWindow
 	/// </summary>
 	public class PreferencesPModel
 	{
-		private IAppiumServerSettings _Settings;
+		private IAppiumAppSettings _Settings;
 		private IPreferencesView _View;
 
-		public PreferencesPModel(IAppiumServerSettings settings, IPreferencesView view)
+		public PreferencesPModel(IAppiumAppSettings settings, IPreferencesView view)
 		{
 			_Settings = settings;
 			_View = view;
@@ -107,6 +108,15 @@ namespace Appium.PreferencesWindow
 		{
 			get { return _Settings.UseNodeJSDebugging; }
 			set	{ _Settings.UseNodeJSDebugging = value; }
+		}
+
+		/// <summary>
+		/// Capability to use when launching inspector
+		/// </summary>
+		public Device InspectorDeviceCapability
+		{
+			get { return _Settings.InspectorDeviceCapability;}
+			set { _Settings.InspectorDeviceCapability = value; }
 		}
 
 		public void OpenWindow()

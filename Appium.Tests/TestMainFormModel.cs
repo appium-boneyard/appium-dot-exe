@@ -21,7 +21,7 @@ namespace Appium.Tests
 		public void TestSetupAppPathChangesSettingsAndNotifies()
 		{
 			// setup
-			DefaultAppiumServerSettings settings = new DefaultAppiumServerSettings();
+			DefaultAppiumAppSettings settings = new DefaultAppiumAppSettings();
 			Model mainModel = new Model(null, settings);
 			List<string> events = new List<string>();
 			mainModel.PropertyChanged += delegate(object s, PropertyChangedEventArgs e)

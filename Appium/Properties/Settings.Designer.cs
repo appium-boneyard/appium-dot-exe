@@ -370,5 +370,17 @@ namespace Appium.Properties {
                 this["UseAndroidDeviceReadyTimeout"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("android")]
+        public string InspectorDeviceCapability {
+            get {
+                return ((string)(this["InspectorDeviceCapability"]));
+            }
+            set {
+                this["InspectorDeviceCapability"] = value;
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Appium.MainWindow
         public MainForm()
         {
             // initialize
-			_Model = new Model(this, new Models.DefaultAppiumServerSettings());
+			_Model = new Model(this, new Models.DefaultAppiumAppSettings());
 			//_Model = new Model(this);
             InitializeComponent();
 			this.modelBindingSource.DataSource = _Model;

@@ -33,7 +33,9 @@ namespace Appium.InspectorWindow
 		{
 			try
 			{
-				ICapabilities capabilities = new DesiredCapabilities();
+				Dictionary<string, object> capsDef = new Dictionary<string, object>();
+				capsDef.Add("device", _Model.Settings.InspectorDeviceCapability.ToString());
+				ICapabilities capabilities = new DesiredCapabilities(capsDef);
 				_Driver = new ScreenshotRemoteWebDriver(new Uri("http://" + this._Model.IPAddress + ":" + this._Model.Port.ToString() + "/wd/hub"), capabilities);
 				// add increased timeout for inspector connection
 				Dictionary<string, int> args = new Dictionary<string, int>();
@@ -58,6 +60,11 @@ namespace Appium.InspectorWindow
 			DOMTreeView.Nodes.Clear();
 			_SetScreenshot();
 			string pagesource = _Driver.PageSource;
+			if (String.IsNullOrEmpty(pagesource))
+			{
+				MessageBox.Show("Empty page source returned, unable to create hierarchy tree.","Appium Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				return;
+			}
 			Root rootNode = JsonConvert.DeserializeObject<Root>(pagesource);
 			PopulateTree(rootNode.Hierarchy, DOMTreeView.Nodes);
 		}
