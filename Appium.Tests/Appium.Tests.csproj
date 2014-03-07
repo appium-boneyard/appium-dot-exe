@@ -69,9 +69,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Appium\Appium.csproj">
+    <ProjectReference Include="..\Appium\AppiumWinForm-OLD.csproj">
       <Project>{6b4415b5-3fb6-4758-af71-700b369a6498}</Project>
-      <Name>Appium</Name>
+      <Name>AppiumWinForm-OLD</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -1,0 +1,39 @@
+﻿<UserControl
+    x:Class="AppiumWPF.Views.GeneralPreferencesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:views="clr-namespace:AppiumWPF.Views"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel
+        Orientation="Vertical">
+        <CheckBox
+            Content="Check For Updates"
+            IsChecked="{Binding IsCheckUpdateEnabled}"/>
+        <CheckBox
+            Content="Quiet Logging" 
+            IsChecked="{Binding IsQuietLoggingEnabled}"/>
+        <CheckBox
+            Content="Keep Artifacts" 
+            IsChecked="{Binding IsKeepArtifactsEnabled}"/>
+        <CheckBox
+            Content="Reset Application State After Each Session"
+            IsChecked="{Binding IsResetApplicationStateEnabled}"/>
+        <CheckBox
+            Content="Pre-Launch Application" 
+            IsChecked="{Binding IsPrelaunchEnabled}"/>
+
+        <views:DeveloperSettingsView 
+            DataContext="{Binding DeveloperSettingsVM}"/>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,102 @@
+﻿<Window
+    x:Name="Appium"
+    x:Class="AppiumWPF.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:views="clr-namespace:AppiumWPF.Views"
+    Title="Appium"
+    Height="650"
+    Width="600"
+    Icon="Resources/appium.ico">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Dictionaries\Styles.xaml" />
+                <ResourceDictionary
+                    Source="Dictionaries\Images.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel
+        Background="LightGray"
+        LastChildFill="True">
+        <Menu
+            DockPanel.Dock="Top"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,1"
+            Width="auto"
+            Height="22">
+            <MenuItem
+                Header="Preferences"
+                HorizontalContentAlignment="Center"
+                ToolTip="Open Preferences"
+                Click="PreferenceClick" />
+            <!-- TODO: make Check's Icon Doctor's Red Cross-->
+            <MenuItem
+                Header="Check"
+                IsEnabled="False"
+                HorizontalContentAlignment="Center"
+                ToolTip="Launch Doctor"
+                Visibility="Collapsed"
+                Command="{Binding CheckCommand}" />
+            <!-- TODO: make Inspector be a magnify glass -->
+            <MenuItem
+                Header="Inspector"
+                HorizontalContentAlignment="Center"
+                ToolTip="Launch Inspector"
+                Visibility="Collapsed"
+                IsEnabled="False" />
+            <!--Command="{Binding InspectorOpenCommand}" />-->
+            <MenuItem
+                Name="btnLaunch"
+                HorizontalContentAlignment="Center"
+                Width="60"
+                ToolTip="Launch the Appium Node Server"
+                Header="{Binding LaunchString}"
+                Command="{Binding LaunchCommand}" />
+            <!--<MenuItem
+                Icon="{DynamicResource RocketOnIcon}" />
+            <MenuItem
+                Icon="{DynamicResource RocketOffIcon}" />-->
+        </Menu>
+
+        <views:MainSettingsView
+            Margin="10,10,10,0"
+            DockPanel.Dock="Top"
+            DataContext="{Binding MainSettingsVM}" />
+
+        <TabControl
+            DockPanel.Dock="Top"
+            Margin="10,10,10,0"
+            Name="osSpecificSettings">
+            <TabItem
+                Name="tab1"
+                Header="Android">
+                <views:AndroidSettingsView
+                    DockPanel.Dock="Top"
+                    Padding="10"
+                    DataContext="{Binding AndroidSettingsVM}" />
+            </TabItem>
+            <TabItem
+                Name="tab2"
+                IsEnabled="False"
+                Header="Future" />
+        </TabControl>
+
+        <ScrollViewer
+            Margin="10"
+            VerticalScrollBarVisibility="Auto">
+            <TextBlock
+                Name="rtbOutput"
+                Foreground="White"
+                Background="Black"
+                Height="Auto"
+                Margin="0"
+                Text="{Binding Output}" />
+        </ScrollViewer>
+    </DockPanel>
+</Window>
