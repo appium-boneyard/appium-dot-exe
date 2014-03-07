@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="AppiumWPF.Views.AndroidSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    mc:Ignorable="d"
+    MinWidth="500">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <sys:Int32
+                x:Key="PackageRow">0</sys:Int32>
+            <sys:Int32
+                x:Key="AVDRow">1</sys:Int32>
+            <sys:Int32
+                x:Key="DeviceReadyRow">2</sys:Int32>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Package Row -->
+        <DockPanel
+            Grid.Column="0"
+            Grid.Row="{StaticResource PackageRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbPackageEnabled"
+                Content="Package:"
+                IsChecked="{Binding IsPackageEnabled}" />
+            <TextBox
+                Text="{Binding Package, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding ElementName=cbPackageEnabled, Path=IsChecked}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="{StaticResource PackageRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbActivityEnabled"
+                Content="Activity:"
+                IsChecked="{Binding IsActivityEnabled}" />
+            <TextBox
+                Text="{Binding Activity, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding ElementName=cbActivityEnabled, Path=IsChecked}" />
+        </DockPanel>
+
+        <!-- Launch AVD Row -->
+        <DockPanel
+            Grid.Column="0"
+            Grid.Row="{StaticResource AVDRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbAVDEnabled"
+                Content="Launch AVD:"
+                IsChecked="{Binding IsLaunchAVDEnabled}" />
+            <ComboBox
+                ItemsSource="{Binding LaunchAVDs}"
+                SelectedValue="{Binding SelectedLaunchAVD}"
+                IsEnabled="{Binding ElementName=cbAVDEnabled, Path=IsChecked}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="{StaticResource AVDRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbWaitForActivityEnabled"
+                Content="Wait for Activity:"
+                IsChecked="{Binding IsWaitForActivityEnabled}" />
+            <TextBox
+                Text="{Binding WaitForActivity, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding ElementName=cbWaitForActivityEnabled, Path=IsChecked}" />
+        </DockPanel>
+
+        <!-- Device Ready Row-->
+        <DockPanel
+            Grid.Column="0"
+            Grid.Row="{StaticResource DeviceReadyRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbDeviceReadyTimeout"
+                Content="Device Ready Timeout:"
+                IsChecked="{Binding IsDeviceReadyTimeoutEnabled}" />
+            <toolkit:IntegerUpDown
+                Margin="4,0,4,0"
+                Height="22"
+                Width="120"
+                Minimum="0"
+                Maximum="300"
+                HorizontalAlignment="Right"
+                Value="{Binding DeviceReadyTimeout, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding ElementName=cbDeviceReadyTimeout, Path=IsChecked}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="{StaticResource DeviceReadyRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbPerformFullReset"
+                Content="Perform Full Reset"
+                IsChecked="{Binding IsPerformFullReset}" />
+        </DockPanel>
+
+
+    </Grid>
+</UserControl>

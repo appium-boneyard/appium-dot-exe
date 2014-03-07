@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using Appium.Models.Server;
+using System.Text;
 
 namespace Appium.MainWindow
 {
@@ -19,11 +20,13 @@ namespace Appium.MainWindow
         public MainForm()
         {
             // initialize
-			_Model = new Model(this, new Models.DefaultAppiumAppSettings());
-			//_Model = new Model(this);
+            _Model = new Model(this, new Models.DefaultAppiumAppSettings());
+            //_Model = new Model(this);
             InitializeComponent();
-			this.modelBindingSource.DataSource = _Model;
+            this.modelBindingSource.DataSource = _Model;
             this.FormClosing += new FormClosingEventHandler(this.FileMenuExitItem_Click);
+            richTextBox1.BackColor = System.Drawing.Color.Black;
+            richTextBox1.ForeColor = System.Drawing.Color.White;
         }
 
         #region Windows, Threads, and Processes
@@ -109,14 +112,14 @@ namespace Appium.MainWindow
             }
             if (!this._InspectorWindow.Visible)
             {
-				if (this._InspectorWindow.Connect())
-				{
-					this._InspectorWindow.Show();
-				}
-				else
-				{
-					MessageBox.Show(String.Format("Failed to connect to appium: {0}", this._InspectorWindow.LastMessage));
-				}
+                if (this._InspectorWindow.Connect())
+                {
+                    this._InspectorWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show(String.Format("Failed to connect to appium: {0}", this._InspectorWindow.LastMessage));
+                }
             }
         }
 
@@ -125,7 +128,7 @@ namespace Appium.MainWindow
         /// <param name="e">event args</param>
         public void FileMenuPreferencesItem_Click(object sender, EventArgs e)
         {
-			this._Model.OpenPreferences();
+            this._Model.OpenPreferences();
         }
 
         /// <summary>called when the exit menu item on the file menu is clicked</summary>
@@ -172,27 +175,59 @@ namespace Appium.MainWindow
                 return;
             }
 
-			//setup runner
-			AppiumServerRunner setup = new AppiumServerRunner(this._NodePath, this._AppiumPackageFolder, _Model.Settings);
+            //setup runner
+            AppiumServerRunner setup = new AppiumServerRunner(this._NodePath, this._AppiumPackageFolder, _Model.Settings);
 
             // setup basic process info
             var appiumServerProcessStartInfo = new ProcessStartInfo();
             appiumServerProcessStartInfo.WorkingDirectory = setup.WorkingDirectory;
             appiumServerProcessStartInfo.FileName = setup.Filename;
-            appiumServerProcessStartInfo.UseShellExecute = true;
-            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine();
-			
-            // start the process
-            this._AppiumServerProcess = Process.Start(appiumServerProcessStartInfo);
+            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine() + "--log-no-color";
+            appiumServerProcessStartInfo.RedirectStandardOutput = true;
+            appiumServerProcessStartInfo.RedirectStandardError = true;
+            appiumServerProcessStartInfo.CreateNoWindow = true;
+            appiumServerProcessStartInfo.UseShellExecute = false;
+
+
+            // set up the process and allow the thread to start it
+            _AppiumServerProcess = new Process();
+            _AppiumServerProcess.StartInfo = appiumServerProcessStartInfo;
+            _AppiumServerProcess.OutputDataReceived += _AppiumServerProcess_OutputDataReceived;
+            _AppiumServerProcess.ErrorDataReceived += _AppiumServerProcess_ErrorDataReceived;
+
             this._ServerExitMonitorThread = new Thread(() =>
             {
                 this._Model.LaunchButtonText = "Stop";
+                this._AppiumServerProcess.Start();
+                this._AppiumServerProcess.BeginOutputReadLine();
+                this._AppiumServerProcess.BeginErrorReadLine();
                 this._AppiumServerProcess.WaitForExit();
                 this._Model.LaunchButtonText = "Launch";
             });
             this._ServerExitMonitorThread.Name = "Server Exit Monitor";
             this._ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
             this._ServerExitMonitorThread.Start();
+        }
+
+        void _AppiumServerProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Console.WriteLine(e.Data);
+        }
+
+        void _AppiumServerProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                MethodInvoker del = delegate
+                {
+                    _AppiumServerProcess_OutputDataReceived(sender, e);
+                };
+                Invoke(del);
+            }
+            else
+            {
+                richTextBox1.Text += e.Data + "\n";
+            }
         }
 
         public void AppPathBrowseButton_Click(object sender, System.EventArgs e)
@@ -209,7 +244,7 @@ namespace Appium.MainWindow
             var result = appPathDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-				_Model.SetupNewApplicationPath(appPathDialog.FileName);
+                _Model.SetupNewApplicationPath(appPathDialog.FileName);
             }
         }
         #endregion
@@ -243,7 +278,7 @@ namespace Appium.MainWindow
             npmInstallProcessStartInfo.WorkingDirectory = this._AppiumRootFolder;
             npmInstallProcessStartInfo.FileName = this._NPMPath;
             npmInstallProcessStartInfo.Arguments = "install appium";
-            npmInstallProcessStartInfo.UseShellExecute = true;
+            npmInstallProcessStartInfo.UseShellExecute = false;
             var npmInstallProcess = Process.Start(npmInstallProcessStartInfo);
             this._Model.StatusBarText = "Installing Appium...";
             npmInstallProcess.WaitForExit();
@@ -304,5 +339,5 @@ namespace Appium.MainWindow
             this._Model.AVDs = avds.ToArray();
         }
         #endregion
-	}
+    }
 }

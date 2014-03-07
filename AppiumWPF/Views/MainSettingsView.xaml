@@ -1,0 +1,70 @@
+﻿<UserControl
+    x:Class="AppiumWPF.Views.MainSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <sys:Int32
+                x:Key="IPRow">0</sys:Int32>
+            <sys:Int32
+                x:Key="AppPathRow">1</sys:Int32>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="{StaticResource IPRow}"
+            DockPanel.Dock="Left"
+            Orientation="Horizontal">
+            <Label
+                Content="IP Address:" />
+            <TextBox
+                Width="100"
+                Text="{Binding IPAddressString, UpdateSourceTrigger=PropertyChanged}" />
+            <Label
+                Margin="10,0,0,0"
+                Content="Port:" />
+            <toolkit:IntegerUpDown
+                Minimum="1"
+                Maximum="65535"
+                Value="{Binding Port, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox
+                Margin="10,0,0,0"
+                Content="Use Remote server"
+                IsChecked="{Binding UseRemoteServer}" />
+        </StackPanel>
+
+        <DockPanel
+            Grid.Row="{StaticResource AppPathRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="appPathCheckBox"
+                Content="Application Path:"
+                IsChecked="{Binding IsAppPathEnabled}" />
+            <Button
+                DockPanel.Dock="Left"
+                Content="Choose"
+                Command="{Binding ChooseFileCommand}" />
+            <TextBox
+                Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding ElementName=appPathCheckBox, Path=IsChecked}" />
+        </DockPanel>
+    </Grid>
+</UserControl>
