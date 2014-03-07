@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AppiumWPF.Views
+namespace Appium.Views
 {
     /// <summary>
     /// Interaction logic for PreferenceWindow.xaml

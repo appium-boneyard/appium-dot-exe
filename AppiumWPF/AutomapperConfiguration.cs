@@ -1,9 +1,9 @@
 ﻿using System;
-using AppiumWPF.Models;
+using Appium.Models;
 using AutoMapper;
-using AppiumWPF.Models.Capability;
+using Appium.Models.Capability;
 
-namespace AppiumWPF
+namespace Appium
 {
 	/// <summary>
 	/// Handles automapper configuration
@@ -15,7 +15,7 @@ namespace AppiumWPF
 		/// </summary>
 		public static void Configure()
 		{
-			Mapper.CreateMap<AppiumWPF.Properties.Settings,IAppiumAppSettings>()
+			Mapper.CreateMap<Appium.Properties.Settings,IAppiumAppSettings>()
 				.ForMember(d => d.AVDToLaunch, opt => opt.MapFrom(s => s.AVD))
 				.ForMember(d => d.IPAddress, opt => opt.MapFrom(s => s.ServerAddress))
 				.ForMember(d => d.Port, opt => opt.MapFrom(s => s.ServerPort))

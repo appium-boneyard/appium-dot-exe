@@ -10,7 +10,7 @@ using System.Windows;
 // ASTRO: FIX this class
 
 
-namespace AppiumWPF.Models.Inspector
+namespace Appium.Models.Inspector
 {
     /// <summary>
     /// Represents tree node of the app building blocks

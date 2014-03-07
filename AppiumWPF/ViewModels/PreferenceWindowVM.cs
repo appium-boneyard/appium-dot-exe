@@ -1,6 +1,6 @@
-﻿using AppiumWPF.Models;
+﻿using Appium.Models;
 
-namespace AppiumWPF.ViewModels
+namespace Appium.ViewModels
 {
     class PreferenceWindowVM
     {

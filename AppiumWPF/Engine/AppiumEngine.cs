@@ -1,6 +1,6 @@
-﻿using AppiumWPF.Models;
-using AppiumWPF.Models.Server;
-using AppiumWPF.Utility;
+﻿using Appium.Models;
+using Appium.Models.Server;
+using Appium.Utility;
 using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 
-namespace AppiumWPF.Engine
+namespace Appium.Engine
 {
     /// <summary>
     /// Delegate to inform listeners that data has been received

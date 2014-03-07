@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace AppiumWPF.ViewModels
+namespace Appium.ViewModels
 {
     /// <summary>
     /// Base View Model class

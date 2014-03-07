@@ -1,8 +1,8 @@
-﻿using AppiumWPF.Models;
-using AppiumWPF.Utility;
+﻿using Appium.Models;
+using Appium.Utility;
 using System.Windows.Input;
 
-namespace AppiumWPF.ViewModels
+namespace Appium.ViewModels
 {
     class MainSettingsVM : BaseVM
     {

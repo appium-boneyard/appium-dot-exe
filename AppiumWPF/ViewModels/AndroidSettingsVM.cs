@@ -1,7 +1,7 @@
-﻿using AppiumWPF.Models;
+﻿using Appium.Models;
 using System.Collections.Generic;
 
-namespace AppiumWPF.ViewModels
+namespace Appium.ViewModels
 {
     class AndroidSettingsVM : BaseVM
     {

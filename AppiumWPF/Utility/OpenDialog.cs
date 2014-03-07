@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 
-namespace AppiumWPF.Utility
+namespace Appium.Utility
 {
     class OpenDialog
     {

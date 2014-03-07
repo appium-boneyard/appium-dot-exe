@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace AppiumWPF.Models.Inspector
+namespace Appium.Models.Inspector
 {
 	public interface INode
 	{

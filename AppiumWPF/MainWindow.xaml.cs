@@ -1,9 +1,9 @@
-﻿using AppiumWPF.ViewModels;
-using AppiumWPF.Views;
+﻿using Appium.ViewModels;
+using Appium.Views;
 using System;
 using System.Windows;
 
-namespace AppiumWPF
+namespace Appium
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
