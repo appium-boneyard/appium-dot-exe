@@ -108,6 +108,12 @@ namespace Appium.ViewModels
             }
         }
 
+        private ICommand _ClearOutputCommand;
+        /// <summary>Open the File Dialog Command</summary>
+        public ICommand ClearOutputCommand
+        {
+            get { return _ClearOutputCommand ?? (_ClearOutputCommand = new RelayCommand(() => _ExecuteClearOutput())); }
+        }
         #endregion Commands
 
         /// <summary>The close action (should close the main window)</summary>
@@ -135,7 +141,6 @@ namespace Appium.ViewModels
                 }
             }
         }
-
         #endregion Public Properties
 
 
@@ -195,6 +200,12 @@ namespace Appium.ViewModels
             {
                 _AppiumEngine.Start();
             }
+        }
+
+        /// <summary>Clear the output string</summary>
+        private void _ExecuteClearOutput()
+        {
+            Output = string.Empty;
         }
         #endregion Execute Commands
 

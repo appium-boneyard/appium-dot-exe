@@ -51,8 +51,13 @@
                 Visibility="Collapsed"
                 IsEnabled="False" />
             <!--Command="{Binding InspectorOpenCommand}" />-->
+
             <MenuItem
-                Name="btnLaunch"
+                HorizontalContentAlignment="Center"
+                Header="Clear Log"
+                ToolTip="Clear the output log"
+                Command="{Binding ClearOutputCommand}" />
+            <MenuItem
                 HorizontalContentAlignment="Center"
                 Width="60"
                 ToolTip="Launch the Appium Node Server"
@@ -96,7 +101,8 @@
                 Background="Black"
                 Height="Auto"
                 Margin="0"
-                Text="{Binding Output}" />
+                TargetUpdated="_ScrollToBottom"
+                Text="{Binding Output, NotifyOnTargetUpdated=True}" />
         </ScrollViewer>
     </DockPanel>
 </Window>
