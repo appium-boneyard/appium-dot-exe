@@ -1,5 +1,5 @@
-﻿using AppiumWPF.Models.Capability;
-namespace AppiumWPF.Models
+﻿using Appium.Models.Capability;
+namespace Appium.Models
 {
 	public interface IAppiumAppSettings : IAppiumServerSettings
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AppiumWPF.Models.Server
+namespace Appium.Models.Server
 {
 	public sealed class QuietLoggingArgument : AppiumServerArgument
 	{

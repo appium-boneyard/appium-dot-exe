@@ -1,10 +1,10 @@
-﻿using AppiumWPF.Engine;
-using AppiumWPF.Models;
+﻿using Appium.Engine;
+using Appium.Models;
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace AppiumWPF.ViewModels
+namespace Appium.ViewModels
 {
     class MainWindowVM : BaseVM
     {

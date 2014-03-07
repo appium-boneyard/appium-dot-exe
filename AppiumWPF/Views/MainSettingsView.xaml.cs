@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace AppiumWPF.Views
+namespace Appium.Views
 {
     /// <summary>
     /// Interaction logic for MainSettingsView.xaml

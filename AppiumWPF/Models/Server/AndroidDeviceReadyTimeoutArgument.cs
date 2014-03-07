@@ -1,5 +1,5 @@
 ﻿
-namespace AppiumWPF.Models.Server
+namespace Appium.Models.Server
 {
 	public sealed class AndroidDeviceReadyTimeoutArgument : AppiumServerUintArgument
 	{

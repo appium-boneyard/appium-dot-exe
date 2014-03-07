@@ -1,5 +1,5 @@
 ﻿
-namespace AppiumWPF.Models.Capability
+namespace Appium.Models.Capability
 {
 	public enum Device
 	{

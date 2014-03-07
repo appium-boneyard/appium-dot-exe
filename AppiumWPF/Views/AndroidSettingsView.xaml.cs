@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AppiumWPF.Views
+namespace Appium.Views
 {
     /// <summary>
     /// Interaction logic for AndroidSettingsView.xaml

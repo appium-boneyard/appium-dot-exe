@@ -1,9 +1,9 @@
 ﻿using System;
 //using AutoMapper;
-using AppiumWPF.Models.Capability;
+using Appium.Models.Capability;
 using AutoMapper;
 
-namespace AppiumWPF.Models
+namespace Appium.Models
 {
     public class DefaultAppiumAppSettings : IAppiumAppSettings
     {
@@ -72,8 +72,8 @@ namespace AppiumWPF.Models
         /// </summary>
         public void Save()
         {
-            Mapper.Map<IAppiumAppSettings, AppiumWPF.Properties.Settings>(this, AppiumWPF.Properties.Settings.Default);
-            AppiumWPF.Properties.Settings.Default.Save();
+            Mapper.Map<IAppiumAppSettings, Appium.Properties.Settings>(this, Appium.Properties.Settings.Default);
+            Appium.Properties.Settings.Default.Save();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace AppiumWPF.Models
         /// </summary>
         public void Load()
         {
-            Mapper.Map<AppiumWPF.Properties.Settings,IAppiumAppSettings>(AppiumWPF.Properties.Settings.Default,this);
+            Mapper.Map<Appium.Properties.Settings,IAppiumAppSettings>(Appium.Properties.Settings.Default,this);
         }
     }
 }

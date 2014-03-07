@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AppiumWPF.Models
+namespace Appium.Models
 {
 	public interface IAppiumServerSettings
 	{

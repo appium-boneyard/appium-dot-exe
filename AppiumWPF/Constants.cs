@@ -1,4 +1,4 @@
-﻿namespace AppiumWPF
+﻿namespace Appium
 {
     public static class Constants
     {

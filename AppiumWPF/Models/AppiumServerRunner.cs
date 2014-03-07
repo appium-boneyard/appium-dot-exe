@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace AppiumWPF.Models.Server
+namespace Appium.Models.Server
 {
     public class AppiumServerRunner
     {

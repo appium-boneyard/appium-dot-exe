@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace AppiumWPF
+namespace Appium
 {
     /// <summary>
     /// A command whose sole purpose is to 
