@@ -1,0 +1,181 @@
+﻿<Window
+    x:Class="Appium.Views.InspectorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:Appium.ViewModels"
+    xmlns:conv="clr-namespace:Appium.Converters"
+    Title="InspectorWindow"
+    Height="650"
+    Width="750"
+    Background="LightGray">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\Dictionaries\Styles.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            <BitmapImage
+                x:Key="defaultPhoto"
+                UriSource="../Resources/NoImages.bmp" />
+            <conv:SelectedNodeToDetailsConverter
+                x:Key="detailsConv" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel
+        LastChildFill="True"
+        Margin="10">
+
+        <!-- Right side of dock-->
+        <DockPanel
+            Margin="4"
+            DockPanel.Dock="Right"
+            LastChildFill="True">
+
+            <!-- Custom Display -->
+            <GroupBox
+                HorizontalAlignment="Stretch"
+                DockPanel.Dock="Top"
+                Header="Display"
+                Width="245"
+                Height="325"
+                Background="White">
+                <Canvas>
+                    <Canvas.Background>
+                        <ImageBrush
+                            ImageSource="{Binding ImageByteArray, TargetNullValue={StaticResource defaultPhoto} }" />
+                        <!--ImageSource="{StaticResource defaultPhoto}"/>-->
+                    </Canvas.Background>
+                    <!--<Rectangle
+                        Visibility="Collapsed"
+                        Stroke="Aqua"
+                        StrokeThickness="3"
+                        Canvas.Top="{Binding Top}"
+                        Canvas.Left="{Binding Left}"
+                        Canvas.Right="{Binding Right}">
+                    </Rectangle>-->
+                </Canvas>
+            </GroupBox>
+
+            <!-- Details View -->
+            <GroupBox
+                Header="Details"
+                Background="White">
+                <!--DockPanel.Dock="Bottom"-->
+                <TextBlock
+                    Text="{Binding SelectedNode, Converter={StaticResource detailsConv}}" />
+            </GroupBox>
+        </DockPanel>
+
+        <DockPanel
+            Margin="4"
+            LastChildFill="True">
+
+            <!-- Top buttons -->
+            <DockPanel
+                DockPanel.Dock="Top"
+                LastChildFill="False">
+                <!--
+                TODO: for future implementation
+                <GroupBox
+                    DockPanel.Dock="Left"
+                    Header="Filters">
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <CheckBox
+                            Content="Show Invisible" />
+                        <CheckBox
+                            Content="Show Disabled" />
+                    </StackPanel>
+                </GroupBox>
+                -->
+                <DockPanel
+                    DockPanel.Dock="Right">
+                    <Button
+                        DockPanel.Dock="Left"
+                        Width="50"
+                        Content="Record"
+                        IsEnabled="False"
+                        Visibility="Hidden"
+                        Command="{Binding RecordCommand}" />
+                    <Button
+                        DockPanel.Dock="Right"
+                        Width="50"
+                        Content="Refresh"
+                        Command="{Binding RefreshCommand}" />
+                </DockPanel>
+            </DockPanel>
+
+            <!-- Bottom Buttons -->
+            <!--
+            TODO: for future implementation
+            <TabControl
+                Visibility="Collapsed"
+                Margin="4"
+                Height="80"
+                DockPanel.Dock="Bottom">
+                <TabItem
+                    Header="Touch" />
+                <TabItem
+                    Header="Text" />
+                <TabItem
+                    Header="Misc" />
+            </TabControl>-->
+            <DockPanel
+                DockPanel.Dock="Bottom"
+                LastChildFill="True">
+                <Label
+                    Content="Message: "
+                    DockPanel.Dock="Left" />
+                <Label
+                    Content="{Binding Message}" />
+            </DockPanel>
+
+
+
+            <!-- Tree View -->
+            <TreeView
+                ItemsSource="{Binding RootNode}">
+                <TreeView.ItemContainerStyle>
+                    <Style
+                        TargetType="{x:Type TreeViewItem}">
+                        <!--
+                        TODO: possibly for future implementation
+                        <Setter
+                            Property="IsExpanded"
+                            Value="{Binding IsExpanded, Mode=TwoWay}" />-->
+                        <Setter
+                            Property="IsSelected"
+                            Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter
+                            Property="FontWeight"
+                            Value="Normal" />
+                        <Style.Triggers>
+                            <Trigger
+                                Property="IsSelected"
+                                Value="True">
+                                <Setter
+                                    Property="FontWeight"
+                                    Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate
+                        DataType="{x:Type vm:UIAutomatorNodeVM}"
+                        ItemsSource="{Binding Children}">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Text="{Binding Name}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+        </DockPanel>
+
+
+    </DockPanel>
+</Window>

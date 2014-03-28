@@ -68,14 +68,12 @@ namespace Appium.Models.Inspector
             }
         }
 
-        private Lazy<Rectangle> _Outline;
+        //private Lazy<Rectangle> _Outline;
 
         public UIAutomatorNode()
         {
             // TODO: return this to original part
-
-
-            _Outline = null;
+            //_Outline = null;
             //_Outline = new Lazy<Rectangle>(() =>
             //{
             //    if (String.IsNullOrEmpty(Bounds))
@@ -116,13 +114,13 @@ namespace Appium.Models.Inspector
             sb.AppendLine("text: " + Text ?? "");
             sb.AppendLine("class: " + Class ?? "");
             sb.AppendLine("package: " + Package ?? "");
-            sb.AppendLine("enabled: " + IsEnabled.ToString().ToLower());
-            sb.AppendLine("focused: " + IsFocused.ToString().ToLower());
-            sb.AppendLine("selected: " + IsSelected.ToString().ToLower());
+            //sb.AppendLine("enabled: " + IsEnabled.ToString().ToLower());
+            //sb.AppendLine("focused: " + IsFocused.ToString().ToLower());
+            //sb.AppendLine("selected: " + IsSelected.ToString().ToLower());
             //sb.AppendFormat("location: [{0},{1}]", _Outline.Value.Location.X, _Outline.Value.Location.Y);
-            sb.AppendLine();
-            sb.AppendFormat("size: {0}x{1}", _Outline.Value.Width, _Outline.Value.Height);
-            sb.AppendLine();
+            //sb.AppendLine();
+            //sb.AppendFormat("size: {0}x{1}", _Outline.Value.Width, _Outline.Value.Height);
+            //sb.AppendLine();
             return sb.ToString();
         }
 
@@ -131,9 +129,9 @@ namespace Appium.Models.Inspector
             return new List<INode>(_Children);
         }
 
-        public Rectangle GetOutline()
-        {
-            return _Outline.Value;
-        }
+        //public Rectangle GetOutline()
+        //{
+        //    return _Outline.Value;
+        //}
     }
 }

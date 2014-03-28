@@ -45,8 +45,8 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.2\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,6 +63,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.40.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -93,7 +96,10 @@
     </ApplicationDefinition>
     <Compile Include="AutomapperConfiguration.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Converters\SelectedNodeToDetailsConverter.cs" />
     <Compile Include="Engine\AppiumEngine.cs" />
+    <Compile Include="Engine\ScreenshotRemoteWebDriver.cs" />
+    <Compile Include="Engine\SeleniumDriver.cs" />
     <Compile Include="Models\AppiumServerRunner.cs" />
     <Compile Include="Models\Capability\Device.cs" />
     <Compile Include="Models\DefaultAppiumAppSettings.cs" />
@@ -127,9 +133,11 @@
     <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\DeveloperSettingsVM.cs" />
     <Compile Include="ViewModels\GeneralPreferencesVM.cs" />
+    <Compile Include="ViewModels\InspectorWindowVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\MainSettingsVM.cs" />
     <Compile Include="ViewModels\PreferenceWindowVM.cs" />
+    <Compile Include="ViewModels\UIAutomatorNodeVM.cs" />
     <Compile Include="Views\AndroidSettingsView.xaml.cs">
       <DependentUpon>AndroidSettingsView.xaml</DependentUpon>
     </Compile>
@@ -138,6 +146,9 @@
     </Compile>
     <Compile Include="Views\GeneralPreferencesView.xaml.cs">
       <DependentUpon>GeneralPreferencesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InspectorWindow.xaml.cs">
+      <DependentUpon>InspectorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainSettingsView.xaml.cs">
       <DependentUpon>MainSettingsView.xaml</DependentUpon>
@@ -177,6 +188,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\InspectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -211,6 +226,9 @@
       <SubType>Designer</SubType>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="update.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -221,6 +239,9 @@
   <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
       <Link>AutoMapper.Net4.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\NoImages.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\RocketOff.ico" />

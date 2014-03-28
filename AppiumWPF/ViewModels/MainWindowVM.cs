@@ -27,12 +27,9 @@ namespace Appium.ViewModels
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="closeAction">action called when we want to close the view</param>
-        public MainWindowVM(Action closeAction)
+        public MainWindowVM()
         {
             AutomapperConfiguration.Configure();
-
-            CloseAction = closeAction;
 
             // create the settings for the application
             _Settings = new DefaultAppiumAppSettings();
@@ -43,11 +40,19 @@ namespace Appium.ViewModels
             _AppiumEngine.OutputDataReceived += _OutputDataReceived;
             _AppiumEngine.ErrorDataReceived += _OutputDataReceived;
             _AppiumEngine.Init(_Settings);
+
+            if (_Settings.CheckForUpdates)
+            {
+                _AppiumEngine.CheckForUpdate();
+            }
         }
 
         #endregion Constructor
 
         #region Public Properties
+
+        /// <summary>Appium Settings</summary>
+        public IAppiumAppSettings Settings { get { return _Settings; } }
 
         #region View Models
         /// <summary>
@@ -78,16 +83,6 @@ namespace Appium.ViewModels
         #endregion View Models
 
         #region Commands
-        private ICommand _ExitCommand;
-        /// <summary>the exit command</summary>
-        public ICommand ExitCommand
-        {
-            get
-            {
-                return _ExitCommand ?? (_ExitCommand = new RelayCommand(() => _ExecuteExitCommand()));
-            }
-        }
-
         private ICommand _CheckCommand;
         /// <summary>Run the check doctor command</summary>
         public ICommand CheckCommand
@@ -116,9 +111,6 @@ namespace Appium.ViewModels
         }
         #endregion Commands
 
-        /// <summary>The close action (should close the main window)</summary>
-        public Action CloseAction { get; private set; }
-
         /// <summary>Launch String</summary>
         public string LaunchString
         {
@@ -141,6 +133,23 @@ namespace Appium.ViewModels
                 }
             }
         }
+
+        private bool _IsInspectorWindowOpen;
+        /// <summary>
+        /// Is Inspector window open
+        /// </summary>
+        public bool IsInspectorWindowOpen
+        {
+            get { return _IsInspectorWindowOpen; }
+            set
+            {
+                if (value != _IsInspectorWindowOpen)
+                {
+                    _IsInspectorWindowOpen = value;
+                    FirePropertyChanged(() => IsInspectorWindowOpen);
+                }
+            }
+        }
         #endregion Public Properties
 
 
@@ -155,20 +164,21 @@ namespace Appium.ViewModels
             _AppiumEngine.Stop();
             _Settings.Save();
         }
+
+        /// <summary>
+        /// On inspector closed event, update the the property
+        /// </summary>
+        /// <param name="sender">NOT USED</param>
+        /// <param name="e">NOT USED</param>
+        public void OnInspectorWindowClosed(object sender, EventArgs e)
+        {
+            IsInspectorWindowOpen = false;
+        }
         #endregion Public Call Back Method
 
         #region Private Methods
 
         #region Execute Commands
-        /// <summary>
-        /// Execute Exiting the application
-        /// </summary>
-        private void _ExecuteExitCommand()
-        {
-            // do not worry about saving here since we will catch it in the window's OnClosing event callback
-            CloseAction();
-        }
-
         /// <summary>
         /// Execute the Check Doctor command
         /// </summary>
@@ -216,7 +226,7 @@ namespace Appium.ViewModels
         /// <param name="output">output string to display</param>
         private void _OutputDataReceived(string output)
         {
-            Output += output + '\n';
+            Output += string.Format("> {0}\n", output);
         }
 
         /// <summary>

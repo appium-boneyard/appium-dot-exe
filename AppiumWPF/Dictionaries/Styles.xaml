@@ -55,6 +55,9 @@
             Property="Height"
             Value="22" />
         <Setter
+            Property="Width"
+            Value="50" />
+        <Setter
             Property="VerticalAlignment"
             Value="Center" />
         <Setter

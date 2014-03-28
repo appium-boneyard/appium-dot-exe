@@ -23,7 +23,7 @@ namespace Appium.ViewModels
         }
         #endregion Constructor
 
-       #region Public Properties
+        #region Public Properties
         /// <summary>General Preference View Model</summary>
         public GeneralPreferencesVM GeneralPreferencesVM
         {

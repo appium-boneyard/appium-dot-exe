@@ -182,7 +182,7 @@ namespace Appium.MainWindow
             var appiumServerProcessStartInfo = new ProcessStartInfo();
             appiumServerProcessStartInfo.WorkingDirectory = setup.WorkingDirectory;
             appiumServerProcessStartInfo.FileName = setup.Filename;
-            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine() + "--log-no-color";
+            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine() + " --log-no-color";
             appiumServerProcessStartInfo.RedirectStandardOutput = true;
             appiumServerProcessStartInfo.RedirectStandardError = true;
             appiumServerProcessStartInfo.CreateNoWindow = true;

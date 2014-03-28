@@ -1,4 +1,5 @@
-﻿using Appium.Models;
+﻿using Appium.Engine;
+using Appium.Models;
 
 namespace Appium.ViewModels
 {
@@ -39,6 +40,12 @@ namespace Appium.ViewModels
                 {
                     _Settings.CheckForUpdates = value;
                     FirePropertyChanged(() => IsCheckUpdateEnabled);
+
+                    // check to see if there are new updates if the flag has been switched
+                    if (_Settings.CheckForUpdates)
+                    {
+                        AppiumEngine.Instance.CheckForUpdate();
+                    }
                 }
             }
         }
@@ -99,6 +106,5 @@ namespace Appium.ViewModels
             }
         }
         #endregion Public Properties
-
     }
 }
