@@ -1,13 +1,16 @@
 ﻿using Appium.Models;
 using Appium.Models.Server;
-using Appium.Utility;
-using ICSharpCode.SharpZipLib.Zip;
+using Appium.Properties;
+using Ionic.Zip;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Threading;
+using System.Windows;
 
 namespace Appium.Engine
 {
@@ -213,7 +216,7 @@ namespace Appium.Engine
             var appiumServerProcessStartInfo = new ProcessStartInfo();
             appiumServerProcessStartInfo.WorkingDirectory = setup.WorkingDirectory;
             appiumServerProcessStartInfo.FileName = setup.Filename;
-            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine() +" --log-no-color";
+            appiumServerProcessStartInfo.Arguments = setup.GetArgumentsCmdLine() + " --log-no-color";
             appiumServerProcessStartInfo.RedirectStandardOutput = true;
             appiumServerProcessStartInfo.RedirectStandardError = true;
             appiumServerProcessStartInfo.CreateNoWindow = true;
@@ -239,6 +242,89 @@ namespace Appium.Engine
             this._ServerExitMonitorThread.Name = "Server Exit Monitor";
             this._ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
             this._ServerExitMonitorThread.Start();
+        }
+
+        /// <summary>
+        /// checks for an update and updates accordingly
+        /// 1) Gets the zipFile location
+        /// 2) Gets Destination Location
+        /// 3) Unzips the file into the temporary location
+        /// 4) Run the update.bat file which does...
+        /// 4.1) Copies all the files from temp folder to running directory (using xcopy) 
+        /// 4.2) Deletes the temp folder
+        /// 4.3) Restarts the Appium.exe again
+        /// </summary>
+        /// <param name="delay">delay before checking</param>
+        public void CheckForUpdate()
+        {
+            string version = null;
+            string url = null;
+            try
+            {
+                // check to see if we have internet connection and what the latest update is
+                var jsonString = new WebClient().DownloadString(@"https://raw.github.com/appium/appium.io/master/autoupdate/update-win.json");
+                dynamic json = JsonConvert.DeserializeObject(jsonString);
+                version = json.latest;
+                url = json.url;
+            }
+            catch { return; }
+
+            var currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            //if (!string.IsNullOrWhiteSpace(version) && (version != currentVersion))
+            if (_IsServerVersionNewer(currentVersion, version))
+            {
+                var upgradeMessage = string.Format("A new version of Appium is available. Would you like to download it?\n\n" +
+                    "This Version:    {0}\nCurrent Version: {1}\nNOTE: This may take a few seconds depending on your connection", currentVersion, version);
+                var downloadNew = MessageBox.Show(upgradeMessage, "Appium Upgrade Available", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+
+                if (downloadNew)
+                {
+                    // download the latest code
+                    var zipFileName = Path.GetFileName(url) ?? "AppiumForWindows.zip";
+                    var zipFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), zipFileName);
+                    var tempFolder = Path.GetTempPath();
+
+                    // download the zip file
+                    if (!File.Exists(zipFile))
+                    {
+                        try
+                        {
+                            new WebClient().DownloadFile(url, zipFile);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error", MessageBoxButton.OK);
+                            return;
+                        }
+                    }
+
+                    // unzip the file into the temp location
+                    using (ZipFile zip = ZipFile.Read(zipFile))
+                    {
+                        foreach (ZipEntry e in zip)
+                        {
+                            e.Extract(tempFolder, ExtractExistingFileAction.OverwriteSilently);
+                        }
+                    }
+
+                    // remove the zip file
+                    File.Delete(zipFile);
+
+                    // install and restart the app
+                    var restart = MessageBox.Show("Download is complete, would you like to install and restart?\nNOTE: This may take a few seconds", "Update and Restart", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+                    if (restart)
+                    {
+                        var info = new ProcessStartInfo();
+                        info.Arguments = tempFolder;
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.CreateNoWindow = true;
+                        info.FileName = "update.bat";
+                        Process.Start(info);
+
+                        Application.Current.Shutdown();
+                    }
+                }
+            }
         }
 
         #endregion Public Methods
@@ -280,7 +366,7 @@ namespace Appium.Engine
         {
             if (null != ErrorDataReceived)
             {
-                
+
                 ErrorDataReceived(data);
             }
         }
@@ -296,7 +382,7 @@ namespace Appium.Engine
                 OutputDataReceived(data);
             }
         }
-        
+
         /// <summary>
         /// Fire Event Handler to inform listeners of a status changed
         /// </summary>
@@ -326,8 +412,14 @@ namespace Appium.Engine
 
             // unzip npm
             _FireOutputData("Installing NPM...");
-            FastZip zip = new FastZip();
-            zip.ExtractZip(npmZipPath, this._AppiumRootFolder, null);
+            using (ZipFile zip = ZipFile.Read(npmZipPath))
+            {
+                foreach (ZipEntry e in zip)
+                {
+                    e.Extract(_AppiumRootFolder, ExtractExistingFileAction.OverwriteSilently);
+                }
+            }
+
             _FireOutputData("Done Extracting NPM...");
             File.Delete(npmZipPath);
         }
@@ -384,6 +476,80 @@ namespace Appium.Engine
             resetProcess.BeginOutputReadLine();
             resetProcess.WaitForExit();
             _FireOutputData("Done Resetting Appium...");
+        }
+
+        /// <summary>
+        /// Is the server version newer than the current application version
+        /// </summary>
+        /// <remarks>version number follows [major].[minor].[build].[revision]</remarks>
+        /// <param name="currentVersion">current version of the application</param>
+        /// <param name="serverVersion">current version on the server</param>
+        /// <returns>true if current version is older than the server version, false otherwise; also false if unable to parse the versions</returns>
+        private static bool _IsServerVersionNewer(string currentVersion, string serverVersion)
+        {
+            // if the same, then don't do anything
+            if (currentVersion == serverVersion)
+            {
+                return false;
+            }
+
+            var retVal = false;
+            // major, minor, build, revision  
+            var tmp = currentVersion.Split('.');
+            int curMajor = -1, curMinor = -1, curBuild = -1, curRev = -1;
+            try
+            {
+                curMajor = int.Parse(tmp[0]);
+                curMinor = int.Parse(tmp[1]);
+                curBuild = int.Parse(tmp[2]);
+                curRev = int.Parse(tmp[3]);
+            }
+            catch
+            {
+                return false;
+            }
+
+            tmp = serverVersion.Split('.');
+            int serverMajor = -1, serverMinor = -1, serverBuild = -1, serverRev = -1;
+            try
+            {
+                serverMajor = int.Parse(tmp[0]);
+                serverMinor = int.Parse(tmp[1]);
+                serverBuild = int.Parse(tmp[2]);
+                serverRev = int.Parse(tmp[3]);
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (curMajor < serverMajor)
+            {
+                retVal = true;
+            }
+            else if (curMajor == serverMajor)
+            {
+                if (curMinor < serverMinor)
+                {
+                    retVal = true;
+                }
+                else if (curMinor == serverMinor)
+                {
+                    if (curBuild < serverBuild)
+                    {
+                        retVal = true;
+                    }
+                    else if (curBuild == serverBuild)
+                    {
+                        if (curRev < serverRev)
+                        {
+                            retVal = true;
+                        }
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         #endregion Private Methods

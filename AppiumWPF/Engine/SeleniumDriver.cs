@@ -1,0 +1,143 @@
+﻿using Appium.Models;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
+using System;
+using System.Collections.Generic;
+
+namespace Appium.Engine
+{
+    class SeleniumDriver
+    {
+        #region Private Member Variables
+        /// <summary>Lock object when accessing the driver object so we do not try to start/stop/use simultaneously</summary>
+        private readonly object _Locket = new object();
+
+        /// <summary>Remote Web Driver - our selenium driver</summary>
+        /// <remarks>null driver means it's stopped</remarks>
+        private RemoteWebDriver _Driver;
+
+        /// <summary>Application Settings</summary>
+        private readonly IAppiumAppSettings _Settings;
+        #endregion Private Member Variables
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="settings"></param>
+        public SeleniumDriver(IAppiumAppSettings settings)
+        {
+            _Settings = settings;
+        }
+        #endregion Constructor
+
+        #region Properties
+        /// <summary>Is the Driver started yet</summary>
+        public bool IsStarted { get { return null != _Driver; } }
+        #endregion Properties
+
+        #region Public Methods
+        /// <summary>
+        /// Start the Selenium Engine, if it hasn't been started
+        /// </summary>
+        /// <param name="errorMessage"></param>
+        /// <returns>true if started already or start has been completed, false if not started or is started</returns>
+        public bool Start(out string errorMessage)
+        {
+            bool retVal = false;
+            errorMessage = null;
+
+            lock (_Locket)
+            {
+                if (null == _Driver)
+                {
+                    try
+                    {
+                        Dictionary<string, object> capsDef = new Dictionary<string, object>();
+                        capsDef.Add("device", _Settings.InspectorDeviceCapability.ToString());
+                        ICapabilities capabilities = new DesiredCapabilities(capsDef);
+                        string uri = string.Format("http://{0}:{1}/wd/hub", _Settings.IPAddress, _Settings.Port);
+                        _Driver = new ScreenshotRemoteWebDriver(new Uri(uri), capabilities);
+                        // add increased timeout for inspector connection
+                        Dictionary<string, int> args = new Dictionary<string, int>();
+                        args.Add("timeout", 900);
+                        _Driver.ExecuteScript("mobile: setCommandTimeout", new object[] { args });
+                        retVal = true;
+                    }
+                    catch (Exception e)
+                    {
+                        errorMessage = e.Message;
+                    }
+                }
+                else
+                {
+                    errorMessage = "Already started";
+                    retVal = true;
+                }
+            }
+
+            return retVal;
+        }
+
+        /// <summary>Stop the Selenium Engine</summary>
+        /// <param name="errorMessage">returns an error if there was one, else null</param>
+        /// <returns>true if it worked, false otherwise</returns>
+        public bool Stop(out string errorMessage)
+        {
+            bool retVal = false;
+            errorMessage = null;
+            lock (_Locket)
+            {
+                if (null != _Driver)
+                {
+                    _Driver.Quit();
+                    _Driver = null;
+                    retVal = true;
+                }
+                else
+                {
+                    errorMessage = "Already stopped";
+                }
+            }
+            return retVal;
+        }
+
+
+        /// <summary>
+        /// Refresh the Selenium DOM's pagesource
+        /// </summary>
+        /// <returns>the refreshed DOM pagesource</returns>
+        public string GetPageSource()
+        {
+            string data = null;
+            lock (_Locket)
+            {
+                if (null != _Driver)
+                {
+                    data = _Driver.PageSource;
+                }
+            }
+            return data;
+        }
+
+        /// <summary>
+        /// Get the Screenshot from the selenium client
+        /// </summary>
+        /// <returns>byte array of the screenshot image if available, else null</returns>
+        public byte[] GetScreenshot()
+        {
+            byte[] retVal = null;
+            lock (_Locket)
+            {
+                if (null != _Driver)
+                {
+                    retVal = ((ITakesScreenshot)_Driver).GetScreenshot().AsByteArray;
+                }
+            }
+            return retVal;
+        }
+
+        #endregion Public Methods
+
+    }
+}

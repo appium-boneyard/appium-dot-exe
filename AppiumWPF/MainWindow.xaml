@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:views="clr-namespace:Appium.Views"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="Appium"
     Height="650"
     Width="600"
@@ -18,6 +19,9 @@
                 <ResourceDictionary
                     Source="Dictionaries\Images.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <toolkit:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -34,7 +38,7 @@
                 Header="Preferences"
                 HorizontalContentAlignment="Center"
                 ToolTip="Open Preferences"
-                Click="PreferenceClick" />
+                Click="_PreferenceClick" />
             <!-- TODO: make Check's Icon Doctor's Red Cross-->
             <MenuItem
                 Header="Check"
@@ -48,17 +52,17 @@
                 Header="Inspector"
                 HorizontalContentAlignment="Center"
                 ToolTip="Launch Inspector"
-                Visibility="Collapsed"
-                IsEnabled="False" />
+                IsEnabled="{Binding IsInspectorWindowOpen, Converter={StaticResource inverseBoolConv}}"
+                Click="_InspectorClick" />
             <!--Command="{Binding InspectorOpenCommand}" />-->
 
-            <MenuItem
+            <!--<MenuItem
                 HorizontalContentAlignment="Center"
                 Header="Clear Log"
                 ToolTip="Clear the output log"
-                Command="{Binding ClearOutputCommand}" />
+                Command="{Binding ClearOutputCommand}" />-->
             <MenuItem
-                HorizontalContentAlignment="Center"
+                TextBlock.TextAlignment="Center"
                 Width="60"
                 ToolTip="Launch the Appium Node Server"
                 Header="{Binding LaunchString}"
@@ -92,17 +96,37 @@
                 Header="Future" />
         </TabControl>
 
-        <ScrollViewer
-            Margin="10"
-            VerticalScrollBarVisibility="Auto">
-            <TextBlock
-                Name="rtbOutput"
-                Foreground="White"
-                Background="Black"
-                Height="Auto"
-                Margin="0"
-                TargetUpdated="_ScrollToBottom"
-                Text="{Binding Output, NotifyOnTargetUpdated=True}" />
-        </ScrollViewer>
+        <DockPanel
+            LastChildFill="True">
+            <DockPanel
+                Margin="10,0,6,0"
+                DockPanel.Dock="Top"
+                LastChildFill="False">
+                <TextBlock
+                    DockPanel.Dock="Left"
+                    VerticalAlignment="Center"
+                    Text="Output:" />
+
+                <Button
+                    DockPanel.Dock="Right"
+                    Content="Clear"
+                    ToolTip="Clear the output log"
+                    Command="{Binding ClearOutputCommand}" />
+            </DockPanel>
+
+            <ScrollViewer
+                Margin="10,0,10,10"
+                VerticalScrollBarVisibility="Auto">
+                <TextBlock
+                    Name="rtbOutput"
+                    Foreground="White"
+                    Background="Black"
+                    Height="Auto"
+                    Margin="0"
+                    TargetUpdated="_ScrollToBottom"
+                    TextWrapping="Wrap"
+                    Text="{Binding Output, NotifyOnTargetUpdated=True}" />
+            </ScrollViewer>
+        </DockPanel>
     </DockPanel>
 </Window>

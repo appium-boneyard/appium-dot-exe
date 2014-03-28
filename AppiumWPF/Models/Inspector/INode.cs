@@ -8,6 +8,6 @@ namespace Appium.Models.Inspector
 		string GetDisplayName();
 		List<INode> GetChildren();
 		string GetDetails();
-		Rectangle GetOutline();
+        //Rectangle GetOutline();
 	}
 }
