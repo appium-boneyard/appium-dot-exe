@@ -1,6 +1,5 @@
 ﻿using Appium.Models;
 using Appium.Models.Server;
-using Appium.Properties;
 using Ionic.Zip;
 using Newtonsoft.Json;
 using System;
@@ -245,86 +244,11 @@ namespace Appium.Engine
         }
 
         /// <summary>
-        /// checks for an update and updates accordingly
-        /// 1) Gets the zipFile location
-        /// 2) Gets Destination Location
-        /// 3) Unzips the file into the temporary location
-        /// 4) Run the update.bat file which does...
-        /// 4.1) Copies all the files from temp folder to running directory (using xcopy) 
-        /// 4.2) Deletes the temp folder
-        /// 4.3) Restarts the Appium.exe again
+        /// On a new thread, checks for an update and updates accordingly 
         /// </summary>
-        /// <param name="delay">delay before checking</param>
         public void CheckForUpdate()
         {
-            string version = null;
-            string url = null;
-            try
-            {
-                // check to see if we have internet connection and what the latest update is
-                var jsonString = new WebClient().DownloadString(@"https://raw.github.com/appium/appium.io/master/autoupdate/update-win.json");
-                dynamic json = JsonConvert.DeserializeObject(jsonString);
-                version = json.latest;
-                url = json.url;
-            }
-            catch { return; }
-
-            var currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
-            //if (!string.IsNullOrWhiteSpace(version) && (version != currentVersion))
-            if (_IsServerVersionNewer(currentVersion, version))
-            {
-                var upgradeMessage = string.Format("A new version of Appium is available. Would you like to download it?\n\n" +
-                    "This Version:    {0}\nCurrent Version: {1}\nNOTE: This may take a few seconds depending on your connection", currentVersion, version);
-                var downloadNew = MessageBox.Show(upgradeMessage, "Appium Upgrade Available", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
-
-                if (downloadNew)
-                {
-                    // download the latest code
-                    var zipFileName = Path.GetFileName(url) ?? "AppiumForWindows.zip";
-                    var zipFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), zipFileName);
-                    var tempFolder = Path.GetTempPath();
-
-                    // download the zip file
-                    if (!File.Exists(zipFile))
-                    {
-                        try
-                        {
-                            new WebClient().DownloadFile(url, zipFile);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error", MessageBoxButton.OK);
-                            return;
-                        }
-                    }
-
-                    // unzip the file into the temp location
-                    using (ZipFile zip = ZipFile.Read(zipFile))
-                    {
-                        foreach (ZipEntry e in zip)
-                        {
-                            e.Extract(tempFolder, ExtractExistingFileAction.OverwriteSilently);
-                        }
-                    }
-
-                    // remove the zip file
-                    File.Delete(zipFile);
-
-                    // install and restart the app
-                    var restart = MessageBox.Show("Download is complete, would you like to install and restart?\nNOTE: This may take a few seconds", "Update and Restart", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
-                    if (restart)
-                    {
-                        var info = new ProcessStartInfo();
-                        info.Arguments = tempFolder;
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.CreateNoWindow = true;
-                        info.FileName = "update.bat";
-                        Process.Start(info);
-
-                        Application.Current.Shutdown();
-                    }
-                }
-            }
+            ThreadPool.QueueUserWorkItem(new WaitCallback(_CheckForUpdate));
         }
 
         #endregion Public Methods
@@ -366,8 +290,7 @@ namespace Appium.Engine
         {
             if (null != ErrorDataReceived)
             {
-
-                ErrorDataReceived(data);
+                ErrorDataReceived(string.Format("ERROR: {0}", data));
             }
         }
 
@@ -412,12 +335,20 @@ namespace Appium.Engine
 
             // unzip npm
             _FireOutputData("Installing NPM...");
-            using (ZipFile zip = ZipFile.Read(npmZipPath))
+            try
             {
-                foreach (ZipEntry e in zip)
+                // use 3rd party zip software because System.IO.Compression will throw if the files already exists
+                using (ZipFile zip = ZipFile.Read(npmZipPath))
                 {
-                    e.Extract(_AppiumRootFolder, ExtractExistingFileAction.OverwriteSilently);
+                    foreach (ZipEntry e in zip)
+                    {
+                        e.Extract(_AppiumRootFolder, ExtractExistingFileAction.OverwriteSilently);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                _FireErrorData(e.Message);
             }
 
             _FireOutputData("Done Extracting NPM...");
@@ -477,6 +408,117 @@ namespace Appium.Engine
             resetProcess.WaitForExit();
             _FireOutputData("Done Resetting Appium...");
         }
+
+
+        /// <summary>
+        /// checks for an update and updates accordingly
+        /// 1) Gets the zipFile location
+        /// 2) Gets Destination Location
+        /// 3) Unzips the file into the temporary location
+        /// 4) Run the update.bat file which does...
+        /// 4.1) Copies all the files from temp folder to running directory (using xcopy) 
+        /// 4.2) Deletes the temp folder
+        /// 4.3) Restarts the Appium.exe again
+        /// </summary>
+        private void _CheckForUpdate(object o)
+        {
+            string version = null;
+            string url = null;
+            try
+            {
+                _FireOutputData("Checking if an update is available");
+                // check to see if we have internet connection and what the latest update is
+                var jsonString = new WebClient().DownloadString(@"https://raw.github.com/appium/appium.io/master/autoupdate/update-win.json");
+                dynamic json = JsonConvert.DeserializeObject(jsonString);
+                version = json.latest;
+                url = json.url;
+            }
+            catch { return; }
+
+            var currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+            if (_IsServerVersionNewer(currentVersion, version))
+            {
+                _FireOutputData(string.Format("Update available to new version {0}", version));
+                var upgradeMessage = string.Format("A new version of Appium is available. Would you like to download it?\n\n" +
+                    "This Version:    {0}\nCurrent Version: {1}\nNOTE: This may take a few seconds depending on your connection", currentVersion, version);
+                var downloadNew = MessageBox.Show(upgradeMessage, "Appium Upgrade Available", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+
+                if (downloadNew)
+                {
+                    // download the latest code
+                    var zipFileName = Path.GetFileName(url) ?? "AppiumForWindows.zip";
+                    var zipFile = Path.Combine(Path.GetTempPath(), zipFileName);
+                    var curFolder = Environment.CurrentDirectory;
+
+                    // download the zip file
+                    if (!File.Exists(zipFile))
+                    {
+                        try
+                        {
+                            _FireOutputData(string.Format("Downloading File from {0}", url));
+                            new WebClient().DownloadFile(url, zipFile);
+                        }
+                        catch
+                        {
+                            _FireErrorData("Unable to download file");
+                            MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error",
+                                MessageBoxButton.OK);
+                            return;
+                        }
+                    }
+
+                    _FireOutputData("Extracting zip file into temporary location");
+                    try
+                    {
+                        // unzip the file into the temp location
+                        // use 3rd party zip software because System.IO.Compression will throw if the files already exists
+                        using (ZipFile zip = ZipFile.Read(zipFile))
+                        {
+                            foreach (ZipEntry e in zip)
+                            {
+                                e.Extract(curFolder, ExtractExistingFileAction.OverwriteSilently);
+                            }
+                        }
+                    }
+                    catch (PathTooLongException ptle)
+                    {
+                        _FireErrorData("Unable to update.");
+                        _FireErrorData(ptle.Message);
+                        _FireErrorData("Possible Fix would be to move main appium folder to a c:\\");
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        _FireErrorData("Unable to update.");
+                        _FireErrorData(e.Message);
+                        return;
+                    }
+                    finally
+                    {
+                        // remove the zip file
+                        File.Delete(zipFile);
+                    }
+
+
+                    // install and restart the app
+                    var restart = MessageBox.Show("Download is complete, would you like to install and restart?\nNOTE: This may take a few seconds", "Update and Restart", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+                    if (restart)
+                    {
+                        _FireOutputData("Restarting and updating to new version of Appium");
+                        var info = new ProcessStartInfo();
+                        info.Arguments = curFolder;
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.CreateNoWindow = true;
+                        info.FileName = "update.bat";
+                        Process.Start(info);
+
+                        Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Is the server version newer than the current application version

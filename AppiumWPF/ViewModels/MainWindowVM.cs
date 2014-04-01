@@ -1,4 +1,5 @@
-﻿using Appium.Engine;
+﻿using System.Threading;
+using Appium.Engine;
 using Appium.Models;
 using System;
 using System.ComponentModel;
@@ -15,13 +16,13 @@ namespace Appium.ViewModels
         private AndroidSettingsVM _AndroidSettingsVM = null;
 
         /// <summary>Appium Engine</summary>
-        private AppiumEngine _AppiumEngine = null;
+        private readonly AppiumEngine _AppiumEngine = null;
 
         /// <summary>Preference Window</summary>
         private PreferenceWindowVM _PreferenceWindowVM = null;
 
         /// <summary>Appium Settings</summary>
-        private IAppiumAppSettings _Settings;
+        private readonly IAppiumAppSettings _Settings;
 
         #region Constructor
         /// <summary>
@@ -43,6 +44,8 @@ namespace Appium.ViewModels
 
             if (_Settings.CheckForUpdates)
             {
+                // wait ten seconds to the page loads
+                Thread.Sleep(10000);
                 _AppiumEngine.CheckForUpdate();
             }
         }
