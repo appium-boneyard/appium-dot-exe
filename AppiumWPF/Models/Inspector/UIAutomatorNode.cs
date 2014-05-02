@@ -28,9 +28,7 @@ namespace Appium.Models.Inspector
         public bool Selected;
         public string Bounds;
 
-        public UIAutomatorNode parent;
-
-        public List<UIAutomatorNode> _Children = new List<UIAutomatorNode>();
+        private List<UIAutomatorNode> _Children = new List<UIAutomatorNode>();
         /// <summary>
         /// Node descendants representation
         /// </summary>
