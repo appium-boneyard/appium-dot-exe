@@ -136,7 +136,6 @@ namespace Appium.ViewModels
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(_Model.GetDetails());
-            sb.AppendLine("selected: " + IsSelected.ToString().ToLower());
             return sb.ToString();
         }
         #endregion Public Methods

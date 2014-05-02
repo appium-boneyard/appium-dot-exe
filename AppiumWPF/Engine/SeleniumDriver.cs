@@ -60,8 +60,8 @@ namespace Appium.Engine
                         _Driver = new ScreenshotRemoteWebDriver(new Uri(uri), capabilities);
                         // add increased timeout for inspector connection
                         Dictionary<string, int> args = new Dictionary<string, int>();
-                        args.Add("timeout", 900);
-                        _Driver.ExecuteScript("mobile: setCommandTimeout", new object[] { args });
+                        //args.Add("timeout", 900);
+                        //_Driver.ExecuteScript("mobile: setCommandTimeout", new object[] { args });
                         retVal = true;
                     }
                     catch (Exception e)
