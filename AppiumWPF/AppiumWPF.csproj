@@ -94,8 +94,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AutomapperConfiguration.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="Models\Server\CustomDeveloperArguments.cs" />
+    <Compile Include="Utility\AutomapperConfiguration.cs" />
+    <Compile Include="Utility\Constants.cs" />
     <Compile Include="Converters\SelectedNodeToDetailsConverter.cs" />
     <Compile Include="Engine\AppiumEngine.cs" />
     <Compile Include="Engine\ScreenshotRemoteWebDriver.cs" />
@@ -108,53 +109,70 @@
     <Compile Include="Models\Inspector\INode.cs" />
     <Compile Include="Models\Inspector\UIAutomatorNode.cs" />
     <Compile Include="Models\Server\AndroidActivityArgument.cs" />
+    <Compile Include="Models\Server\AndroidBootstrapPortArgument.cs" />
+    <Compile Include="Models\Server\AndroidCoverageArgument.cs" />
     <Compile Include="Models\Server\AndroidDeviceReadyTimeoutArgument.cs" />
     <Compile Include="Models\Server\AndroidPackageArgument.cs" />
     <Compile Include="Models\Server\AndroidWaitActivityArgument.cs" />
+    <Compile Include="Models\Server\AndroidWaitForPackageArgument.cs" />
     <Compile Include="Models\Server\AppiumServerArgument.cs" />
     <Compile Include="Models\Server\AppiumServerStringArgument.cs" />
     <Compile Include="Models\Server\AppiumServerUintArgument.cs" />
     <Compile Include="Models\Server\ApplicationPathArgument.cs" />
+    <Compile Include="Models\Server\AVDArgsToLaunchArgument.cs" />
     <Compile Include="Models\Server\AVDToLaunchArgument.cs" />
     <Compile Include="Models\Server\BreakOnAppStartArgument.cs" />
+    <Compile Include="Models\Server\ChromeDriverPortArgument.cs" />
     <Compile Include="Models\Server\FullResetArgument.cs" />
     <Compile Include="Models\Server\IAppiumServerArgument.cs" />
-    <Compile Include="Models\Server\KeepArtifactsArgument.cs" />
+    <Compile Include="Models\Server\LogToFileArgument.cs" />
+    <Compile Include="Models\Server\LogToWebHookArgument.cs" />
     <Compile Include="Models\Server\NodeJSDebugArgument.cs" />
     <Compile Include="Models\Server\NoResetArgument.cs" />
+    <Compile Include="Models\Server\OverrideExistingSessionArgument.cs" />
     <Compile Include="Models\Server\PrelauchApplicationArgument.cs" />
     <Compile Include="Models\Server\QuietLoggingArgument.cs" />
+    <Compile Include="Models\Server\SelendroidPortArgument.cs" />
+    <Compile Include="Models\Server\SeleniumGridArgument.cs" />
     <Compile Include="Models\Server\ServerAddressArgument.cs" />
     <Compile Include="Models\Server\ServerPortArgument.cs" />
     <Compile Include="Models\Server\ServerRunnerArgument.cs" />
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Models\Server\ShowTimestampLogArgument.cs" />
+    <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="Utility\OpenDialog.cs" />
     <Compile Include="ViewModels\AndroidSettingsVM.cs" />
     <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\DeveloperSettingsVM.cs" />
-    <Compile Include="ViewModels\GeneralPreferencesVM.cs" />
+    <Compile Include="ViewModels\GeneralSettingsVM.cs" />
     <Compile Include="ViewModels\InspectorWindowVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
-    <Compile Include="ViewModels\MainSettingsVM.cs" />
-    <Compile Include="ViewModels\PreferenceWindowVM.cs" />
     <Compile Include="ViewModels\UIAutomatorNodeVM.cs" />
-    <Compile Include="Views\AndroidSettingsView.xaml.cs">
+    <Compile Include="Views\Android\AndroidSettingsView.xaml.cs">
       <DependentUpon>AndroidSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeveloperSettingsView.xaml.cs">
+    <Compile Include="Views\Android\AdvancedView.xaml.cs">
+      <DependentUpon>AdvancedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Android\ApplicationView.xaml.cs">
+      <DependentUpon>ApplicationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Android\LaunchDeviceView.xaml.cs">
+      <DependentUpon>LaunchDeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Developer\DeveloperSettingsView.xaml.cs">
       <DependentUpon>DeveloperSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GeneralPreferencesView.xaml.cs">
-      <DependentUpon>GeneralPreferencesView.xaml</DependentUpon>
+    <Compile Include="Views\General\GeneralSettingsView.xaml.cs">
+      <DependentUpon>GeneralSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\General\LoggingView.xaml.cs">
+      <DependentUpon>LoggingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\General\ServerView.xaml.cs">
+      <DependentUpon>ServerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InspectorWindow.xaml.cs">
       <DependentUpon>InspectorWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainSettingsView.xaml.cs">
-      <DependentUpon>MainSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PreferenceWindow.xaml.cs">
-      <DependentUpon>PreferenceWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Dictionaries\Images.xaml">
       <SubType>Designer</SubType>
@@ -176,27 +194,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AndroidSettingsView.xaml">
+    <Page Include="Views\Android\AndroidSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DeveloperSettingsView.xaml">
+    <Page Include="Views\Android\AdvancedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\GeneralPreferencesView.xaml">
+    <Page Include="Views\Android\ApplicationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Android\LaunchDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Developer\DeveloperSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\General\GeneralSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\General\LoggingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\General\ServerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InspectorWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PreferenceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,11 +271,36 @@
       <Link>AutoMapper.Net4.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\android.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\developer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\doctor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\help.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\lightswitch.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\NoImages.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\RocketOff.ico" />
-    <Resource Include="Resources\RocketOn.ico" />
+    <Content Include="Resources\robot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\RocketOn.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\stopsign.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

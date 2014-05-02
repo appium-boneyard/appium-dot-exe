@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Appium.Views
+namespace Appium.Views.General
 {
     /// <summary>
-    /// Interaction logic for DeveloperSettingsView.xaml
+    /// Interaction logic for LoggingView.xaml
     /// </summary>
-    public partial class DeveloperSettingsView : UserControl
+    public partial class LoggingView : UserControl
     {
-        public DeveloperSettingsView()
+        public LoggingView()
         {
             InitializeComponent();
         }

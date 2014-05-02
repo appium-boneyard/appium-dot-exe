@@ -2,6 +2,7 @@
 using Appium.Views;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Appium
 {
@@ -21,20 +22,6 @@ namespace Appium
         }
 
         #region Call Back Method
-        /// <summary>
-        /// Preference menu item clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _PreferenceClick(object sender, RoutedEventArgs e)
-        {
-            Window win = new PreferenceWindow() { DataContext = _VM.PreferenceWindowVM };
-            if (null != win)
-            {
-                win.ShowDialog();
-            }
-        }
-
         /// <summary>
         /// Inspector menu item clicked - open the inspector window
         /// </summary>
@@ -59,9 +46,9 @@ namespace Appium
         /// <param name="e">NOT USED</param>
         private void _ScrollToBottom(object sender, System.Windows.Data.DataTransferEventArgs e)
         {
-            TextBlock tb;
+            TextBox tb;
             ScrollViewer sv;
-            if (null == (tb = sender as TextBlock))
+            if (null == (tb = sender as TextBox))
             {
                 // do nothing
             }

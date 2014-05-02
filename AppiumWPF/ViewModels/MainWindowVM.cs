@@ -1,28 +1,32 @@
-﻿using System.Threading;
-using Appium.Engine;
+﻿using Appium.Engine;
 using Appium.Models;
+using Appium.Utility;
 using System;
 using System.ComponentModel;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Input;
 
 namespace Appium.ViewModels
 {
     class MainWindowVM : BaseVM
     {
-        /// <summary>Main Settings View Model</summary>
-        private MainSettingsVM _MainSettingsVM = null;
+        #region Private Member Variables
+        /// <summary>Appium Engine</summary>
+        private readonly AppiumEngine _AppiumEngine = null;
 
         /// <summary>View Model for Android Specific Settings</summary>
         private AndroidSettingsVM _AndroidSettingsVM = null;
 
-        /// <summary>Appium Engine</summary>
-        private readonly AppiumEngine _AppiumEngine = null;
+        /// <summary>View Model for General Settings</summary>
+        private GeneralSettingsVM _GeneralSettingsVM = null;
 
-        /// <summary>Preference Window</summary>
-        private PreferenceWindowVM _PreferenceWindowVM = null;
+        /// <summary>View Model for Developer Settings</summary>
+        private DeveloperSettingsVM _DeveloperSettingsVM = null;
 
         /// <summary>Appium Settings</summary>
         private readonly IAppiumAppSettings _Settings;
+        #endregion Private Member Variables
 
         #region Constructor
         /// <summary>
@@ -53,20 +57,92 @@ namespace Appium.ViewModels
         #endregion Constructor
 
         #region Public Properties
+        private bool _IsAndroidSettingsOpen;
+        /// <summary>
+        /// Is the Android Settings Popup Open
+        /// </summary>
+        public bool IsAndroidSettingsOpen
+        {
+            get { return _IsAndroidSettingsOpen; }
+            set
+            {
+                if (value != _IsAndroidSettingsOpen)
+                {
+                    _IsAndroidSettingsOpen = value;
+                    FirePropertyChanged(() => IsAndroidSettingsOpen);
+                }
+            }
+        }
+
+        private bool _IsGeneralSettingsOpen;
+        /// <summary>
+        /// Is the General Settings Popup Open
+        /// </summary>
+        public bool IsGeneralSettingsOpen
+        {
+            get { return _IsGeneralSettingsOpen; }
+            set
+            {
+                if (value != _IsGeneralSettingsOpen)
+                {
+                    _IsGeneralSettingsOpen = value;
+                    FirePropertyChanged(() => IsGeneralSettingsOpen);
+                }
+            }
+        }
+
+        private bool _IsDeveloperSettingsOpen;
+        /// <summary>
+        /// Is the Developer Settings Popup Open
+        /// </summary>
+        public bool IsDeveloperSettingsOpen
+        {
+            get { return _IsDeveloperSettingsOpen; }
+            set
+            {
+                if (value != _IsDeveloperSettingsOpen)
+                {
+                    _IsDeveloperSettingsOpen = value;
+                    FirePropertyChanged(() => IsDeveloperSettingsOpen);
+                }
+            }
+        }
+
+        private bool _IsAboutOpen;
+        /// <summary>
+        /// Is the About Popup Open
+        /// </summary>
+        public bool IsAboutOpen
+        {
+            get { return _IsAboutOpen; }
+            set
+            {
+                if (value != _IsAboutOpen)
+                {
+                    _IsAboutOpen = value;
+                    FirePropertyChanged(() => IsAboutOpen);
+                }
+
+                if (value)
+                {
+                    FirePropertyChanged(() => Version);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Version Number of the assembly
+        /// </summary>
+        public string Version
+        {
+            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+        }
+
 
         /// <summary>Appium Settings</summary>
         public IAppiumAppSettings Settings { get { return _Settings; } }
 
         #region View Models
-        /// <summary>
-        /// Main Settings VM
-        /// contains such items as IP Address, port and application path
-        /// </summary>
-        public MainSettingsVM MainSettingsVM
-        {
-            get { return _MainSettingsVM ?? (_MainSettingsVM = new MainSettingsVM(_Settings)); }
-        }
-
         /// <summary>
         /// Android Settings VM
         /// </summary>
@@ -76,13 +152,20 @@ namespace Appium.ViewModels
         }
 
         /// <summary>
-        /// Preference Settings VM
+        /// General Settings VM
         /// </summary>
-        public PreferenceWindowVM PreferenceWindowVM
+        public GeneralSettingsVM GeneralSettingsVM
         {
-            get { return _PreferenceWindowVM ?? (_PreferenceWindowVM = new PreferenceWindowVM(_Settings)); }
+            get { return _GeneralSettingsVM ?? (_GeneralSettingsVM = new GeneralSettingsVM(_Settings)); }
         }
 
+        /// <summary>
+        /// Developer Settings VM
+        /// </summary>
+        public DeveloperSettingsVM DeveloperSettingsVM
+        {
+            get { return _DeveloperSettingsVM ?? (_DeveloperSettingsVM = new DeveloperSettingsVM(_Settings)); }
+        }
         #endregion View Models
 
         #region Commands
@@ -90,20 +173,14 @@ namespace Appium.ViewModels
         /// <summary>Run the check doctor command</summary>
         public ICommand CheckCommand
         {
-            get
-            {
-                return _CheckCommand ?? (_CheckCommand = new RelayCommand(() => _ExecuteCheckCommand()));
-            }
+            get { return _CheckCommand ?? (_CheckCommand = new RelayCommand(() => _ExecuteCheckCommand())); }
         }
 
         private ICommand _LaunchCommand;
         /// <summary>Launch the Appium Node Server</summary>
         public ICommand LaunchCommand
         {
-            get
-            {
-                return _LaunchCommand ?? (_LaunchCommand = new RelayCommand(() => _ExecuteLaunchCommand(), () => _CanExecuteLaunchCommand()));
-            }
+            get { return _LaunchCommand ?? (_LaunchCommand = new RelayCommand(() => _ExecuteLaunchCommand(), () => _CanExecuteLaunchCommand())); }
         }
 
         private ICommand _ClearOutputCommand;
@@ -112,12 +189,41 @@ namespace Appium.ViewModels
         {
             get { return _ClearOutputCommand ?? (_ClearOutputCommand = new RelayCommand(() => _ExecuteClearOutput())); }
         }
+
+        private ICommand _AndroidSettingsCommand;
+        /// <summary>Open the File Dialog Command</summary>
+        public ICommand AndroidSettingsCommand
+        {
+            get { return _AndroidSettingsCommand ?? (_AndroidSettingsCommand = new RelayCommand(() => _ExecuteOpenAndroidSettings())); }
+        }
+
+        private ICommand _GeneralSettingsCommand;
+        /// <summary>Open the File Dialog Command</summary>
+        public ICommand GeneralSettingsCommand
+        {
+            get { return _GeneralSettingsCommand ?? (_GeneralSettingsCommand = new RelayCommand(() => _ExecuteOpenGeneralSettings())); }
+        }
+
+        private ICommand _DeveloperSettingsCommand;
+        /// <summary>Open the File Dialog Command</summary>
+        public ICommand DeveloperSettingsCommand
+        {
+            get { return _DeveloperSettingsCommand ?? (_DeveloperSettingsCommand = new RelayCommand(() => _ExecuteOpenDeveloperSettings())); }
+        }
+
+        private ICommand _AboutCommand;
+        /// <summary>Open the File Dialog Command</summary>
+        public ICommand AboutCommand
+        {
+            get { return _AboutCommand ?? (_AboutCommand = new RelayCommand(() => _ExecuteOpenAbout())); }
+        }
+
+
         #endregion Commands
 
-        /// <summary>Launch String</summary>
-        public string LaunchString
+        public bool IsRunning
         {
-            get { return _AppiumEngine.IsRunning ? "Stop" : "Launch"; }
+            get { return _AppiumEngine.IsRunning; }
         }
 
         private string _Output = string.Empty;
@@ -154,7 +260,6 @@ namespace Appium.ViewModels
             }
         }
         #endregion Public Properties
-
 
         #region Public Call Back Method
         /// <summary>
@@ -220,6 +325,38 @@ namespace Appium.ViewModels
         {
             Output = string.Empty;
         }
+
+        /// <summary>
+        /// Opens the Android Settings Popup
+        /// </summary>
+        private void _ExecuteOpenAndroidSettings()
+        {
+            IsAndroidSettingsOpen = true;
+        }
+
+        /// <summary>
+        /// Opens the General Settings Popup
+        /// </summary>
+        private void _ExecuteOpenGeneralSettings()
+        {
+            IsGeneralSettingsOpen = true;
+        }
+
+        /// <summary>
+        /// Opens the Developer Settings Popup
+        /// </summary>
+        private void _ExecuteOpenDeveloperSettings()
+        {
+            IsDeveloperSettingsOpen = true;
+        }
+
+        /// <summary>
+        /// Opens the About Popup
+        /// </summary>
+        private void _ExecuteOpenAbout()
+        {
+            IsAboutOpen = true;
+        }
         #endregion Execute Commands
 
         #region Call Back Methods
@@ -237,7 +374,7 @@ namespace Appium.ViewModels
         /// </summary>
         private void _AppiumEngine_RunningStatusChanged()
         {
-            FirePropertyChanged(() => LaunchString);
+            FirePropertyChanged(() => IsRunning);
         }
         #endregion Call Back Methods
 

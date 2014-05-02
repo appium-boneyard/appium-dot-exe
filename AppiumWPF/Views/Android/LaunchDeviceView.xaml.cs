@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Appium.Views
+namespace Appium.Views.Android
 {
     /// <summary>
-    /// Interaction logic for PreferenceWindow.xaml
+    /// Interaction logic for LaunchDeviceView.xaml
     /// </summary>
-    public partial class PreferenceWindow : Window
+    public partial class LaunchDeviceView : UserControl
     {
-        public PreferenceWindow()
+        public LaunchDeviceView()
         {
             InitializeComponent();
         }

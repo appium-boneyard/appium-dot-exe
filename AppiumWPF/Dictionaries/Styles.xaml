@@ -53,16 +53,19 @@
         TargetType="{x:Type Button}">
         <Setter
             Property="Height"
-            Value="22" />
+            Value="40" />
         <Setter
             Property="Width"
-            Value="50" />
+            Value="40" />
         <Setter
             Property="VerticalAlignment"
             Value="Center" />
         <Setter
             Property="Margin"
             Value="4" />
+        <Setter
+            Property="Focusable"
+            Value="False" />
     </Style>
 
     <!-- Default Style for ComboBox -->
@@ -78,6 +81,7 @@
         <Setter
             Property="Margin"
             Value="4" />
+
     </Style>
 
     <!-- Default style for IntegerUpDown control-->

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Appium.Views
+namespace Appium.Views.General
 {
     /// <summary>
-    /// Interaction logic for AndroidSettingsView.xaml
+    /// Interaction logic for ServerView.xaml
     /// </summary>
-    public partial class AndroidSettingsView : UserControl
+    public partial class ServerView : UserControl
     {
-        public AndroidSettingsView()
+        public ServerView()
         {
             InitializeComponent();
         }

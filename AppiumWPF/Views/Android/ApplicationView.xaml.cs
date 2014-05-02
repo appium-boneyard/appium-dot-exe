@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Appium.Views
+namespace Appium.Views.Android
 {
     /// <summary>
-    /// Interaction logic for GeneralPreferencesView.xaml
+    /// Interaction logic for ApplicationView.xaml
     /// </summary>
-    public partial class GeneralPreferencesView : UserControl
+    public partial class ApplicationView : UserControl
     {
-        public GeneralPreferencesView()
+        public ApplicationView()
         {
             InitializeComponent();
         }

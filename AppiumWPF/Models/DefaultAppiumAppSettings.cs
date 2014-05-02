@@ -1,5 +1,4 @@
-﻿using System;
-//using AutoMapper;
+﻿//using AutoMapper;
 using Appium.Models.Capability;
 using AutoMapper;
 
@@ -15,7 +14,9 @@ namespace Appium.Models
 
         public string AndroidPackage { get; set; }
 
-        public string AndroidWaitActivity { get; set; }
+        public string AndroidWaitForActivity { get; set; }
+
+        public string AndroidWaitForPackage { get; set; }
 
         public string AVDToLaunch { get; set; }
 
@@ -25,6 +26,8 @@ namespace Appium.Models
 
         public bool PerformFullAndroidReset { get; set; }
 
+        public bool NoReset { get; set; }
+
         public uint Port { get; set; }
 
         public bool UseAndroidActivity { get; set; }
@@ -33,7 +36,9 @@ namespace Appium.Models
 
         public bool UseAndroidPackage { get; set; }
 
-        public bool UseAndroidWaitActivity { get; set; }
+        public bool UseAndroidWaitForActivity { get; set; }
+
+        public bool UseAndroidWaitForPackage { get; set; }
 
         public bool UseApplicationPath { get; set; }
 
@@ -65,6 +70,52 @@ namespace Appium.Models
 
         public bool UseNodeJSDebugging { get; set; }
 
+        public bool UseAVDLaunchArguments { get; set; }
+
+        public string AVDLaunchArguments { get; set; }
+
+        public bool UseSDKPath { get; set; }
+
+        public string SDKPath { get; set; }
+
+        public bool UseCoverageClass { get; set; }
+
+        public string CoverageClass { get; set; }
+
+        public bool UseBootstrapPort { get; set; }
+
+        public uint BootstrapPort { get; set; }
+
+        public bool UseSelendroidPort { get; set; }
+
+        public uint SelendroidPort { get; set; }
+
+        public bool UseChromeDriverPort { get; set; }
+
+        public uint ChromeDriverPort { get; set; }
+
+        public bool ShowTimestamps { get; set; }
+
+        public bool UseLogToFile { get; set; }
+
+        public string LogToFile { get; set; }
+
+        public bool UseLogToWebHook { get; set; }
+
+        public string LogToWebHook { get; set; }
+
+        public bool OverrideExistingSessions { get; set; }
+
+        public bool KillProcessUsingServerPortBeforeLaunch { get; set; }
+
+        public bool UseGridSeleniumConfigFile { get; set; }
+
+        public string GridSeleniumConfigFile { get; set; }
+
+        public bool UseCustomServerFlags { get; set; }
+
+        public string CustomServerFlags { get; set; }
+
         public Device InspectorDeviceCapability { get; set; }
 
         /// <summary>
@@ -81,7 +132,7 @@ namespace Appium.Models
         /// </summary>
         public void Load()
         {
-            Mapper.Map<Appium.Properties.Settings,IAppiumAppSettings>(Appium.Properties.Settings.Default,this);
+            Mapper.Map<Appium.Properties.Settings, IAppiumAppSettings>(Appium.Properties.Settings.Default, this);
         }
     }
 }

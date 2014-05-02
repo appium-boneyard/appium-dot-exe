@@ -105,13 +105,17 @@ namespace Appium.Models.Server
             {
                 _args.Add(new AVDToLaunchArgument(settings.AVDToLaunch));
             }
-            if (settings.UseAndroidWaitActivity)
+            if (settings.UseAndroidWaitForActivity)
             {
-                _args.Add(new AndroidWaitActivityArgument(settings.AndroidWaitActivity));
+                _args.Add(new AndroidWaitActivityArgument(settings.AndroidWaitForActivity));
             }
             if (settings.UseAndroidDeviceReadyTimeout)
             {
                 _args.Add(new AndroidDeviceReadyTimeoutArgument(settings.AndroidDeviceReadyTimeout));
+            }
+            if (settings.UseAndroidWaitForPackage)
+            {
+                _args.Add(new AndroidWaitForPackageArgument(settings.AndroidWaitForPackage));
             }
             if (settings.PerformFullAndroidReset)
             {
@@ -122,17 +126,67 @@ namespace Appium.Models.Server
             {
                 _args.Add(new QuietLoggingArgument());
             }
-            if (settings.KeepArtifacts)
-            {
-                _args.Add(new KeepArtifactsArgument());
-            }
-            if (!settings.ResetApplicationState && !settings.PerformFullAndroidReset)
+            if (settings.NoReset)
             {
                 _args.Add(new NoResetArgument());
             }
             if (settings.PrelaunchApplication)
             {
                 _args.Add(new PrelauchApplicationArgument());
+            }
+            if (settings.UseAVDLaunchArguments)
+            {
+                _args.Add(new AVDArgsToLaunchArgument(settings.AVDLaunchArguments));
+            }
+            if (settings.UseSDKPath)
+            {
+                Environment.SetEnvironmentVariable("ANDROID_HOME", settings.SDKPath);
+            }
+            if (settings.UseCoverageClass)
+            {
+                _args.Add(new AndroidCoverageArgument(settings.CoverageClass));
+            }
+            if (settings.UseBootstrapPort)
+            {
+                _args.Add(new AndroidBootstrapPortArgument(settings.BootstrapPort));
+            }
+            if (settings.UseSelendroidPort)
+            {
+                _args.Add(new SelendroidPortArgument(settings.SelendroidPort));
+            }
+            if (settings.UseChromeDriverPort)
+            {
+                _args.Add(new ChromeDriverPortArgument(settings.ChromeDriverPort));
+            }
+            if (settings.ShowTimestamps)
+            {
+                _args.Add(new ShowTimestampLogArgument());
+            }
+            if (settings.UseLogToFile)
+            {
+                _args.Add(new LogToFileArgument(settings.LogToFile));
+            }
+            if (settings.UseLogToWebHook)
+            {
+                _args.Add(new LogToWebHookArgument(settings.LogToWebHook));
+            }
+            if (settings.OverrideExistingSessions)
+            {
+                _args.Add(new OverrideExistingSessionArgument());
+            }
+            if (settings.KillProcessUsingServerPortBeforeLaunch)
+            {
+                // TODO: Need to implement this and uncomment the UI component
+                // 1) Find all processes running on the port
+                // 2) kill the process running on the port
+            }
+            if (settings.UseGridSeleniumConfigFile)
+            {
+                _args.Add(new SeleniumGridArgument(settings.GridSeleniumConfigFile));
+            }
+            if (settings.UseCustomServerFlags)
+            {
+                _args.Add(new CustomDeveloperArguments(settings.CustomServerFlags));
             }
         }
 

@@ -1,0 +1,114 @@
+﻿<UserControl
+    x:Class="Appium.Views.Android.AdvancedView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <sys:Int32
+                x:Key="SDKRow">0</sys:Int32>
+            <sys:Int32
+                x:Key="CoverageRow">1</sys:Int32>
+            <sys:Int32
+                x:Key="BootstrapRow">2</sys:Int32>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- SDK Row -->
+        <DockPanel
+            Grid.Row="{StaticResource SDKRow}"
+            Grid.ColumnSpan="3"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="SDK Path"
+                IsChecked="{Binding UseSDKPath}" />
+            <TextBox
+                Text="{Binding SDKPath, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseSDKPath}" />
+        </DockPanel>
+
+        <!-- Coverage Class Row -->
+        <DockPanel
+            Grid.Row="{StaticResource CoverageRow}"
+            Grid.ColumnSpan="3"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Coverage Class"
+                IsChecked="{Binding UseCoverageClass}" />
+            <TextBox
+                Text="{Binding CoverageClass, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseCoverageClass}" />
+        </DockPanel>
+
+        <!-- Bootstrap Port Row -->
+        <DockPanel
+            Grid.Row="{StaticResource BootstrapRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Bootstrap Port"
+                IsChecked="{Binding UseBootstrapPort}" />
+            <toolkit:IntegerUpDown
+                Minimum="1"
+                Maximum="65535"
+                Value="{Binding BootstrapPort, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseBootstrapPort}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Row="{StaticResource BootstrapRow}"
+            Grid.Column="1"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Selendroid Port"
+                IsChecked="{Binding UseSelendroidPort}" />
+            <toolkit:IntegerUpDown
+                Minimum="1"
+                Maximum="65535"
+                Value="{Binding SelendroidPort, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseSelendroidPort}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Row="{StaticResource BootstrapRow}"
+            Grid.Column="2"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Chrome Driver Port"
+                IsChecked="{Binding UseChromeDriverPort}" />
+            <toolkit:IntegerUpDown
+                Minimum="1"
+                Maximum="65535"
+                Value="{Binding ChromeDriverPort, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseChromeDriverPort}" />
+        </DockPanel>
+    </Grid>
+</UserControl>

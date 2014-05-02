@@ -5,6 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:views="clr-namespace:Appium.Views"
+    xmlns:android="clr-namespace:Appium.Views.Android"
+    xmlns:general="clr-namespace:Appium.Views.General"
+    xmlns:developer="clr-namespace:Appium.Views.Developer"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="Appium"
     Height="650"
@@ -22,105 +25,234 @@
 
             <toolkit:InverseBoolConverter
                 x:Key="inverseBoolConv" />
+
+            <BitmapImage
+                x:Key="androidImage">pack://application:,,,/Resources/android.png</BitmapImage>
+            <BitmapImage
+                x:Key="infoImage">pack://application:,,,/Resources/info.png</BitmapImage>
+            <BitmapImage
+                x:Key="developerImage">pack://application:,,,/Resources/developer.png</BitmapImage>
+            <BitmapImage
+                x:Key="lightswitchImage">pack://application:,,,/Resources/lightswitch.png</BitmapImage>
+            <BitmapImage
+                x:Key="rocketOnImage">pack://application:,,,/Resources/RocketOn.ico</BitmapImage>
+            <BitmapImage
+                x:Key="stopImage">pack://application:,,,/Resources/stopsign.ico</BitmapImage>
+            <BitmapImage
+                x:Key="aboutImage">pack://application:,,,/Resources/help.png</BitmapImage>
         </ResourceDictionary>
     </Window.Resources>
 
     <DockPanel
         Background="LightGray"
         LastChildFill="True">
-        <Menu
-            DockPanel.Dock="Top"
-            BorderBrush="Black"
-            BorderThickness="0,0,0,1"
-            Width="auto"
-            Height="22">
-            <MenuItem
-                Header="Preferences"
-                HorizontalContentAlignment="Center"
-                ToolTip="Open Preferences"
-                Click="_PreferenceClick" />
-            <!-- TODO: make Check's Icon Doctor's Red Cross-->
-            <MenuItem
+        <!-- TODO: make Check's Icon Doctor's Red Cross-->
+        <!--<MenuItem
                 Header="Check"
                 IsEnabled="False"
                 HorizontalContentAlignment="Center"
                 ToolTip="Launch Doctor"
                 Visibility="Collapsed"
-                Command="{Binding CheckCommand}" />
-            <!-- TODO: make Inspector be a magnify glass -->
-            <MenuItem
-                Header="Inspector"
-                HorizontalContentAlignment="Center"
-                ToolTip="Launch Inspector"
+                Command="{Binding CheckCommand}" />-->
+
+        <DockPanel
+            DockPanel.Dock="Top"
+            HorizontalAlignment="Stretch"
+            Margin="6,0,6,0"
+            LastChildFill="False">
+
+            <!-- Left side of the Dock -->
+            <Button
+                Name="btnAndroidSettings"
+                DockPanel.Dock="Left"
+                ToolTip="Android Settings"
+                Command="{Binding AndroidSettingsCommand}">
+                <Image
+                    Source="{StaticResource androidImage}" />
+            </Button>
+            <Button
+                Name="btnGeneralSettings"
+                DockPanel.Dock="Left"
+                ToolTip="General Settings"
+                Command="{Binding GeneralSettingsCommand}">
+                <Image
+                    Source="{StaticResource lightswitchImage}" />
+            </Button>
+
+            <Button
+                Name="btnDeveloperSettings"
+                DockPanel.Dock="Left"
+                ToolTip="Developer Settings"
+                Command="{Binding DeveloperSettingsCommand}">
+                <Image
+                    Source="{StaticResource developerImage}" />
+            </Button>
+            <Button
+                Name="btnAbout"
+                DockPanel.Dock="Left"
+                ToolTip="About"
+                Command="{Binding AboutCommand}">
+                <Image
+                    Source="{StaticResource aboutImage}" />
+            </Button>
+
+            <!-- Right side of the Dock -->
+            <Button
+                Name="btnLaunch"
+                DockPanel.Dock="Right"
+                Command="{Binding LaunchCommand}">
+                <Image>
+                    <Image.Style>
+                        <Style
+                            TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsRunning}"
+                                    Value="false">
+                                    <Setter
+                                        Property="Source"
+                                        Value="{StaticResource rocketOnImage}" />
+                                    <Setter
+                                        Property="ToolTip"
+                                        Value="Launch the Appium Node Server" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding IsRunning}"
+                                    Value="true">
+                                    <Setter
+                                        Property="Source"
+                                        Value="{StaticResource stopImage}" />
+                                    <!--Value="{StaticResource rocketOffImage}" />-->
+                                    <Setter
+                                        Property="ToolTip"
+                                        Value="Stop the Appium Node Server" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>
+            <Button
+                Name="btnInspector"
+                DockPanel.Dock="Right"
+                ToolTip="Inspector"
                 IsEnabled="{Binding IsInspectorWindowOpen, Converter={StaticResource inverseBoolConv}}"
-                Click="_InspectorClick" />
-            <!--Command="{Binding InspectorOpenCommand}" />-->
+                Click="_InspectorClick">
+                <Image
+                    Source="{StaticResource infoImage}" />
+            </Button>
 
-            <!--<MenuItem
-                HorizontalContentAlignment="Center"
-                Header="Clear Log"
-                ToolTip="Clear the output log"
-                Command="{Binding ClearOutputCommand}" />-->
-            <MenuItem
-                TextBlock.TextAlignment="Center"
-                Width="60"
-                ToolTip="Launch the Appium Node Server"
-                Header="{Binding LaunchString}"
-                Command="{Binding LaunchCommand}" />
-            <!--<MenuItem
-                Icon="{DynamicResource RocketOnIcon}" />
-            <MenuItem
-                Icon="{DynamicResource RocketOffIcon}" />-->
-        </Menu>
+        </DockPanel>
 
-        <views:MainSettingsView
-            Margin="10,10,10,0"
-            DockPanel.Dock="Top"
-            DataContext="{Binding MainSettingsVM}" />
-
-        <TabControl
-            DockPanel.Dock="Top"
-            Margin="10,10,10,0"
-            Name="osSpecificSettings">
-            <TabItem
-                Name="tab1"
-                Header="Android">
-                <views:AndroidSettingsView
-                    DockPanel.Dock="Top"
-                    Padding="10"
+        <!-- Android Settings Popup -->
+        <Popup
+            PlacementTarget="{Binding ElementName=btnAndroidSettings}"
+            StaysOpen="False"
+            AllowsTransparency="True"
+            IsOpen="{Binding IsAndroidSettingsOpen}">
+            <Border
+                CornerRadius="10"
+                BorderThickness="4"
+                Background="LightGray"
+                Padding="10"
+                BorderBrush="#A4C639">
+                <android:AndroidSettingsView
                     DataContext="{Binding AndroidSettingsVM}" />
-            </TabItem>
-            <TabItem
-                Name="tab2"
-                IsEnabled="False"
-                Header="Future" />
-        </TabControl>
+            </Border>
+        </Popup>
 
+        <!-- General Settings Popup -->
+        <Popup
+            PlacementTarget="{Binding ElementName=btnGeneralSettings}"
+            StaysOpen="False"
+            AllowsTransparency="True"
+            IsOpen="{Binding IsGeneralSettingsOpen}">
+            <Border
+                CornerRadius="10"
+                BorderThickness="4"
+                Background="LightGray"
+                Padding="10"
+                BorderBrush="White">
+                <general:GeneralSettingsView
+                    DataContext="{Binding GeneralSettingsVM}" />
+            </Border>
+        </Popup>
+
+        <!-- Developer Settings Popup -->
+        <Popup
+            PlacementTarget="{Binding ElementName=btnDeveloperSettings}"
+            StaysOpen="False"
+            AllowsTransparency="True"
+            IsOpen="{Binding IsDeveloperSettingsOpen}">
+            <Border
+                CornerRadius="10"
+                BorderThickness="4"
+                Background="LightGray"
+                Padding="10"
+                BorderBrush="Gray">
+                <developer:DeveloperSettingsView
+                    DataContext="{Binding DeveloperSettingsVM}" />
+            </Border>
+        </Popup>
+
+        <!-- About Popup -->
+        <Popup
+            PlacementTarget="{Binding ElementName=btnAbout}"
+            StaysOpen="False"
+            AllowsTransparency="True"
+            IsOpen="{Binding IsAboutOpen}">
+            <Border
+                CornerRadius="10"
+                BorderThickness="4"
+                Background="LightGray"
+                Padding="10"
+                BorderBrush="Purple">
+                <StackPanel>
+                    <Label
+                        Content="Appium" />
+                    <StackPanel
+                        Orientation="Horizontal">
+                    <Label
+                        Content="Version: "></Label>
+                        <Label
+                            Content="{Binding Version}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Popup>
+
+
+
+        <!-- Output -->
         <DockPanel
             LastChildFill="True">
             <DockPanel
-                Margin="10,0,6,0"
-                DockPanel.Dock="Top"
+                Margin="10,0,6,10"
+                DockPanel.Dock="Bottom"
                 LastChildFill="False">
-                <TextBlock
+                <!--<TextBlock
                     DockPanel.Dock="Left"
                     VerticalAlignment="Center"
-                    Text="Output:" />
-
+                    Text="Output:" />-->
                 <Button
                     DockPanel.Dock="Right"
+                    Height="22"
+                    Width="50"
                     Content="Clear"
                     ToolTip="Clear the output log"
                     Command="{Binding ClearOutputCommand}" />
             </DockPanel>
 
             <ScrollViewer
-                Margin="10,0,10,10"
+                Margin="10,5,10,0"
                 VerticalScrollBarVisibility="Auto">
-                <TextBlock
+                <TextBox
                     Name="rtbOutput"
                     Foreground="White"
                     Background="Black"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    IsReadOnly="True"
                     Height="Auto"
                     Margin="0"
                     TargetUpdated="_ScrollToBottom"
