@@ -3,9 +3,14 @@ using Appium.Models;
 using Appium.Models.Inspector;
 using Appium.Utility;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Input;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Appium.ViewModels
 {
@@ -118,7 +123,6 @@ namespace Appium.ViewModels
         #region Private Methods
 
         #region Command Methods
-
         private void _ExecuteRefreshCommand()
         {
             System.Threading.ThreadPool.QueueUserWorkItem(
@@ -143,14 +147,14 @@ namespace Appium.ViewModels
             }
             Message = "Updating";
 
-            string pageSource;
+            string pageSource = null;
             // grab the page source and parse it
             if (!string.IsNullOrWhiteSpace(pageSource = _Driver.GetPageSource()))
             {
                 _CleanUpRoot();
-                _Root root = JsonConvert.DeserializeObject<_Root>(pageSource);
+                var root = _ConvertToUIAutomatorNode(pageSource);
                 _RootNode = new ObservableCollection<UIAutomatorNodeVM>();
-                UIAutomatorNodeVM vm = new UIAutomatorNodeVM(root.Hierarchy, vm_SelectionChanged);
+                UIAutomatorNodeVM vm = new UIAutomatorNodeVM(root, vm_SelectionChanged);
                 _RootNode.Add(vm);
                 FirePropertyChanged(() => RootNode);
             }
@@ -198,12 +202,65 @@ namespace Appium.ViewModels
         }
         #endregion Command Methods
 
-        #endregion Private Methods
-
-        private class _Root
+        /// <summary>
+        /// converts the xml page source into a UIAutomatorNode
+        /// </summary>
+        /// <param name="pageSource">xml page source</param>
+        /// <returns>UI Automator Node representation of the DOM</returns>
+        private static UIAutomatorNode _ConvertToUIAutomatorNode(string pageSource)
         {
-            public UIAutomatorNode Hierarchy { get; set; }
+            var nodeStack = new Stack<UIAutomatorNode>();
+            UIAutomatorNode root = null;
+
+            using (var reader = XmlReader.Create(new StringReader(pageSource)))
+            {
+                while (reader.Read())
+                {
+                    if ("hierarchy" == reader.Name || "AppiumAUT" == reader.Name)
+                    {
+                        continue;
+                    }
+
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            var node = new UIAutomatorNode(reader);
+
+                            if (reader.IsEmptyElement)
+                            {
+                                if (0 == nodeStack.Count)
+                                {
+                                    root = node;
+                                }
+                                else
+                                {
+                                    nodeStack.Peek().Children.Add(node);
+                                }
+                            }
+                            else
+                            {
+                                nodeStack.Push(node);
+                            }
+                            break;
+                        case XmlNodeType.EndElement:
+                            var child = nodeStack.Pop();
+                            if (nodeStack.Count == 0)
+                            {
+                                root = child;
+                            }
+                            else
+                            {
+                                var parent = nodeStack.Peek();
+                                parent.Children.Add(child);
+                            }
+                            break;
+                    }
+                }
+            }
+            return root;
         }
 
+
+        #endregion Private Methods
     }
 }

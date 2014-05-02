@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:Appium.ViewModels"
     xmlns:conv="clr-namespace:Appium.Converters"
-    Title="InspectorWindow"
+    Title="Inspector Window"
     Height="650"
     Width="750"
     Background="LightGray">
@@ -13,7 +13,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary
                     Source="..\Dictionaries\Styles.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
             <BitmapImage
                 x:Key="defaultPhoto"
@@ -36,10 +35,14 @@
             <GroupBox
                 HorizontalAlignment="Stretch"
                 DockPanel.Dock="Top"
-                Header="Display"
                 Width="245"
                 Height="325"
-                Background="White">
+                Padding="4">
+                <GroupBox.Header>
+                    <Label
+                        FontWeight="Bold"
+                        Content="Display" />
+                </GroupBox.Header>
                 <Canvas>
                     <Canvas.Background>
                         <ImageBrush
@@ -59,11 +62,22 @@
 
             <!-- Details View -->
             <GroupBox
-                Header="Details"
-                Background="White">
-                <!--DockPanel.Dock="Bottom"-->
-                <TextBlock
-                    Text="{Binding SelectedNode, Converter={StaticResource detailsConv}}" />
+                Padding="4">
+                <GroupBox.Header>
+                    <Label
+                        FontWeight="Bold"
+                        Content="Details" />
+                </GroupBox.Header>
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto">
+                    <!--DockPanel.Dock="Bottom"-->
+                    <TextBox
+                        Margin="0"
+                        IsReadOnly="True"
+                        Height="Auto"
+                        VerticalAlignment="Stretch"
+                        Text="{Binding SelectedNode, Converter={StaticResource detailsConv}}" />
+                </ScrollViewer>
             </GroupBox>
         </DockPanel>
 
