@@ -22,6 +22,8 @@ namespace Appium.ViewModels
         #endregion Constructor
 
         #region Public Properties
+
+        #region Use Developer Mode
         /// <summary>Use Developer Mode</summary>
         public bool UseDeveloperMode
         {
@@ -35,7 +37,9 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Use Developer Mode
 
+        #region External Node JS Binary
         /// <summary>Use External Node JS Binary</summary>
         public bool UseExternalNodeJSBinary
         {
@@ -63,7 +67,9 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion External Node JS Binary
 
+        #region External Appium Package
         /// <summary>Use the External Appium Package</summary>
         public bool UseExternalAppiumPackage
         {
@@ -91,7 +97,9 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion External Appium Package
 
+        #region Break On Application Start
         /// <summary>Break on application start</summary>
         public bool IsBreakOnApplicationStart
         {
@@ -105,7 +113,9 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Break On Application Start
 
+        #region Node JS Debug Port
         /// <summary>Enable the node JS debug port</summary>
         public bool UseNodeJSDebugPort
         {
@@ -133,6 +143,38 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Node JS Debug Port
+
+        #region Custom Server Flags
+        /// <summary>Use Custom Server Flags</summary>
+        public bool UseCustomServerFlags
+        {
+            get { return _Settings.UseCustomServerFlags; }
+            set
+            {
+                if (value != _Settings.UseCustomServerFlags)
+                {
+                    _Settings.UseCustomServerFlags = value;
+                    FirePropertyChanged(() => UseCustomServerFlags);
+                }
+            }
+        }
+
+        /// <summary>Custom Server Flags</summary>
+        public string CustomServerFlags
+        {
+            get { return _Settings.CustomServerFlags; }
+            set
+            {
+                if (value != _Settings.CustomServerFlags)
+                {
+                    _Settings.CustomServerFlags = value;
+                    FirePropertyChanged(() => CustomServerFlags);
+                }
+            }
+        }
+        #endregion Custom Server Flags
+
         #endregion Public Properties
 
         #region Command Properties

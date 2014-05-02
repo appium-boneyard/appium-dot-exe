@@ -1,0 +1,90 @@
+﻿<UserControl
+    x:Class="Appium.Views.General.LoggingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <sys:Int32
+                x:Key="QuietRow">0</sys:Int32>
+            <sys:Int32
+                x:Key="LogToFileRow">1</sys:Int32>
+            <sys:Int32
+                x:Key="LogWebHookRow">2</sys:Int32>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Quiet Logging Row -->
+        <CheckBox
+            Grid.Row="{StaticResource QuietRow}"
+            Content="Quiet Logging"
+            IsChecked="{Binding UseQuietLogging}" />
+        <CheckBox
+            Grid.Row="{StaticResource QuietRow}"
+            Grid.Column="1"
+            Content="Use Colors"
+            ToolTip="(Not Implemented Yet)"
+            IsEnabled="False" />
+        <!--IsChecked="{Binding UseColors}" />-->
+        <CheckBox
+            Grid.Row="{StaticResource QuietRow}"
+            Grid.Column="2"
+            Content="Show Timestamps"
+            IsChecked="{Binding ShowTimestamps}" />
+
+        <!-- Log To File Row -->
+        <DockPanel
+            Grid.Row="{StaticResource LogToFileRow}"
+            Grid.ColumnSpan="3"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbLogToFileEnabled"
+                Content="Log To File"
+                IsChecked="{Binding UseLogToFile}" />
+            <TextBox
+                Text="{Binding LogToFile, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseLogToFile}" />
+        </DockPanel>
+
+        <!-- Log To File Row -->
+        <DockPanel
+            Grid.Row="{StaticResource LogWebHookRow}"
+            Grid.ColumnSpan="3"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbLogToWebHookEnabled"
+                Content="Log To WebHook"
+                IsChecked="{Binding UseLogToWebHook}" />
+            <TextBox
+                Text="{Binding LogToWebHook, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseLogToWebHook}" />
+        </DockPanel>
+    </Grid>
+</UserControl>

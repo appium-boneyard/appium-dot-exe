@@ -1,9 +1,9 @@
-﻿using System;
-using Appium.Models;
-using AutoMapper;
+﻿using Appium.Models;
 using Appium.Models.Capability;
+using AutoMapper;
+using System;
 
-namespace Appium
+namespace Appium.Utility
 {
 	/// <summary>
 	/// Handles automapper configuration

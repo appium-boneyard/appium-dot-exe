@@ -1,6 +1,7 @@
 ﻿using Appium.Engine;
 using Appium.Models;
 using Appium.Models.Inspector;
+using Appium.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;

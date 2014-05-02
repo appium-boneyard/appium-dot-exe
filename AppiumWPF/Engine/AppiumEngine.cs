@@ -1,5 +1,6 @@
 ﻿using Appium.Models;
 using Appium.Models.Server;
+using Appium.Utility;
 using Ionic.Zip;
 using Newtonsoft.Json;
 using System;
@@ -516,6 +517,10 @@ namespace Appium.Engine
                         Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
                     }
                 }
+            }
+            else
+            {
+                _FireOutputData("Update not available");
             }
         }
 

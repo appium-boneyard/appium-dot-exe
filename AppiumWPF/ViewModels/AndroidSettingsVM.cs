@@ -1,5 +1,7 @@
 ﻿using Appium.Models;
+using Appium.Utility;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace Appium.ViewModels
 {
@@ -26,10 +28,55 @@ namespace Appium.ViewModels
         #endregion Constructor
 
         #region Public Properties
+
+        #region Application Path
+        /// <summary>
+        /// Is the application path enabled (and will be used)
+        /// </summary>
+        public bool IsAppPathEnabled
+        {
+            get { return _Settings.UseApplicationPath; }
+            set
+            {
+                if (value != _Settings.UseApplicationPath)
+                {
+                    _Settings.UseApplicationPath = value;
+                    FirePropertyChanged(() => IsAppPathEnabled);
+                }
+            }
+        }
+
+        /// <summary>
+        /// File Path to the application 
+        /// </summary>
+        public string FilePath
+        {
+            get { return _Settings.ApplicationPath; }
+            set
+            {
+                if (value != _Settings.ApplicationPath)
+                {
+                    _Settings.ApplicationPath = value;
+                    FirePropertyChanged(() => FilePath);
+                }
+            }
+        }
+
+        private ICommand _ChooseFileCommand;
+        /// <summary>
+        /// Open the File Dialog Command
+        /// </summary>
+        public ICommand ChooseFileCommand
+        {
+            get { return _ChooseFileCommand ?? (_ChooseFileCommand = new RelayCommand(() => _ExecuteOpenFileDialog(), () => _CanExecuteOpenFileDialog())); }
+        }
+        #endregion Application Path
+
+        #region Package
         /// <summary>
         /// Use the application package flag (--app-pkg)
         /// </summary>
-        public bool IsPackageEnabled
+        public bool UsePackage
         {
             get { return _Settings.UseAndroidPackage; }
             set
@@ -37,7 +84,7 @@ namespace Appium.ViewModels
                 if (value != _Settings.UseAndroidPackage)
                 {
                     _Settings.UseAndroidPackage = value;
-                    FirePropertyChanged(() => IsPackageEnabled);
+                    FirePropertyChanged(() => UsePackage);
                 }
             }
         }
@@ -57,19 +104,21 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Package
 
+        #region Activity
         /// <summary>
         /// Use the android activity flag (--app-activity)
         /// </summary>
-        public bool IsActivityEnabled
+        public bool UseActivity
         {
             get { return _Settings.UseAndroidActivity; }
             set
             {
                 if (value != _Settings.UseAndroidActivity)
                 {
-                    _Settings.UseAndroidActivity= value;
-                    FirePropertyChanged(() => IsActivityEnabled);
+                    _Settings.UseAndroidActivity = value;
+                    FirePropertyChanged(() => UseActivity);
                 }
             }
         }
@@ -89,11 +138,13 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Activity
 
+        #region Launch AVDs
         /// <summary>
         /// enable the avd flag (--avd) 
         /// </summary>
-        public bool IsLaunchAVDEnabled
+        public bool UseLaunchAVD
         {
             get { return _Settings.LaunchAVD; }
             set
@@ -101,7 +152,7 @@ namespace Appium.ViewModels
                 if (value != _Settings.LaunchAVD)
                 {
                     _Settings.LaunchAVD = value;
-                    FirePropertyChanged(() => IsLaunchAVDEnabled);
+                    FirePropertyChanged(() => UseLaunchAVD);
                 }
             }
         }
@@ -126,19 +177,21 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Launch AVDs
 
+        #region Wait For Activity
         /// <summary>
         ///  enable the application wait activity (--app-wait-activity [activity])
         /// </summary>
-        public bool IsWaitForActivityEnabled
+        public bool UseWaitForActivity
         {
-            get { return _Settings.UseAndroidWaitActivity; }
+            get { return _Settings.UseAndroidWaitForActivity; }
             set
             {
-                if (value != _Settings.UseAndroidWaitActivity)
+                if (value != _Settings.UseAndroidWaitForActivity)
                 {
-                    _Settings.UseAndroidWaitActivity = value;
-                    FirePropertyChanged(() => IsWaitForActivityEnabled);
+                    _Settings.UseAndroidWaitForActivity = value;
+                    FirePropertyChanged(() => UseWaitForActivity);
                 }
             }
         }
@@ -148,21 +201,57 @@ namespace Appium.ViewModels
         /// </summary>
         public string WaitForActivity
         {
-            get { return _Settings.AndroidWaitActivity; }
+            get { return _Settings.AndroidWaitForActivity; }
             set
             {
-                if (value != _Settings.AndroidWaitActivity)
+                if (value != _Settings.AndroidWaitForActivity)
                 {
-                    _Settings.AndroidWaitActivity = value;
+                    _Settings.AndroidWaitForActivity = value;
                     FirePropertyChanged(() => WaitForActivity);
+                }
+            }
+        }
+        #endregion Wait For Activity
+
+        #region Wait For Package
+        /// <summary>
+        ///  enable the application wait for package (--app-wait-package [activity])
+        /// </summary>
+        public bool UseWaitForPackage
+        {
+            get { return _Settings.UseAndroidWaitForPackage; }
+            set
+            {
+                if (value != _Settings.UseAndroidWaitForPackage)
+                {
+                    _Settings.UseAndroidWaitForPackage = value;
+                    FirePropertyChanged(() => UseWaitForPackage);
                 }
             }
         }
 
         /// <summary>
+        /// Package name for the Android package you want to wait for (e.g. com.example.android.myApp)
+        /// </summary>
+        public string WaitForPackage
+        {
+            get { return _Settings.AndroidWaitForPackage; }
+            set
+            {
+                if (value != _Settings.AndroidWaitForPackage)
+                {
+                    _Settings.AndroidWaitForPackage = value;
+                    FirePropertyChanged(() => WaitForPackage);
+                }
+            }
+        }
+        #endregion Wait For Package
+
+        #region Device Ready
+        /// <summary>
         /// Enable the device timeout flag (--device-ready-timeout [number])
         /// </summary>
-        public bool IsDeviceReadyTimeoutEnabled
+        public bool UseDeviceReadyTimeout
         {
             get { return _Settings.UseAndroidDeviceReadyTimeout; }
             set
@@ -170,7 +259,7 @@ namespace Appium.ViewModels
                 if (value != _Settings.UseAndroidDeviceReadyTimeout)
                 {
                     _Settings.UseAndroidDeviceReadyTimeout = value;
-                    FirePropertyChanged(() => IsDeviceReadyTimeoutEnabled);
+                    FirePropertyChanged(() => UseDeviceReadyTimeout);
                 }
             }
         }
@@ -190,7 +279,9 @@ namespace Appium.ViewModels
                 }
             }
         }
+        #endregion Device Ready
 
+        #region Reset
         /// <summary>
         /// Reset app state by un-installing app instead of clearing app data. This flag will also remove the app
         /// after the session is complete (--full-reset)
@@ -207,6 +298,213 @@ namespace Appium.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Don't reset app state between sessions
+        /// </summary>
+        public bool NoReset
+        {
+            get { return _Settings.NoReset; }
+            set
+            {
+                if (value != _Settings.NoReset)
+                {
+                    _Settings.NoReset = value;
+                    FirePropertyChanged(() => NoReset);
+                }
+            }
+        }
+        #endregion Reset
+
+        #region Launch Arguments
+        public bool UseLaunchArguments
+        {
+            get { return _Settings.UseAVDLaunchArguments; }
+            set
+            {
+                if (value != _Settings.UseAVDLaunchArguments)
+                {
+                    _Settings.UseAVDLaunchArguments = value;
+                    FirePropertyChanged(() => UseLaunchArguments);
+                }
+            }
+        }
+
+        public string LaunchArguments
+        {
+            get { return _Settings.AVDLaunchArguments; }
+            set
+            {
+                if (value != _Settings.AVDLaunchArguments)
+                {
+                    _Settings.AVDLaunchArguments = value;
+                    FirePropertyChanged(() => LaunchArguments);
+                }
+            }
+        }
+        #endregion Launch Arguments
+
+        #region SDK Path
+        public bool UseSDKPath
+        {
+            get { return _Settings.UseSDKPath; }
+            set
+            {
+                if (value != _Settings.UseSDKPath)
+                {
+                    _Settings.UseSDKPath = value;
+                    FirePropertyChanged(() => UseSDKPath);
+                }
+            }
+        }
+
+        public string SDKPath
+        {
+            get { return _Settings.SDKPath; }
+            set
+            {
+                if (value != _Settings.SDKPath)
+                {
+                    _Settings.SDKPath = value;
+                    FirePropertyChanged(() => SDKPath);
+                }
+            }
+        }
+        #endregion SDK Path
+
+        #region Coverage Class
+        public bool UseCoverageClass
+        {
+            get { return _Settings.UseCoverageClass; }
+            set
+            {
+                if (value != _Settings.UseCoverageClass)
+                {
+                    _Settings.UseCoverageClass = value;
+                    FirePropertyChanged(() => UseCoverageClass);
+                }
+            }
+        }
+
+        public string CoverageClass
+        {
+            get { return _Settings.CoverageClass; }
+            set
+            {
+                if (value != _Settings.CoverageClass)
+                {
+                    _Settings.CoverageClass = value;
+                    FirePropertyChanged(() => CoverageClass);
+                }
+            }
+        }
+        #endregion Coverage Class
+
+        #region Bootstrap Port
+        public bool UseBootstrapPort
+        {
+            get { return _Settings.UseBootstrapPort; }
+            set
+            {
+                if (value != _Settings.UseBootstrapPort)
+                {
+                    _Settings.UseBootstrapPort = value;
+                    FirePropertyChanged(() => UseBootstrapPort);
+                }
+            }
+        }
+
+        public uint BootstrapPort
+        {
+            get { return _Settings.BootstrapPort; }
+            set
+            {
+                if (value != _Settings.BootstrapPort)
+                {
+                    _Settings.BootstrapPort = value;
+                    FirePropertyChanged(() => BootstrapPort);
+                }
+            }
+        }
+        #endregion Bootstrap Port
+
+        #region Selendroid Port
+        public bool UseSelendroidPort
+        {
+            get { return _Settings.UseSelendroidPort; }
+            set
+            {
+                if (value != _Settings.UseSelendroidPort)
+                {
+                    _Settings.UseSelendroidPort = value;
+                    FirePropertyChanged(() => UseSelendroidPort);
+                }
+            }
+        }
+
+        public uint SelendroidPort
+        {
+            get { return _Settings.SelendroidPort; }
+            set
+            {
+                if (value != _Settings.SelendroidPort)
+                {
+                    _Settings.SelendroidPort = value;
+                    FirePropertyChanged(() => SelendroidPort);
+                }
+            }
+        }
+        #endregion Selendroid Port
+
+        #region Chrome Driver
+        public bool UseChromeDriverPort
+        {
+            get { return _Settings.UseChromeDriverPort; }
+            set
+            {
+                if (value != _Settings.UseChromeDriverPort)
+                {
+                    _Settings.UseChromeDriverPort = value;
+                    FirePropertyChanged(() => UseChromeDriverPort);
+                }
+            }
+        }
+
+        public uint ChromeDriverPort
+        {
+            get { return _Settings.ChromeDriverPort; }
+            set
+            {
+                if (value != _Settings.ChromeDriverPort)
+                {
+                    _Settings.ChromeDriverPort = value;
+                    FirePropertyChanged(() => ChromeDriverPort);
+                }
+            }
+        }
+        #endregion Chrome DRiver
+
         #endregion Public Properties
+
+        #region Private Methods
+        /// <summary>
+        /// Open the File Dialog Window
+        /// Display the previous location, or if the user inputted a partial filepath, open that filepath directory
+        /// </summary>
+        private void _ExecuteOpenFileDialog()
+        {
+            FilePath = OpenDialog.OpenFileDialog(FilePath, "Select Application", ".apk", "Android Apps (*.apk)|*.apk");
+        }
+
+        /// <summary>
+        /// Can Execute the open file dialog 
+        /// </summary>
+        /// <returns></returns>
+        private bool _CanExecuteOpenFileDialog()
+        {
+            return IsAppPathEnabled;
+        }
+        #endregion Private Methods
+ 
     }
 }

@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="Appium.Views.Android.AndroidSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:android="clr-namespace:Appium.Views.Android"
+    mc:Ignorable="d"
+    MinWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel
+        Background="LightGray">
+        <Label
+            FontStyle="Normal"
+            FontWeight="Bold"
+            Content="Android Settings" />
+        <GroupBox
+            Margin="0,5,0,0"
+            Header="Application">
+            <android:ApplicationView />
+        </GroupBox>
+        <GroupBox
+            Margin="0,5,0,0"
+            Header="Launch Device">
+            <android:LaunchDeviceView />
+        </GroupBox>
+        <GroupBox
+            Margin="0,5,0,0"
+            Header="Advanced">
+            <android:AdvancedView/>
+        </GroupBox>
+    </StackPanel>
+</UserControl>
