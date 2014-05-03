@@ -94,6 +94,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Inspector\AbstractNode.cs" />
+    <Compile Include="Models\Inspector\UIAutomatorAppleNode.cs" />
     <Compile Include="Models\Server\CustomDeveloperArguments.cs" />
     <Compile Include="Utility\AutomapperConfiguration.cs" />
     <Compile Include="Utility\Constants.cs" />
@@ -107,7 +109,7 @@
     <Compile Include="Models\IAppiumAppSettings.cs" />
     <Compile Include="Models\IAppiumServerSettings.cs" />
     <Compile Include="Models\Inspector\INode.cs" />
-    <Compile Include="Models\Inspector\UIAutomatorNode.cs" />
+    <Compile Include="Models\Inspector\UIAutomatorAndroidNode.cs" />
     <Compile Include="Models\Server\AndroidActivityArgument.cs" />
     <Compile Include="Models\Server\AndroidBootstrapPortArgument.cs" />
     <Compile Include="Models\Server\AndroidCoverageArgument.cs" />

@@ -15,7 +15,7 @@ namespace Appium.ViewModels
     {
         #region Data
         private readonly ObservableCollection<UIAutomatorNodeVM> _Children;
-        private readonly UIAutomatorNode _Model;
+        private readonly INode _Model;
         private SelectionChangedEventHandler _EH;
         // flag: Has Dispose already been called?
         bool disposed = false;
@@ -27,7 +27,7 @@ namespace Appium.ViewModels
         /// </summary>
         /// <param name="parent">link to the parent</param>
         /// <param name="lazyLoadChildren">true to lazy load the children or false otherwise</param>
-        public UIAutomatorNodeVM(UIAutomatorNode node, SelectionChangedEventHandler eh)
+        public UIAutomatorNodeVM(INode node, SelectionChangedEventHandler eh)
         {
             _Model = node;
             _EH = eh;
@@ -150,9 +150,9 @@ namespace Appium.ViewModels
             {
                 foreach (INode node in _Model.GetChildren())
                 {
-                    if (node is UIAutomatorNode)
+                    if (null != node)
                     {
-                        Children.Add(new UIAutomatorNodeVM(node as UIAutomatorNode, _EH));
+                        Children.Add(new UIAutomatorNodeVM(node, _EH));
                     }
                 }
             }
