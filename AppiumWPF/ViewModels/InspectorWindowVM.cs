@@ -203,28 +203,42 @@ namespace Appium.ViewModels
         #endregion Command Methods
 
         /// <summary>
-        /// converts the xml page source into a UIAutomatorNode
+        /// converts the xml page source into a UIAutomatorNode (with it's children)
         /// </summary>
         /// <param name="pageSource">xml page source</param>
-        /// <returns>UI Automator Node representation of the DOM</returns>
-        private static UIAutomatorNode _ConvertToUIAutomatorNode(string pageSource)
+        /// <returns>INode representation of the DOM</returns>
+        private static INode _ConvertToUIAutomatorNode(string pageSource)
         {
-            var nodeStack = new Stack<UIAutomatorNode>();
-            UIAutomatorNode root = null;
+            var nodeStack = new Stack<AbstractNode>();
+            INode root = null;
+            bool isApple = false;
 
             using (var reader = XmlReader.Create(new StringReader(pageSource)))
             {
                 while (reader.Read())
                 {
-                    if ("hierarchy" == reader.Name || "AppiumAUT" == reader.Name)
+                    if ("hierarchy" == reader.Name)
                     {
+                        continue;
+                    }
+                    else if ("AppiumAUT" == reader.Name)
+                    {
+                        isApple = true;
                         continue;
                     }
 
                     switch (reader.NodeType)
                     {
                         case XmlNodeType.Element:
-                            var node = new UIAutomatorNode(reader);
+                            AbstractNode node = null;
+                            if (isApple)
+                            {
+                                node = new UIAutomatorAppleNode(reader);
+                            }
+                            else
+                            {
+                                node = new UIAutomatorAndroidNode(reader);
+                            }
 
                             if (reader.IsEmptyElement)
                             {
