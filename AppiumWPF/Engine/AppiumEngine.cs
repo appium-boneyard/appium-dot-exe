@@ -10,6 +10,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace Appium.Engine
 {
@@ -67,6 +68,9 @@ namespace Appium.Engine
 
         /// <summary>path to the node modules folder</summary>
         private string _NodeModulesFolder { get { return Path.Combine(_AppiumRootFolder, "node_modules"); } }
+
+        /// <summary>VBoxManage path</summary>
+        private string _VBoxManagePath = "Oracle\\VirtualBox\\VBoxManage.exe";
         #endregion Paths
 
         #region Events
@@ -117,6 +121,7 @@ namespace Appium.Engine
                         // use the android command to list the avds
                         ProcessStartInfo avdDetectionProcessInfo = new ProcessStartInfo();
                         avdDetectionProcessInfo.FileName = Path.Combine(this._AndroidSDKPath, "tools", "android.bat");
+
                         if (File.Exists(avdDetectionProcessInfo.FileName))
                         {
                             avdDetectionProcessInfo.Arguments = "list avd -c";
@@ -137,6 +142,42 @@ namespace Appium.Engine
                                 if (line.Length > 0)
                                 {
                                     _AVDs.Add(line);
+                                }
+                            }
+                        }
+
+                        // get genymotion avds
+                        ProcessStartInfo genymotionAvdDetectionProc = new ProcessStartInfo();
+                        String vboxPath;
+                        vboxPath = (String)Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion", 
+                                "ProgramW6432Dir", "");
+                        if (vboxPath.Length == 0)
+                            vboxPath = Environment.GetEnvironmentVariable("ProgramFiles");
+                        vboxPath = Path.Combine(vboxPath, _VBoxManagePath);
+                        genymotionAvdDetectionProc.FileName = vboxPath;
+                        if (File.Exists(genymotionAvdDetectionProc.FileName))
+                        {
+                            genymotionAvdDetectionProc.Arguments = "list vms";
+                            genymotionAvdDetectionProc.UseShellExecute = false;
+                            genymotionAvdDetectionProc.CreateNoWindow = true;
+                            genymotionAvdDetectionProc.RedirectStandardOutput = true;
+                            var genymotionAvdDetectionProcess = Process.Start(genymotionAvdDetectionProc);
+                            genymotionAvdDetectionProcess.WaitForExit();
+
+                            // read the output
+                            string output = "";
+                            using (System.IO.StreamReader myOutput = genymotionAvdDetectionProcess.StandardOutput)
+                            {
+                                output = myOutput.ReadToEnd().TrimEnd();
+                            }
+                            foreach (var line in output.Split(new char[] { '\r', '\n' }))
+                            {
+                                int startQuote, endQuote;
+                                startQuote = line.IndexOf('"');
+                                endQuote = line.LastIndexOf('"');
+                                if (startQuote != -1 && endQuote != -1 && startQuote < endQuote)
+                                {
+                                    _AVDs.Add(line.Substring(startQuote + 1, endQuote - startQuote - 1));
                                 }
                             }
                         }
@@ -596,6 +637,7 @@ namespace Appium.Engine
 
         #endregion Private Methods
 
-
     }
+
 }
+
