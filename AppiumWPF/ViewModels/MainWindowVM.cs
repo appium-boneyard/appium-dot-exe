@@ -4,7 +4,6 @@ using Appium.Utility;
 using System;
 using System.ComponentModel;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Input;
 
 namespace Appium.ViewModels
@@ -34,6 +33,7 @@ namespace Appium.ViewModels
         /// </summary>
         public MainWindowVM()
         {
+
             AutomapperConfiguration.Configure();
 
             // create the settings for the application
@@ -48,12 +48,9 @@ namespace Appium.ViewModels
 
             if (_Settings.CheckForUpdates)
             {
-                // wait ten seconds to the page loads
-                Thread.Sleep(10000);
                 _AppiumEngine.CheckForUpdate();
             }
         }
-
         #endregion Constructor
 
         #region Public Properties
