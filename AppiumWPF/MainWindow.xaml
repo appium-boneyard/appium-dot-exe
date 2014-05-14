@@ -40,6 +40,8 @@
                 x:Key="aboutImage">pack://application:,,,/Resources/help.png</BitmapImage>
             <BitmapImage
                 x:Key="appiumIcon">pack://application:,,,/Resources/appium.ico</BitmapImage>
+            <BitmapImage
+                x:Key="appiumLogoImage">pack://application:,,,/Resources/appiumLogo.png</BitmapImage>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -207,7 +209,8 @@
                 Background="LightGray"
                 Padding="10"
                 BorderBrush="Purple">
-                <StackPanel>                    <Image
+                <StackPanel>
+                    <Image
                         HorizontalAlignment="Center"
                         Source="{StaticResource appiumIcon}"
                         Height="80" />
@@ -231,7 +234,6 @@
             </Border>
         </Popup>
 
-
         <!-- Output -->
         <DockPanel
             LastChildFill="True">
@@ -252,22 +254,28 @@
                     Command="{Binding ClearOutputCommand}" />
             </DockPanel>
 
-            <ScrollViewer
-                Margin="10,5,10,0"
-                VerticalScrollBarVisibility="Auto">
+            <Grid
+                Background="Black">
+                <Grid.Resources>
+                    <ImageBrush
+                        x:Key="appiumLogo"
+                        AlignmentX="Center"
+                        AlignmentY="Center"
+                        Stretch="None"
+                        ImageSource="{StaticResource appiumLogoImage}" />
+                </Grid.Resources>
                 <TextBox
                     Name="rtbOutput"
                     Foreground="White"
-                    Background="Black"
+                    Background="{StaticResource appiumLogo}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     IsReadOnly="True"
                     Height="Auto"
                     Margin="0"
                     TargetUpdated="_ScrollToBottom"
-                    TextWrapping="Wrap"
                     Text="{Binding Output, NotifyOnTargetUpdated=True}" />
-            </ScrollViewer>
+            </Grid>
         </DockPanel>
     </DockPanel>
 </Window>
