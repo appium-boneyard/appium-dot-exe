@@ -274,6 +274,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     IsReadOnly="True"
+                    TextWrapping="Wrap"
                     Height="Auto"
                     Margin="0"
                     TargetUpdated="_ScrollToBottom"
