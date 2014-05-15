@@ -254,16 +254,19 @@
                     Command="{Binding ClearOutputCommand}" />
             </DockPanel>
 
-            <Grid
-                Background="Black">
-                <Grid.Resources>
+            <ScrollViewer
+                Background="Black"
+                Margin="10,5,10,0"
+                VerticalScrollBarVisibility="Auto">
+                <ScrollViewer.Resources>
                     <ImageBrush
                         x:Key="appiumLogo"
                         AlignmentX="Center"
                         AlignmentY="Center"
                         Stretch="None"
                         ImageSource="{StaticResource appiumLogoImage}" />
-                </Grid.Resources>
+
+                </ScrollViewer.Resources>
                 <TextBox
                     Name="rtbOutput"
                     Foreground="White"
@@ -275,7 +278,7 @@
                     Margin="0"
                     TargetUpdated="_ScrollToBottom"
                     Text="{Binding Output, NotifyOnTargetUpdated=True}" />
-            </Grid>
+            </ScrollViewer>
         </DockPanel>
     </DockPanel>
 </Window>
