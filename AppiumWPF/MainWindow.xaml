@@ -8,8 +8,8 @@
     xmlns:developer="clr-namespace:Appium.Views.Developer"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="Appium"
-    Height="650"
-    Width="600"
+    Height="750"
+    Width="850"
     Icon="Resources/appium.ico">
 
     <Window.Resources>
