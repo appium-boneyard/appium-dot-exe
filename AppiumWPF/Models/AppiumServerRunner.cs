@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Appium.Models.Capability;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -188,6 +189,24 @@ namespace Appium.Models.Server
             {
                 _args.Add(new CustomDeveloperArguments(settings.CustomServerFlags));
             }
+
+            #region Capabilities
+            _args.Add(new PlatformNameArgument(settings.PlatformName));
+            _args.Add(new PlatformVersionArgument(Dictionaries.GetPlatformVersion(settings.PlatformVersion)));
+            _args.Add(new AutomationNameArgument(settings.AutomationName));
+            if (settings.UseDeviceName)
+            {
+                _args.Add(new DeviceNameArgument(settings.DeviceName));
+            }
+            if (settings.UseLanguage)
+            {
+                _args.Add(new LanguageArgument(settings.Language));
+            }
+            if (settings.UseLocale)
+            {
+                _args.Add(new LocaleArgument(settings.Locale));
+            }
+            #endregion Capabilities
         }
 
         public string GetArgumentsCmdLine()

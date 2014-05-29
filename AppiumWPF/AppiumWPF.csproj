@@ -94,9 +94,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Capability\Dictionaries.cs" />
     <Compile Include="Models\Inspector\AbstractNode.cs" />
     <Compile Include="Models\Inspector\UIAutomatorAppleNode.cs" />
+    <Compile Include="Models\Server\AutomationNameArgument.cs" />
     <Compile Include="Models\Server\CustomDeveloperArguments.cs" />
+    <Compile Include="Models\Server\DeviceNameArgument.cs" />
+    <Compile Include="Models\Server\LanguageArgument.cs" />
+    <Compile Include="Models\Server\LocaleArgument.cs" />
+    <Compile Include="Models\Server\PlatformNameArgument.cs" />
+    <Compile Include="Models\Server\PlatformVersionArgument.cs" />
     <Compile Include="Utility\AutomapperConfiguration.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Converters\SelectedNodeToDetailsConverter.cs" />
@@ -158,6 +165,9 @@
     <Compile Include="Views\Android\ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Android\CapabilitiesView.xaml.cs">
+      <DependentUpon>CapabilitiesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Android\LaunchDeviceView.xaml.cs">
       <DependentUpon>LaunchDeviceView.xaml</DependentUpon>
     </Compile>
@@ -205,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Android\ApplicationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Android\CapabilitiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

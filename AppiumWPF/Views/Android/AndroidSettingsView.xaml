@@ -33,8 +33,13 @@
         </GroupBox>
         <GroupBox
             Margin="0,5,0,0"
+            Header="Capabilities">
+            <android:CapabilitiesView />
+        </GroupBox>
+        <GroupBox
+            Margin="0,5,0,0"
             Header="Advanced">
-            <android:AdvancedView/>
+            <android:AdvancedView />
         </GroupBox>
     </StackPanel>
 </UserControl>

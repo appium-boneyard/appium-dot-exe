@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="Appium.Views.Android.CapabilitiesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="..\..\Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <sys:Int32
+                x:Key="PlatformNameRow">0</sys:Int32>
+            <sys:Int32
+                x:Key="PlatformVersionRow">1</sys:Int32>
+            <sys:Int32
+                x:Key="DeviceNameRow">2</sys:Int32>
+            <sys:Int32
+                x:Key="LanguageRow">3</sys:Int32>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Platform Name Row -->
+        <DockPanel
+            Grid.Row="{StaticResource PlatformNameRow}"
+            Grid.Column="0"
+            LastChildFill="True">
+            <Label
+                DockPanel.Dock="Left"
+                Content="Platform Name" />
+            <!-- TODO: do this -->
+            <ComboBox
+                ItemsSource="{Binding PlatformNameList}"
+                SelectedValue="{Binding PlatformName}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Row="{StaticResource PlatformNameRow}"
+            Grid.Column="1"
+            LastChildFill="True">
+            <Label
+                DockPanel.Dock="Left"
+                Content="Automation Name" />
+            <ComboBox
+                ItemsSource="{Binding AutomationNameList}"
+                SelectedValue="{Binding AutomationName}" />
+        </DockPanel>
+
+
+        <!-- Platform Version Row -->
+        <DockPanel
+            Grid.Row="{StaticResource PlatformVersionRow}"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            LastChildFill="True">
+            <Label
+                DockPanel.Dock="Left"
+                Content="PlatformVersion" />
+            <ComboBox
+                ItemsSource="{Binding PlatformVersionList}"
+                SelectedValue="{Binding PlatformVersion}" />
+        </DockPanel>
+
+        <DockPanel
+            Grid.Row="{StaticResource DeviceNameRow}"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Device Name"
+                IsChecked="{Binding UseDeviceName}" />
+            <TextBox
+                Text="{Binding DeviceName, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseDeviceName}" />
+        </DockPanel>
+
+        <!-- Language and Locale Row -->
+        <DockPanel
+            Grid.Row="{StaticResource LanguageRow}"
+            Grid.Column="0"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Language"
+                IsChecked="{Binding UseLanguage}" />
+            <!-- TODO: do this -->
+            <ComboBox
+                ItemsSource="{Binding LanguageList}"
+                SelectedValue="{Binding Language}"
+                IsEnabled="{Binding UseLanguage}" />
+        </DockPanel>
+        <DockPanel
+            Grid.Row="{StaticResource LanguageRow}"
+            Grid.Column="1"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Locale"
+                IsChecked="{Binding UseLocale}" />
+            <!-- TODO: do this -->
+            <ComboBox
+                ItemsSource="{Binding LocaleList}"
+                SelectedValue="{Binding Locale}"
+                IsEnabled="{Binding UseLocale}" />
+        </DockPanel>
+
+
+
+
+
+    </Grid>
+</UserControl>

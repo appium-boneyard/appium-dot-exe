@@ -1,4 +1,6 @@
 ﻿
+using OpenQA.Selenium;
+
 namespace Appium.Models
 {
     public interface IAppiumServerSettings
@@ -107,6 +109,27 @@ namespace Appium.Models
         bool UseCustomServerFlags { get; set; }
 
         string CustomServerFlags { get; set; }
+
+        #region Capabilities Section
+        string PlatformName { get; set; }
+
+        string AutomationName { get; set; }
+
+        string PlatformVersion { get; set; }
+
+        bool UseDeviceName { get; set; }
+
+        string DeviceName { get; set; }
+
+        bool UseLanguage { get; set; }
+
+        string Language { get; set; }
+
+        bool UseLocale { get; set; }
+
+        string Locale { get; set; }
+        #endregion Capabilities Section
+
 
         #endregion
 

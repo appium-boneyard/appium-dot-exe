@@ -382,5 +382,113 @@ namespace Appium.Properties {
                 this["InspectorDeviceCapability"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseLanguage {
+            get {
+                return ((bool)(this["UseLanguage"]));
+            }
+            set {
+                this["UseLanguage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en")]
+        public string Language {
+            get {
+                return ((string)(this["Language"]));
+            }
+            set {
+                this["Language"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseLocale {
+            get {
+                return ((bool)(this["UseLocale"]));
+            }
+            set {
+                this["UseLocale"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("US")]
+        public string Locale {
+            get {
+                return ((string)(this["Locale"]));
+            }
+            set {
+                this["Locale"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseDeviceName {
+            get {
+                return ((bool)(this["UseDeviceName"]));
+            }
+            set {
+                this["UseDeviceName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DeviceName {
+            get {
+                return ((string)(this["DeviceName"]));
+            }
+            set {
+                this["DeviceName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Android")]
+        public string PlatformName {
+            get {
+                return ((string)(this["PlatformName"]));
+            }
+            set {
+                this["PlatformName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Appium")]
+        public string AutomationName {
+            get {
+                return ((string)(this["AutomationName"]));
+            }
+            set {
+                this["AutomationName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4.3 Jelly Bean (API Level 18)")]
+        public string PlatformVersion {
+            get {
+                return ((string)(this["PlatformVersion"]));
+            }
+            set {
+                this["PlatformVersion"] = value;
+            }
+        }
     }
 }
