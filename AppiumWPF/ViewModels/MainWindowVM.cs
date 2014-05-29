@@ -127,12 +127,52 @@ namespace Appium.ViewModels
             }
         }
 
+        private string _Version;
         /// <summary>
         /// Version Number of the assembly
         /// </summary>
         public string Version
         {
-            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_Version))
+                {
+                    _Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                }
+                return _Version;
+            }
+        }
+
+        private string _Company;
+        /// <summary>
+        /// Company from the assembly
+        /// </summary>
+        public string Company
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_Company))
+                {
+                    _Company = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCompanyAttribute), false)).Company;
+                }
+                return _Company;
+            }
+        }
+
+        private string _Copyright;
+        /// <summary>
+        /// Copyright info from the assembly
+        /// </summary>
+        public string Copyright
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_Copyright))
+                {
+                    _Copyright = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute), false)).Copyright;
+                }
+                return _Copyright;
+            }
         }
 
 

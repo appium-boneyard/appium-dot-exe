@@ -225,11 +225,29 @@
                         <Label
                             Content="{Binding Version}" />
                         <Label
-                            Content="(Orion)" />
+                            Content="(Cygnus)" />
                     </StackPanel>
-                    <Label
-                        HorizontalAlignment="Center"
-                        Content="Copyright © 2013-2014 Appium. All rights reserved." />
+                    <StackPanel
+                        Orientation="Vertical"
+                        HorizontalAlignment="Center">
+                        <StackPanel.Resources>
+                            <Style
+                                TargetType="{x:Type Label}">
+                                <Setter
+                                    Property="Padding"
+                                    Value="0" />
+                                <Setter
+                                    Property="HorizontalAlignment"
+                                    Value="Center" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label
+                            Content="{Binding Copyright}" />
+                        <Label
+                            Content="{Binding Company}" />
+                        <Label
+                            Content="All rights reserved." />
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Popup>
