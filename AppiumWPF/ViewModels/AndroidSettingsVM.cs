@@ -1,4 +1,7 @@
-﻿using Appium.Models;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Media;
+using Appium.Models;
+using Appium.Models.Capability;
 using Appium.Utility;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -24,10 +27,43 @@ namespace Appium.ViewModels
             {
                 SelectedLaunchAVD = LaunchAVDs[0];
             }
+
+            PlatformNameList = Dictionaries.PlatformNameList;
+            if (string.IsNullOrWhiteSpace(PlatformName))
+            {
+                PlatformName = PlatformNameList[0];
+            }
+
+            AutomationNameList = Dictionaries.AutomationNameList;
+            if (string.IsNullOrWhiteSpace(AutomationName))
+            {
+                AutomationName = AutomationNameList[0];
+            }
+
+            PlatformVersionList = Dictionaries.PlatformVersionList;
+            if (string.IsNullOrWhiteSpace(PlatformVersion))
+            {
+                PlatformVersion = PlatformVersionList[0];
+            }
+
+            LanguageList = Dictionaries.LanguageList;
+            if (string.IsNullOrWhiteSpace(Language))
+            {
+                Language = LanguageList[0];
+            }
+
+            LocaleList = Dictionaries.LocaleList;
+            if (string.IsNullOrWhiteSpace(Locale))
+            {
+                Locale = LocaleList[0];
+            }
+
         }
         #endregion Constructor
 
         #region Public Properties
+
+        #region Application Section
 
         #region Application Path
         /// <summary>
@@ -140,45 +176,6 @@ namespace Appium.ViewModels
         }
         #endregion Activity
 
-        #region Launch AVDs
-        /// <summary>
-        /// enable the avd flag (--avd) 
-        /// </summary>
-        public bool UseLaunchAVD
-        {
-            get { return _Settings.LaunchAVD; }
-            set
-            {
-                if (value != _Settings.LaunchAVD)
-                {
-                    _Settings.LaunchAVD = value;
-                    FirePropertyChanged(() => UseLaunchAVD);
-                }
-            }
-        }
-
-        /// <summary>
-        /// List of all possible AVDs on this system
-        /// </summary>
-        public List<string> LaunchAVDs { get; private set; }
-
-        /// <summary>
-        /// name of the avd to launch
-        /// </summary>
-        public string SelectedLaunchAVD
-        {
-            get { return _Settings.AVDToLaunch; }
-            set
-            {
-                if (value != _Settings.AVDToLaunch)
-                {
-                    _Settings.AVDToLaunch = value;
-                    FirePropertyChanged(() => SelectedLaunchAVD);
-                }
-            }
-        }
-        #endregion Launch AVDs
-
         #region Wait For Activity
         /// <summary>
         ///  enable the application wait activity (--app-wait-activity [activity])
@@ -247,40 +244,6 @@ namespace Appium.ViewModels
         }
         #endregion Wait For Package
 
-        #region Device Ready
-        /// <summary>
-        /// Enable the device timeout flag (--device-ready-timeout [number])
-        /// </summary>
-        public bool UseDeviceReadyTimeout
-        {
-            get { return _Settings.UseAndroidDeviceReadyTimeout; }
-            set
-            {
-                if (value != _Settings.UseAndroidDeviceReadyTimeout)
-                {
-                    _Settings.UseAndroidDeviceReadyTimeout = value;
-                    FirePropertyChanged(() => UseDeviceReadyTimeout);
-                }
-            }
-        }
-
-        /// <summary>
-        /// timeout in seconds while waiting for device to become ready
-        /// </summary>
-        public uint DeviceReadyTimeout
-        {
-            get { return _Settings.AndroidDeviceReadyTimeout; }
-            set
-            {
-                if (value != _Settings.AndroidDeviceReadyTimeout)
-                {
-                    _Settings.AndroidDeviceReadyTimeout = value;
-                    FirePropertyChanged(() => DeviceReadyTimeout);
-                }
-            }
-        }
-        #endregion Device Ready
-
         #region Reset
         /// <summary>
         /// Reset app state by un-installing app instead of clearing app data. This flag will also remove the app
@@ -316,6 +279,83 @@ namespace Appium.ViewModels
         }
         #endregion Reset
 
+        #endregion Application Section
+
+        #region Launch Section
+
+        #region Launch AVDs
+        /// <summary>
+        /// enable the avd flag (--avd) 
+        /// </summary>
+        public bool UseLaunchAVD
+        {
+            get { return _Settings.LaunchAVD; }
+            set
+            {
+                if (value != _Settings.LaunchAVD)
+                {
+                    _Settings.LaunchAVD = value;
+                    FirePropertyChanged(() => UseLaunchAVD);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of all possible AVDs on this system
+        /// </summary>
+        public List<string> LaunchAVDs { get; private set; }
+
+        /// <summary>
+        /// name of the avd to launch
+        /// </summary>
+        public string SelectedLaunchAVD
+        {
+            get { return _Settings.AVDToLaunch; }
+            set
+            {
+                if (value != _Settings.AVDToLaunch)
+                {
+                    _Settings.AVDToLaunch = value;
+                    FirePropertyChanged(() => SelectedLaunchAVD);
+                }
+            }
+        }
+        #endregion Launch AVDs
+
+        #region Device Ready
+        /// <summary>
+        /// Enable the device timeout flag (--device-ready-timeout [number])
+        /// </summary>
+        public bool UseDeviceReadyTimeout
+        {
+            get { return _Settings.UseAndroidDeviceReadyTimeout; }
+            set
+            {
+                if (value != _Settings.UseAndroidDeviceReadyTimeout)
+                {
+                    _Settings.UseAndroidDeviceReadyTimeout = value;
+                    FirePropertyChanged(() => UseDeviceReadyTimeout);
+                }
+            }
+        }
+
+        /// <summary>
+        /// timeout in seconds while waiting for device to become ready
+        /// </summary>
+        public uint DeviceReadyTimeout
+        {
+            get { return _Settings.AndroidDeviceReadyTimeout; }
+            set
+            {
+                if (value != _Settings.AndroidDeviceReadyTimeout)
+                {
+                    _Settings.AndroidDeviceReadyTimeout = value;
+                    FirePropertyChanged(() => DeviceReadyTimeout);
+                }
+            }
+        }
+        #endregion Device Ready
+
         #region Launch Arguments
         public bool UseLaunchArguments
         {
@@ -343,6 +383,195 @@ namespace Appium.ViewModels
             }
         }
         #endregion Launch Arguments
+
+        #endregion Launch Section
+
+        #region Capabilities Section
+
+        #region Platform Name
+        /// <summary>
+        /// Platform Name
+        /// </summary>
+        public string PlatformName
+        {
+            get { return _Settings.PlatformName; }
+            set
+            {
+                if (value != _Settings.PlatformName)
+                {
+                    _Settings.PlatformName = value;
+                    FirePropertyChanged(() => PlatformName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of available Platform Names
+        /// </summary>
+        public ReadOnlyCollection<string> PlatformNameList { get; private set; }
+        #endregion Platform Name
+
+        #region Platform Version
+        /// <summary>
+        /// Platform Version
+        /// </summary>
+        public string PlatformVersion
+        {
+            get { return _Settings.PlatformVersion; }
+            set
+            {
+                if (value != _Settings.PlatformVersion)
+                {
+                    _Settings.PlatformVersion = value;
+                    FirePropertyChanged(() => PlatformVersion);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of platform version
+        /// </summary>
+        public ReadOnlyCollection<string> PlatformVersionList { get; private set; }
+        #endregion Platform Version
+
+        #region Automation Name
+        /// <summary>
+        /// Automation Name
+        /// </summary>
+        public string AutomationName
+        {
+            get { return _Settings.AutomationName; }
+            set
+            {
+                if (value != _Settings.AutomationName)
+                {
+                    _Settings.AutomationName = value;
+                    FirePropertyChanged(() => AutomationName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of Automation Names
+        /// </summary>
+        public ReadOnlyCollection<string> AutomationNameList { get; private set; }
+        #endregion Automation Name
+
+        #region Device Name
+        /// <summary>
+        /// Use the Device Name
+        /// </summary>
+        public bool UseDeviceName
+        {
+            get { return _Settings.UseDeviceName; }
+            set
+            {
+                if (value != _Settings.UseDeviceName)
+                {
+                    _Settings.UseDeviceName = value;
+                    FirePropertyChanged(() => UseDeviceName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Device Name
+        /// </summary>
+        public string DeviceName
+        {
+            get { return _Settings.DeviceName; }
+            set
+            {
+                if (value != _Settings.DeviceName)
+                {
+                    _Settings.DeviceName = value;
+                    FirePropertyChanged(() => DeviceName);
+                }
+            }
+        }
+        #endregion Device Name
+
+        #region Language
+        /// <summary>
+        /// Use the given Language 
+        /// </summary>
+        public bool UseLanguage
+        {
+            get { return _Settings.UseLanguage; }
+            set
+            {
+                if (value != _Settings.UseLanguage)
+                {
+                    _Settings.UseLanguage = value;
+                    FirePropertyChanged(() => UseLanguage);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Language
+        /// </summary>
+        public string Language
+        {
+            get { return _Settings.Language; }
+            set
+            {
+                if (value != _Settings.Language)
+                {
+                    _Settings.Language = value;
+                    FirePropertyChanged(() => Language);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of available Languages
+        /// </summary>
+        public ReadOnlyCollection<string> LanguageList { get; private set; }
+        #endregion Language
+
+        #region Locale
+        /// <summary>
+        /// Use the Locale 
+        /// </summary>
+        public bool UseLocale
+        {
+            get { return _Settings.UseLocale; }
+            set
+            {
+                if (value != _Settings.UseLocale)
+                {
+                    _Settings.UseLocale = value;
+                    FirePropertyChanged(() => UseLocale);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Locale
+        /// </summary>
+        public string Locale
+        {
+            get { return _Settings.Locale; }
+            set
+            {
+                if (value != _Settings.Locale)
+                {
+                    _Settings.Locale = value;
+                    FirePropertyChanged(() => Locale);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of available locales
+        /// </summary>
+        public ReadOnlyCollection<string> LocaleList { get; private set; }
+        #endregion Locale
+
+        #endregion Capabilities Section
+
+        #region Advanced Section
 
         #region SDK Path
         public bool UseSDKPath
@@ -456,7 +685,7 @@ namespace Appium.ViewModels
         }
         #endregion Selendroid Port
 
-        #region Chrome Driver
+        #region Chrome Driver Port
         public bool UseChromeDriverPort
         {
             get { return _Settings.UseChromeDriverPort; }
@@ -482,7 +711,9 @@ namespace Appium.ViewModels
                 }
             }
         }
-        #endregion Chrome DRiver
+        #endregion Chrome Driver Port
+
+        #endregion Advanced Section
 
         #endregion Public Properties
 
@@ -505,6 +736,6 @@ namespace Appium.ViewModels
             return IsAppPathEnabled;
         }
         #endregion Private Methods
- 
+
     }
 }

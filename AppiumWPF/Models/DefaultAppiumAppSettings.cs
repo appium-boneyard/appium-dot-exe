@@ -116,6 +116,26 @@ namespace Appium.Models
 
         public string CustomServerFlags { get; set; }
 
+        #region Capabilities Section
+        public string PlatformName { get; set; }
+
+        public string AutomationName { get; set; }
+
+        public string PlatformVersion { get; set; }
+
+        public bool UseDeviceName { get; set; }
+
+        public string DeviceName { get; set; }
+
+        public bool UseLanguage { get; set; }
+
+        public string Language { get; set; }
+
+        public bool UseLocale { get; set; }
+
+        public string Locale { get; set; }
+        #endregion Capabilities Section
+
         public Device InspectorDeviceCapability { get; set; }
 
         /// <summary>
