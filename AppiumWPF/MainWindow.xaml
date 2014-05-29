@@ -157,7 +157,8 @@
                 BorderThickness="4"
                 Background="LightGray"
                 Padding="10"
-                BorderBrush="#A4C639">
+                BorderBrush="#A4C639"
+                IsEnabled="{Binding IsRunning, Converter={StaticResource inverseBoolConv}}">
                 <android:AndroidSettingsView
                     DataContext="{Binding AndroidSettingsVM}" />
             </Border>
@@ -174,7 +175,8 @@
                 BorderThickness="4"
                 Background="LightGray"
                 Padding="10"
-                BorderBrush="White">
+                BorderBrush="White"
+                IsEnabled="{Binding IsRunning, Converter={StaticResource inverseBoolConv}}">
                 <general:GeneralSettingsView
                     DataContext="{Binding GeneralSettingsVM}" />
             </Border>
@@ -191,7 +193,8 @@
                 BorderThickness="4"
                 Background="LightGray"
                 Padding="10"
-                BorderBrush="Gray">
+                BorderBrush="Gray"
+                IsEnabled="{Binding IsRunning, Converter={StaticResource inverseBoolConv}}">
                 <developer:DeveloperSettingsView
                     DataContext="{Binding DeveloperSettingsVM}" />
             </Border>
