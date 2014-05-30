@@ -54,7 +54,28 @@ namespace Appium.Engine
                     try
                     {
                         Dictionary<string, object> capsDef = new Dictionary<string, object>();
-                        capsDef.Add("device", _Settings.InspectorDeviceCapability.ToString());
+
+                        if (_Settings.UseApplicationPath && _Settings.ApplicationPath != "")
+                        {
+                            capsDef.Add("app", _Settings.ApplicationPath);
+                        }
+
+                        if (_Settings.UseAndroidPackage && _Settings.AndroidPackage != "")
+                        {
+                            capsDef.Add("appPackage", _Settings.AndroidPackage);
+                        }
+
+                        if (_Settings.UseAndroidActivity && _Settings.AndroidActivity != "")
+                        {
+                            capsDef.Add("appActivity", _Settings.AndroidActivity);
+                        }
+                        
+                        // Include the platform if any of the capabilities were set
+                        if (capsDef.Count != 0 && _Settings.PlatformName != "")
+                        {
+                            capsDef.Add("platformName", _Settings.PlatformName);
+                        }
+
                         ICapabilities capabilities = new DesiredCapabilities(capsDef);
                         string uri = string.Format("http://{0}:{1}/wd/hub", _Settings.IPAddress, _Settings.Port);
                         _Driver = new ScreenshotRemoteWebDriver(new Uri(uri), capabilities);
