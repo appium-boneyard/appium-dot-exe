@@ -24,9 +24,12 @@
                 x:Key="BreakOnRow">3</sys:Int32>
             <sys:Int32
                 x:Key="CustomRow">4</sys:Int32>
+            <toolkit:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel
+        IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}">
         <Label
             FontStyle="Normal"
             FontWeight="Bold"

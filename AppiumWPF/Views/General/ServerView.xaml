@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d"
     MinWidth="400">
@@ -14,6 +13,8 @@
                 <ResourceDictionary
                     Source="..\..\Dictionaries\Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <toolkit:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel
@@ -37,10 +38,12 @@
             IsChecked="{Binding CheckUpdate}" />
         <CheckBox
             Content="Pre-Launch Application"
-            IsChecked="{Binding IsPrelaunchEnabled}" />
+            IsChecked="{Binding IsPrelaunchEnabled}"
+            IsEnabled="{Binding UseRemoteServer, Converter={StaticResource inverseBoolConv}}" />
         <CheckBox
             Content="Override Existing Session"
-            IsChecked="{Binding OverrideExistingSessions}" />
+            IsChecked="{Binding OverrideExistingSessions}"
+            IsEnabled="{Binding UseRemoteServer, Converter={StaticResource inverseBoolConv}}" />
         <!--
         TODO: Implement this
         <CheckBox
@@ -50,7 +53,8 @@
             Content="Use Remote Server"
             IsChecked="{Binding UseRemoteServer}" />
         <DockPanel
-            LastChildFill="True">
+            LastChildFill="True"
+            IsEnabled="{Binding UseRemoteServer, Converter={StaticResource inverseBoolConv}}">
             <CheckBox
                 DockPanel.Dock="Left"
                 Content="Selenium Grid Configuration File"

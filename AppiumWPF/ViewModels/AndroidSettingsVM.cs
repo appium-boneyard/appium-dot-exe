@@ -63,6 +63,25 @@ namespace Appium.ViewModels
 
         #region Public Properties
 
+        #region Using Remote Server
+        private bool _UsingRemoteServer;
+        /// <summary>
+        /// Is Remote Server On
+        /// </summary>
+        public bool UsingRemoteServer
+        {
+            get { return _UsingRemoteServer; }
+            set
+            {
+                if (value != _UsingRemoteServer)
+                {
+                    _UsingRemoteServer = value;
+                    FirePropertyChanged(() => UsingRemoteServer);
+                }
+            }
+        }
+        #endregion Using Remote Server
+
         #region Application Section
 
         #region Application Path

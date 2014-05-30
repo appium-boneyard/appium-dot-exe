@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:android="clr-namespace:Appium.Views.Android"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d"
     MinWidth="600">
     <UserControl.Resources>
@@ -13,6 +14,8 @@
                 <ResourceDictionary
                     Source="..\..\Dictionaries\Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <xctk:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel
@@ -23,12 +26,14 @@
             Content="Android Settings" />
         <GroupBox
             Margin="0,5,0,0"
-            Header="Application">
+            Header="Application"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}">
             <android:ApplicationView />
         </GroupBox>
         <GroupBox
             Margin="0,5,0,0"
-            Header="Launch Device">
+            Header="Launch Device"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}">
             <android:LaunchDeviceView />
         </GroupBox>
         <GroupBox
@@ -38,7 +43,8 @@
         </GroupBox>
         <GroupBox
             Margin="0,5,0,0"
-            Header="Advanced">
+            Header="Advanced"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}">
             <android:AdvancedView />
         </GroupBox>
     </StackPanel>
