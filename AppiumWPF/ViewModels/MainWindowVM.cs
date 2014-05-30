@@ -1,4 +1,5 @@
-﻿using Appium.Engine;
+﻿using System.Data;
+using Appium.Engine;
 using Appium.Models;
 using Appium.Utility;
 using System;
@@ -25,6 +26,12 @@ namespace Appium.ViewModels
 
         /// <summary>Appium Settings</summary>
         private readonly IAppiumAppSettings _Settings;
+
+        /// <summary>Remote Server String (used to match property name) (is dynamic in case General Settings changes the property)</summary>
+        private readonly string _RemoteServerString = null;
+
+        /// <summary>Information string for when remote server is enabled</summary>
+        private const string _RemoteServerEnabledMsg = "\"Use Remote Server\" is enabled. Most settings will be disabled. You can only use Inspector to connect to a remote Appium Server in this mode.";
         #endregion Private Member Variables
 
         #region Constructor
@@ -52,23 +59,32 @@ namespace Appium.ViewModels
             }
 
             _RemoteServerString = GetPropertyName(() => GeneralSettingsVM.UseRemoteServer);
+            _UpdateRemoteServerSettings();
             GeneralSettingsVM.PropertyChanged += _GeneralSettingsVM_PropertyChanged;
         }
 
 
         #endregion Constructor
 
-        private readonly string _RemoteServerString = null;
-        private void _GeneralSettingsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        #region Public Properties
+
+        private string _Information = string.Empty;
+
+        public string Information
         {
-            if (_RemoteServerString == e.PropertyName)
+            get { return _Information; }
+            set
             {
-                AndroidSettingsVM.UsingRemoteServer = GeneralSettingsVM.UseRemoteServer;
-                DeveloperSettingsVM.UsingRemoteServer = GeneralSettingsVM.UseRemoteServer;
+                if (value != _Information)
+                {
+                    _Information = value;
+                    FirePropertyChanged(() => Information);
+                }
             }
         }
 
-        #region Public Properties
+
+
         private bool _IsAndroidSettingsOpen;
         /// <summary>
         /// Is the Android Settings Popup Open
@@ -428,7 +444,30 @@ namespace Appium.ViewModels
         {
             FirePropertyChanged(() => IsRunning);
         }
+
+        /// <summary>
+        /// General Settings VM's property changed event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GeneralSettingsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (_RemoteServerString == e.PropertyName)
+            {
+                _UpdateRemoteServerSettings();
+            }
+        }
         #endregion Call Back Methods
+
+        /// <summary>
+        /// Update the other VM's UseRemoteServer settings so they can update accordingly
+        /// </summary>
+        private void _UpdateRemoteServerSettings()
+        {
+            AndroidSettingsVM.UsingRemoteServer = GeneralSettingsVM.UseRemoteServer;
+            DeveloperSettingsVM.UsingRemoteServer = GeneralSettingsVM.UseRemoteServer;
+            Information = (GeneralSettingsVM.UseRemoteServer) ? _RemoteServerEnabledMsg : string.Empty;
+        }
 
         #endregion Private Methods
 
