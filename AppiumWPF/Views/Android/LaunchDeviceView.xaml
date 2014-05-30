@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d"
     >
     <UserControl.Resources>
@@ -18,6 +19,8 @@
                 x:Key="LaunchAVDRow">0</sys:Int32>
             <sys:Int32
                 x:Key="ArgumentsRow">1</sys:Int32>
+            <xctk:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -39,6 +42,7 @@
         <DockPanel
             Grid.Column="0"
             Grid.Row="{StaticResource LaunchAVDRow}"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -76,6 +80,7 @@
         <DockPanel
             Grid.ColumnSpan="2"
             LastChildFill="True"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             Grid.Row="{StaticResource ArgumentsRow}">
             <CheckBox
                 DockPanel.Dock="Left"

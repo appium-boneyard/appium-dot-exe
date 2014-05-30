@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,6 +20,8 @@
                 x:Key="CoverageRow">1</sys:Int32>
             <sys:Int32
                 x:Key="BootstrapRow">2</sys:Int32>
+            <xctk:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -44,6 +47,7 @@
         <DockPanel
             Grid.Row="{StaticResource SDKRow}"
             Grid.ColumnSpan="3"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -71,6 +75,7 @@
         <!-- Bootstrap Port Row -->
         <DockPanel
             Grid.Row="{StaticResource BootstrapRow}"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -85,6 +90,7 @@
         <DockPanel
             Grid.Row="{StaticResource BootstrapRow}"
             Grid.Column="1"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -99,6 +105,7 @@
         <DockPanel
             Grid.Row="{StaticResource BootstrapRow}"
             Grid.Column="2"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"

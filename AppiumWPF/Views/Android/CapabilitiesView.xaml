@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -20,6 +21,8 @@
                 x:Key="DeviceNameRow">2</sys:Int32>
             <sys:Int32
                 x:Key="LanguageRow">3</sys:Int32>
+            <xctk:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -71,6 +74,7 @@
             Grid.Row="{StaticResource PlatformVersionRow}"
             Grid.Column="0"
             Grid.ColumnSpan="2"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <Label
                 DockPanel.Dock="Left"
@@ -98,6 +102,7 @@
         <DockPanel
             Grid.Row="{StaticResource LanguageRow}"
             Grid.Column="0"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -112,6 +117,7 @@
         <DockPanel
             Grid.Row="{StaticResource LanguageRow}"
             Grid.Column="1"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"

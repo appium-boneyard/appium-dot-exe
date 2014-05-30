@@ -31,8 +31,7 @@
         </GroupBox>
         <GroupBox
             Margin="0,5,0,0"
-            Header="Launch Device"
-            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}">
+            Header="Launch Device">
             <android:LaunchDeviceView />
         </GroupBox>
         <GroupBox
@@ -42,8 +41,7 @@
         </GroupBox>
         <GroupBox
             Margin="0,5,0,0"
-            Header="Advanced"
-            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}">
+            Header="Advanced">
             <android:AdvancedView />
         </GroupBox>
     </StackPanel>
