@@ -275,32 +275,35 @@
                     Command="{Binding ClearOutputCommand}" />
             </DockPanel>
 
-            <ScrollViewer
+            <DockPanel
                 Background="Black"
-                Margin="10,5,10,0"
-                VerticalScrollBarVisibility="Auto">
-                <ScrollViewer.Resources>
-                    <ImageBrush
-                        x:Key="appiumLogo"
-                        AlignmentX="Center"
-                        AlignmentY="Center"
-                        Stretch="None"
-                        ImageSource="{StaticResource appiumLogoImage}" />
-
-                </ScrollViewer.Resources>
+                LastChildFill="True">
                 <TextBox
                     Name="rtbOutput"
                     Foreground="White"
-                    Background="{StaticResource appiumLogo}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     IsReadOnly="True"
                     TextWrapping="Wrap"
                     Height="Auto"
+                    VerticalScrollBarVisibility="Auto"
                     Margin="0"
                     TargetUpdated="_ScrollToBottom"
-                    Text="{Binding Output, NotifyOnTargetUpdated=True}" />
-            </ScrollViewer>
+                    Text="{Binding Output, NotifyOnTargetUpdated=True}">
+                    <TextBox.Background>
+                        <VisualBrush
+                            Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <StackPanel>
+                                    <Image
+                                        Stretch="None"
+                                        Source="{StaticResource appiumLogoImage}" />
+                                </StackPanel>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </TextBox.Background>
+                </TextBox>
+            </DockPanel>
         </DockPanel>
     </DockPanel>
 </Window>
