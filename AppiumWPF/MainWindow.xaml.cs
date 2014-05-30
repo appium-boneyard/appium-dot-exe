@@ -2,7 +2,6 @@
 using Appium.Views;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace Appium
 {
@@ -11,7 +10,7 @@ namespace Appium
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowVM _VM;
+        private readonly MainWindowVM _VM;
 
         public MainWindow()
         {
@@ -30,13 +29,11 @@ namespace Appium
         private void _InspectorClick(object sender, RoutedEventArgs e)
         {
             Window win = new InspectorWindow() { DataContext = new InspectorWindowVM(_VM.Settings) };
-            if (null != win)
-            {
-                // open it with show to allow for both appium and inspector windows to be moveable and clickable
-                win.Show();
-                _VM.IsInspectorWindowOpen = true;
-                win.Closed += _VM.OnInspectorWindowClosed;
-            }
+
+            // open it with show to allow for both appium and inspector windows to be moveable and clickable
+            win.Show();
+            _VM.IsInspectorWindowOpen = true;
+            win.Closed += _VM.OnInspectorWindowClosed;
         }
 
         /// <summary>
@@ -47,19 +44,13 @@ namespace Appium
         private void _ScrollToBottom(object sender, System.Windows.Data.DataTransferEventArgs e)
         {
             TextBox tb;
-            ScrollViewer sv;
             if (null == (tb = sender as TextBox))
             {
                 // do nothing
             }
-            //else if (null == (sv = tb.Parent as ScrollViewer))
-            //{
-            //    // do nothing
-            //}
             else
             {
                 tb.ScrollToEnd();
-                //sv.ScrollToBottom();
             }
         }
         #endregion Call Back Method
