@@ -46,7 +46,7 @@
                 <Canvas>
                     <Canvas.Background>
                         <ImageBrush
-                            ImageSource="{Binding ImageByteArray, TargetNullValue={StaticResource defaultPhoto} }" />
+                            ImageSource="{Binding ImageByteArray, TargetNullValue={StaticResource defaultPhoto} }" Stretch="Uniform" />
                         <!--ImageSource="{StaticResource defaultPhoto}"/>-->
                     </Canvas.Background>
                     <!--<Rectangle
