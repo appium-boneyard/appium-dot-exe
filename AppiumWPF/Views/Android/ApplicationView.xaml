@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -20,6 +21,8 @@
                 x:Key="FullResetRow">2</sys:Int32>
             <sys:Int32
                 x:Key="ResetRow">3</sys:Int32>
+            <xctk:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -94,6 +97,7 @@
         <DockPanel
             Grid.Column="0"
             Grid.Row="{StaticResource FullResetRow}"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -119,6 +123,7 @@
         <DockPanel
             Grid.Column="0"
             Grid.Row="{StaticResource ResetRow}"
+            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
            <CheckBox
                 DockPanel.Dock="Left"

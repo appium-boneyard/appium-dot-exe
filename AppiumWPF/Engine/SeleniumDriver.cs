@@ -55,21 +55,52 @@ namespace Appium.Engine
                     {
                         Dictionary<string, object> capsDef = new Dictionary<string, object>();
 
+                        // Only set automation name if it isn't equal to the default
+                        if (_Settings.AutomationName != "Appium")
+                        {
+                            capsDef.Add("automationName", _Settings.AutomationName);
+                        }
+
+                        if (_Settings.UseDeviceName && _Settings.DeviceName != "")
+                        {
+                            capsDef.Add("deviceName", _Settings.DeviceName);
+                        }
+
                         if (_Settings.UseApplicationPath && _Settings.ApplicationPath != "")
                         {
                             capsDef.Add("app", _Settings.ApplicationPath);
-                        }
-
-                        if (_Settings.UseAndroidPackage && _Settings.AndroidPackage != "")
-                        {
-                            capsDef.Add("appPackage", _Settings.AndroidPackage);
                         }
 
                         if (_Settings.UseAndroidActivity && _Settings.AndroidActivity != "")
                         {
                             capsDef.Add("appActivity", _Settings.AndroidActivity);
                         }
+
+                        if (_Settings.UseAndroidPackage && _Settings.AndroidPackage != "")
+                        {
+                            capsDef.Add("appPackage", _Settings.AndroidPackage);
+                        }
                         
+                        if (_Settings.UseAndroidWaitForActivity && _Settings.AndroidWaitForActivity != "")
+                        {
+                            capsDef.Add("appWaitActivity", _Settings.AndroidWaitForActivity);
+                        }
+
+                        if (_Settings.UseAndroidWaitForPackage && _Settings.AndroidWaitForPackage != "")
+                        {
+                            capsDef.Add("appWaitPackage", _Settings.AndroidWaitForPackage);
+                        }
+
+                        if (_Settings.UseAndroidDeviceReadyTimeout && _Settings.AndroidDeviceReadyTimeout.ToString() != "")
+                        {
+                            capsDef.Add("deviceReadyTimeout", _Settings.AndroidDeviceReadyTimeout.ToString());
+                        }
+
+                        if (_Settings.UseCoverageClass && _Settings.CoverageClass != "")
+                        {
+                            capsDef.Add("androidCoverage", _Settings.CoverageClass);
+                        }
+
                         // Include the platform if any of the capabilities were set
                         if (capsDef.Count != 0 && _Settings.PlatformName != "")
                         {
