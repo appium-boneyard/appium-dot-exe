@@ -51,14 +51,23 @@ namespace Appium.ViewModels
         /// <param name="expression">linq expression used to find the property name</param>
         protected void FirePropertyChanged<T>(Expression<Func<T>> expression)
         {
+            var propertyName = GetPropertyName(expression);
+            FirePropertyChanged(propertyName);
+        }
+
+        /// <summary>Use Expression to get the member name</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns>property name</returns>
+        protected string GetPropertyName<T>(Expression<Func<T>> expression)
+        {
             // Similar to http://stackoverflow.com/questions/3778598/get-string-property-name-from-expression but we only care to get the name
-            string propertyName = string.Empty;
-            if (null != expression)
+            var propertyName = string.Empty;
+            if (null != expression && expression.Body is MemberExpression)
             {
                 propertyName = (expression.Body as MemberExpression).Member.Name;
             }
-
-            FirePropertyChanged(propertyName);
+            return propertyName;
         }
         #endregion INotifyPropertyChanged
     }

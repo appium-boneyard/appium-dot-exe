@@ -50,8 +50,23 @@ namespace Appium.ViewModels
             {
                 _AppiumEngine.CheckForUpdate();
             }
+
+            _RemoteServerString = GetPropertyName(() => GeneralSettingsVM.UseRemoteServer);
+            GeneralSettingsVM.PropertyChanged += _GeneralSettingsVM_PropertyChanged;
         }
+
+
         #endregion Constructor
+
+        private readonly string _RemoteServerString = null;
+        private void _GeneralSettingsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (_RemoteServerString == e.PropertyName)
+            {
+                AndroidSettingsVM.UsingRemoteServer = GeneralSettingsVM.UseRemoteServer;
+                DeveloperSettingsVM.UsingRemoteServer = GeneralSettingsVM.UseRemoteServer;
+            }
+        }
 
         #region Public Properties
         private bool _IsAndroidSettingsOpen;
@@ -339,7 +354,7 @@ namespace Appium.ViewModels
         /// <returns>true if can launch, false otherwise</returns>
         private bool _CanExecuteLaunchCommand()
         {
-            return _AppiumEngine.IsInitialized;
+            return _AppiumEngine.IsInitialized && !GeneralSettingsVM.UseRemoteServer;
         }
 
         /// <summary>

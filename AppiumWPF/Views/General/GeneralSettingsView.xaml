@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:general="clr-namespace:Appium.Views.General"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d"
     MinWidth="600">
     <UserControl.Resources>
@@ -13,6 +14,8 @@
                 <ResourceDictionary
                     Source="..\..\Dictionaries\Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <xctk:InverseBoolConverter
+                x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel
@@ -29,7 +32,8 @@
         </GroupBox>
         <GroupBox
             Margin="0,5,0,0"
-            Header="Logging">
+            Header="Logging"
+            IsEnabled="{Binding UseRemoteServer, Converter={StaticResource inverseBoolConv}}">
             <general:LoggingView/>
         </GroupBox>
     </StackPanel>
