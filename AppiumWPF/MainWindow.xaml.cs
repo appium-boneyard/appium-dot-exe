@@ -52,13 +52,14 @@ namespace Appium
             {
                 // do nothing
             }
-            else if (null == (sv = tb.Parent as ScrollViewer))
-            {
-                // do nothing
-            }
+            //else if (null == (sv = tb.Parent as ScrollViewer))
+            //{
+            //    // do nothing
+            //}
             else
             {
-                sv.ScrollToBottom();
+                tb.ScrollToEnd();
+                //sv.ScrollToBottom();
             }
         }
         #endregion Call Back Method
