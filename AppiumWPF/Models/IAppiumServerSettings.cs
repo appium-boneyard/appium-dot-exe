@@ -25,6 +25,12 @@ namespace Appium.Models
         /// <summary>avd to launch</summary>
         string AVDToLaunch { get; set; }
 
+        /// <summary>name of the android browser</summary>
+        bool UseAndroidBrowser { get; set; }
+
+        /// <summary>true if the given android browser should be used</summary>
+        string AndroidBrowser { get; set; }
+
         /// <summary>ip address to listen on</summary>
         string IPAddress { get; set; }
 

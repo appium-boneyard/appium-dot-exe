@@ -119,5 +119,11 @@
     <Setting Name="PlatformVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)">4.3 Jelly Bean (API Level 18)</Value>
     </Setting>
+    <Setting Name="AndroidBrowser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Chrome</Value>
+    </Setting>
+    <Setting Name="UseAndroidBrowser" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -88,35 +88,47 @@ namespace Appium.Models.Server
             _args.Add(new ServerRunnerArgument());
             _args.Add(new ServerAddressArgument(settings.IPAddress));
             _args.Add(new ServerPortArgument(settings.Port));
-            if (settings.UseApplicationPath)
+
+            if (!settings.UseAndroidBrowser)
             {
-                _args.Add(new ApplicationPathArgument(settings.ApplicationPath));
+                if (settings.UseApplicationPath)
+                {
+                    _args.Add(new ApplicationPathArgument(settings.ApplicationPath));
+                }
+
+                // Android specific arguments
+                if (settings.UseAndroidActivity)
+                {
+                    _args.Add(new AndroidActivityArgument(settings.AndroidActivity));
+                }
+
+                if (settings.UseAndroidPackage)
+                {
+                    _args.Add(new AndroidPackageArgument(settings.AndroidPackage));
+                }
+
+                if (settings.UseAndroidWaitForActivity)
+                {
+                    _args.Add(new AndroidWaitActivityArgument(settings.AndroidWaitForActivity));
+                }
+
+                if (settings.UseAndroidWaitForPackage)
+                {
+                    _args.Add(new AndroidWaitForPackageArgument(settings.AndroidWaitForPackage));
+                }
+            }
+            else
+            {
+                _args.Add(new AndroidBrowserArgument(settings.AndroidBrowser));
             }
 
-            // android specific args
-            if (settings.UseAndroidActivity)
-            {
-                _args.Add(new AndroidActivityArgument(settings.AndroidActivity));
-            }
-            if (settings.UseAndroidPackage)
-            {
-                _args.Add(new AndroidPackageArgument(settings.AndroidPackage));
-            }
             if (settings.LaunchAVD)
             {
                 _args.Add(new AVDToLaunchArgument(settings.AVDToLaunch));
             }
-            if (settings.UseAndroidWaitForActivity)
-            {
-                _args.Add(new AndroidWaitActivityArgument(settings.AndroidWaitForActivity));
-            }
             if (settings.UseAndroidDeviceReadyTimeout)
             {
                 _args.Add(new AndroidDeviceReadyTimeoutArgument(settings.AndroidDeviceReadyTimeout));
-            }
-            if (settings.UseAndroidWaitForPackage)
-            {
-                _args.Add(new AndroidWaitForPackageArgument(settings.AndroidWaitForPackage));
             }
             if (settings.PerformFullAndroidReset)
             {
