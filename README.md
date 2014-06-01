@@ -35,6 +35,7 @@ To install:
  * **Full Reset**: Reset app state by uninstalling app instead of clearing app data and also remove the app after the
    session is complete.
  * **No Reset**: Prevent the device from being reset.
+ * **Use Browser**: Launch the specified Android browser (e.g. `Chrome`).
 * **Launch Device**
  * **Launch AVD**: Name of the AVD to launch.
  * **Device Ready Timeout**: Timeout in seconds while waiting for device to become ready.
