@@ -66,29 +66,36 @@ namespace Appium.Engine
                             capsDef.Add("deviceName", _Settings.DeviceName);
                         }
 
-                        if (_Settings.UseApplicationPath && _Settings.ApplicationPath != "")
+                        if (!_Settings.UseAndroidBrowser)
                         {
-                            capsDef.Add("app", _Settings.ApplicationPath);
-                        }
+                            if (_Settings.UseApplicationPath && _Settings.ApplicationPath != "")
+                            {
+                                capsDef.Add("app", _Settings.ApplicationPath);
+                            }
 
-                        if (_Settings.UseAndroidActivity && _Settings.AndroidActivity != "")
-                        {
-                            capsDef.Add("appActivity", _Settings.AndroidActivity);
-                        }
+                            if (_Settings.UseAndroidActivity && _Settings.AndroidActivity != "")
+                            {
+                                capsDef.Add("appActivity", _Settings.AndroidActivity);
+                            }
 
-                        if (_Settings.UseAndroidPackage && _Settings.AndroidPackage != "")
-                        {
-                            capsDef.Add("appPackage", _Settings.AndroidPackage);
-                        }
-                        
-                        if (_Settings.UseAndroidWaitForActivity && _Settings.AndroidWaitForActivity != "")
-                        {
-                            capsDef.Add("appWaitActivity", _Settings.AndroidWaitForActivity);
-                        }
+                            if (_Settings.UseAndroidPackage && _Settings.AndroidPackage != "")
+                            {
+                                capsDef.Add("appPackage", _Settings.AndroidPackage);
+                            }
 
-                        if (_Settings.UseAndroidWaitForPackage && _Settings.AndroidWaitForPackage != "")
+                            if (_Settings.UseAndroidWaitForActivity && _Settings.AndroidWaitForActivity != "")
+                            {
+                                capsDef.Add("appWaitActivity", _Settings.AndroidWaitForActivity);
+                            }
+
+                            if (_Settings.UseAndroidWaitForPackage && _Settings.AndroidWaitForPackage != "")
+                            {
+                                capsDef.Add("appWaitPackage", _Settings.AndroidWaitForPackage);
+                            }
+                        }
+                        else
                         {
-                            capsDef.Add("appWaitPackage", _Settings.AndroidWaitForPackage);
+                            capsDef.Add("browserName", _Settings.AndroidBrowser);
                         }
 
                         if (_Settings.UseAndroidDeviceReadyTimeout && _Settings.AndroidDeviceReadyTimeout.ToString() != "")

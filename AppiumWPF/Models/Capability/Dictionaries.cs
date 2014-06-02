@@ -207,6 +207,23 @@ namespace Appium.Models.Capability
         public static ReadOnlyCollection<string> AutomationNameList = _AutomationNameList.AsReadOnly();
         #endregion Automation Names
 
+        #region Browser Names
+        /// <summary>
+        /// List of supported Android Browsers
+        /// </summary>
+        private static readonly List<string> _AndroidBrowserList = new List<string>()
+        {
+            "Browser",
+            "Chrome",
+            "Chromium"
+        };
+
+        /// <summary>
+        /// List of supported Android Browsers
+        /// </summary>
+        public static ReadOnlyCollection<string> AndroidBrowserList = _AndroidBrowserList.AsReadOnly();
+        #endregion Browser Names
+
         #endregion Android Specific
     }
 }

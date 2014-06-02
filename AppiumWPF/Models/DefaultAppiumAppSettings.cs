@@ -62,6 +62,10 @@ namespace Appium.Models
 
         public bool ResetApplicationState { get; set; }
 
+        public bool UseAndroidBrowser { get; set; }
+
+        public string AndroidBrowser { get; set; }
+
         public bool UseDeveloperMode { get; set; }
 
         public bool UseExternalNodeJSBinary { get; set; }

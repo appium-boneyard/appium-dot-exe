@@ -21,12 +21,16 @@
                 x:Key="FullResetRow">2</sys:Int32>
             <sys:Int32
                 x:Key="ResetRow">3</sys:Int32>
+            <sys:Int32
+            	x:Key="BrowserRow">4</sys:Int32>
             <xctk:InverseBoolConverter
                 x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
                 Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
@@ -48,6 +52,7 @@
         <DockPanel
             Grid.Row="{StaticResource AppPathRow}"
             Grid.ColumnSpan="2"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -69,6 +74,7 @@
         <DockPanel
             Grid.Column="0"
             Grid.Row="{StaticResource PackageRow}"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -82,6 +88,7 @@
         <DockPanel
             Grid.Column="1"
             Grid.Row="{StaticResource PackageRow}"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -108,6 +115,7 @@
         <DockPanel
             Grid.Column="1"
             Grid.Row="{StaticResource FullResetRow}"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -125,7 +133,7 @@
             Grid.Row="{StaticResource ResetRow}"
             IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
-           <CheckBox
+            <CheckBox
                 DockPanel.Dock="Left"
                 Name="cbNoReset"
                 Content="No Reset"
@@ -134,6 +142,7 @@
         <DockPanel
             Grid.Column="1"
             Grid.Row="{StaticResource ResetRow}"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
@@ -143,6 +152,21 @@
             <TextBox
                 Text="{Binding WaitForPackage, UpdateSourceTrigger=PropertyChanged}"
                 IsEnabled="{Binding UseWaitForPackage}" />
+        </DockPanel>
+        
+        <!-- Browser Row -->
+        <DockPanel
+        	Grid.Row="{StaticResource BrowserRow}"
+        	Grid.Column="0"
+        	LastChildFill="True">
+            <CheckBox
+        		DockPanel.Dock="Left"
+        		Content="Use Browser"
+        		IsChecked="{Binding UseAndroidBrowser}" />
+            <ComboBox
+        		ItemsSource="{Binding AndroidBrowserList}"
+        		SelectedValue="{Binding AndroidBrowser}"
+        		IsEnabled="{Binding UseAndroidBrowser}" />
         </DockPanel>
     </Grid>
 </UserControl>

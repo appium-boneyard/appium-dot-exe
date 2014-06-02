@@ -58,6 +58,12 @@ namespace Appium.ViewModels
                 Locale = LocaleList[0];
             }
 
+            AndroidBrowserList = Dictionaries.AndroidBrowserList;
+            if (string.IsNullOrWhiteSpace(AndroidBrowser))
+            {
+                AndroidBrowser = AndroidBrowserList[0];
+            }
+
         }
         #endregion Constructor
 
@@ -297,6 +303,45 @@ namespace Appium.ViewModels
             }
         }
         #endregion Reset
+
+        #region Browser
+        /// <summary>
+        /// Use the given Android Browser 
+        /// </summary>
+        public bool UseAndroidBrowser
+        {
+            get { return _Settings.UseAndroidBrowser; }
+            set
+            {
+                if (value != _Settings.UseAndroidBrowser)
+                {
+                    _Settings.UseAndroidBrowser = value;
+                    FirePropertyChanged(() => UseAndroidBrowser);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Browser
+        /// </summary>
+        public string AndroidBrowser
+        {
+            get { return _Settings.AndroidBrowser; }
+            set
+            {
+                if (value != _Settings.AndroidBrowser)
+                {
+                    _Settings.AndroidBrowser = value;
+                    FirePropertyChanged(() => AndroidBrowser);
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of available Browsers
+        /// </summary>
+        public ReadOnlyCollection<string> AndroidBrowserList { get; private set; }
+        #endregion Browser
 
         #endregion Application Section
 
