@@ -6,7 +6,7 @@
     xmlns:conv="clr-namespace:Appium.Converters"
     Title="Inspector Window"
     Height="650"
-    Width="750"
+    Width="900"
     Background="LightGray">
     <Window.Resources>
         <ResourceDictionary>
@@ -21,22 +21,36 @@
                 x:Key="detailsConv" />
         </ResourceDictionary>
     </Window.Resources>
-    <DockPanel
-        LastChildFill="True"
-        Margin="10">
 
-        <!-- Right side of dock-->
-        <DockPanel
+    <Grid
+        Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="500" />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- Details and Image Section -->
+        <Grid
             Margin="4"
-            DockPanel.Dock="Right"
-            LastChildFill="True">
+            Grid.Column="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="1" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
 
             <!-- Custom Display -->
             <GroupBox
                 HorizontalAlignment="Stretch"
-                DockPanel.Dock="Top"
-                Width="245"
-                Height="325"
+                Grid.Row="0"
+                Margin="0,0,0,4"
                 Padding="4">
                 <GroupBox.Header>
                     <Label
@@ -46,12 +60,13 @@
                 <Canvas>
                     <Canvas.Background>
                         <ImageBrush
-                            ImageSource="{Binding ImageByteArray, TargetNullValue={StaticResource defaultPhoto} }" Stretch="Uniform" />
-                        <!--ImageSource="{StaticResource defaultPhoto}"/>-->
+                            ImageSource="{Binding ImageByteArray, TargetNullValue={StaticResource defaultPhoto} }"
+                            Stretch="Uniform" />
                     </Canvas.Background>
+                    <!-- todo: to put a rectange around the part of the element that is clicked -->
                     <!--<Rectangle
                         Visibility="Collapsed"
-                        Stroke="Aqua"
+                        Stroke="Red"
                         StrokeThickness="3"
                         Canvas.Top="{Binding Top}"
                         Canvas.Left="{Binding Left}"
@@ -60,8 +75,17 @@
                 </Canvas>
             </GroupBox>
 
+            <GridSplitter
+                Background="DimGray"
+                ResizeDirection="Rows"
+                Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ResizeBehavior="BasedOnAlignment" />
+
             <!-- Details View -->
             <GroupBox
+                Grid.Row="2"
                 Padding="4">
                 <GroupBox.Header>
                     <Label
@@ -70,7 +94,6 @@
                 </GroupBox.Header>
                 <ScrollViewer
                     VerticalScrollBarVisibility="Auto">
-                    <!--DockPanel.Dock="Bottom"-->
                     <TextBox
                         Margin="0"
                         IsReadOnly="True"
@@ -79,9 +102,19 @@
                         Text="{Binding SelectedNode, Converter={StaticResource detailsConv}}" />
                 </ScrollViewer>
             </GroupBox>
-        </DockPanel>
+        </Grid>
 
+        <GridSplitter
+            Background="DimGray"
+            ResizeDirection="Columns"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ResizeBehavior="BasedOnAlignment" />
+
+        <!-- Tree View and buttons -->
         <DockPanel
+            Grid.Column="0"
             Margin="4"
             LastChildFill="True">
 
@@ -145,8 +178,6 @@
                     Content="{Binding Message}" />
             </DockPanel>
 
-
-
             <!-- Tree View -->
             <TreeView
                 ItemsSource="{Binding RootNode}">
@@ -189,7 +220,5 @@
                 </TreeView.Resources>
             </TreeView>
         </DockPanel>
-
-
-    </DockPanel>
+    </Grid>
 </Window>
