@@ -68,12 +68,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Appium\AppiumWinForm-OLD.csproj">
-      <Project>{6b4415b5-3fb6-4758-af71-700b369a6498}</Project>
-      <Name>AppiumWinForm-OLD</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
