@@ -125,5 +125,29 @@
     <Setting Name="UseAndroidBrowser" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="AndroidIntentAction" Type="System.String" Scope="User">
+      <Value Profile="(Default)">android.intent.action.MAIN</Value>
+    </Setting>
+    <Setting Name="AndroidIntentCategory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">android.intent.category.LAUNCHER</Value>
+    </Setting>
+    <Setting Name="AndroidIntentFlags" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0x10200000</Value>
+    </Setting>
+    <Setting Name="AndroidIntentArguments" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UseAndroidIntentAction" Type="System.String" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseAndroidIntentCategory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseAndroidIntentFlags" Type="System.String" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseAndroidIntentArguments" Type="System.String" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

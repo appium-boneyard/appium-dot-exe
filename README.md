@@ -36,6 +36,10 @@ To install:
    session is complete.
  * **No Reset**: Prevent the device from being reset.
  * **Use Browser**: Launch the specified Android browser (e.g. `Chrome`).
+ * **Intent Action**: Intent action which will be used to start the activity.
+ * **Intent Category**: Intent category which will be used to start the activity.
+ * **Intent Flags**: Flags that will be used to start the activity.
+ * **Intent Arguments**: Additional intent arguments that will be used to start the activity.
 * **Launch Device**
  * **Launch AVD**: Name of the AVD to launch.
  * **Device Ready Timeout**: Timeout in seconds while waiting for device to become ready.

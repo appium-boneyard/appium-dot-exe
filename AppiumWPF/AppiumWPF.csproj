@@ -99,6 +99,10 @@
     <Compile Include="Models\Capability\Dictionaries.cs" />
     <Compile Include="Models\Inspector\AbstractNode.cs" />
     <Compile Include="Models\Inspector\UIAutomatorAppleNode.cs" />
+    <Compile Include="Models\Server\AndroidIntentActionArgument.cs" />
+    <Compile Include="Models\Server\AndroidIntentArgumentsArgument.cs" />
+    <Compile Include="Models\Server\AndroidIntentCategoryArgument.cs" />
+    <Compile Include="Models\Server\AndroidIntentFlagsArgument.cs" />
     <Compile Include="Models\Server\AutomationNameArgument.cs" />
     <Compile Include="Models\Server\CustomDeveloperArguments.cs" />
     <Compile Include="Models\Server\DeviceNameArgument.cs" />

@@ -134,6 +134,27 @@ namespace Appium.Models.Server
             {
                 _args.Add(new FullResetArgument());
             }
+
+            if (settings.UseAndroidIntentAction)
+            {
+                _args.Add(new AndroidIntentActionArgument(settings.AndroidIntentAction));
+            }
+
+            if (settings.UseAndroidIntentCategory)
+            {
+                _args.Add(new AndroidIntentCategoryArgument(settings.AndroidIntentCategory));
+            }
+
+            if (settings.UseAndroidIntentFlags)
+            {
+                _args.Add(new AndroidIntentFlagsArgument(settings.AndroidIntentFlags));
+            }
+
+            if (settings.UseAndroidIntentArguments)
+            {
+                _args.Add(new AndroidIntentArgumentsArgument(settings.AndroidIntentArguments));
+            }
+
             // preference-related arguments
             if (settings.QuietLogging)
             {

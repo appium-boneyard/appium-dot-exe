@@ -108,6 +108,26 @@ namespace Appium.Engine
                             capsDef.Add("androidCoverage", _Settings.CoverageClass);
                         }
 
+                        if (_Settings.UseAndroidIntentAction && _Settings.AndroidIntentAction != "")
+                        {
+                            capsDef.Add("intentAction", _Settings.AndroidIntentAction);
+                        }
+
+                        if (_Settings.UseAndroidIntentCategory && _Settings.AndroidIntentCategory != "")
+                        {
+                            capsDef.Add("intentCategory", _Settings.AndroidIntentCategory);
+                        }
+
+                        if (_Settings.UseAndroidIntentFlags && _Settings.AndroidIntentFlags != "")
+                        {
+                            capsDef.Add("intentFlags", _Settings.AndroidIntentFlags);
+                        }
+
+                        if (_Settings.UseAndroidIntentArguments && _Settings.AndroidIntentArguments != "")
+                        {
+                            capsDef.Add("optionalIntentArguments", _Settings.AndroidIntentArguments);
+                        }
+
                         // Include the platform if any of the capabilities were set
                         if (capsDef.Count != 0 && _Settings.PlatformName != "")
                         {

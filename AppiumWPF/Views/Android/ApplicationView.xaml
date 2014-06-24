@@ -23,12 +23,20 @@
                 x:Key="ResetRow">3</sys:Int32>
             <sys:Int32
             	x:Key="BrowserRow">4</sys:Int32>
+            <sys:Int32
+            	x:Key="IntentFirstRow">5</sys:Int32>
+            <sys:Int32
+            	x:Key="IntentSecondRow">6</sys:Int32>
             <xctk:InverseBoolConverter
                 x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
                 Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
@@ -167,6 +175,60 @@
         		ItemsSource="{Binding AndroidBrowserList}"
         		SelectedValue="{Binding AndroidBrowser}"
         		IsEnabled="{Binding UseAndroidBrowser}" />
+        </DockPanel>
+
+        <!-- Intent First Row -->
+        <DockPanel
+            Grid.Column="0"
+            Grid.Row="{StaticResource IntentFirstRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Intent Action:"
+                IsChecked="{Binding UseAndroidIntentAction}" />
+            <TextBox
+                Text="{Binding AndroidIntentAction, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseAndroidIntentAction}" />
+        </DockPanel>
+
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="{StaticResource IntentFirstRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Intent Category:"
+                IsChecked="{Binding UseAndroidIntentCategory}" />
+            <TextBox
+                Text="{Binding AndroidIntentCategory, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseAndroidIntentCategory}" />
+        </DockPanel>
+
+        <!-- Intent Second Row -->
+        <DockPanel
+            Grid.Column="0"
+            Grid.Row="{StaticResource IntentSecondRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Intent Flags:"
+                IsChecked="{Binding UseAndroidIntentFlags}" />
+            <TextBox
+                Text="{Binding AndroidIntentFlags, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseAndroidIntentFlags}" />
+        </DockPanel>
+
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="{StaticResource IntentSecondRow}"
+            LastChildFill="True">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Intent Arguments:"
+                IsChecked="{Binding UseAndroidIntentArguments}" />
+            <TextBox
+                Text="{Binding AndroidIntentArguments, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseAndroidIntentArguments}" />
         </DockPanel>
     </Grid>
 </UserControl>
