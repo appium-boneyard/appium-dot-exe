@@ -514,5 +514,101 @@ namespace Appium.Properties {
                 this["UseAndroidBrowser"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("android.intent.action.MAIN")]
+        public string AndroidIntentAction {
+            get {
+                return ((string)(this["AndroidIntentAction"]));
+            }
+            set {
+                this["AndroidIntentAction"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("android.intent.category.LAUNCHER")]
+        public string AndroidIntentCategory {
+            get {
+                return ((string)(this["AndroidIntentCategory"]));
+            }
+            set {
+                this["AndroidIntentCategory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0x10200000")]
+        public string AndroidIntentFlags {
+            get {
+                return ((string)(this["AndroidIntentFlags"]));
+            }
+            set {
+                this["AndroidIntentFlags"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AndroidIntentArguments {
+            get {
+                return ((string)(this["AndroidIntentArguments"]));
+            }
+            set {
+                this["AndroidIntentArguments"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string UseAndroidIntentAction {
+            get {
+                return ((string)(this["UseAndroidIntentAction"]));
+            }
+            set {
+                this["UseAndroidIntentAction"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string UseAndroidIntentCategory {
+            get {
+                return ((string)(this["UseAndroidIntentCategory"]));
+            }
+            set {
+                this["UseAndroidIntentCategory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string UseAndroidIntentFlags {
+            get {
+                return ((string)(this["UseAndroidIntentFlags"]));
+            }
+            set {
+                this["UseAndroidIntentFlags"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string UseAndroidIntentArguments {
+            get {
+                return ((string)(this["UseAndroidIntentArguments"]));
+            }
+            set {
+                this["UseAndroidIntentArguments"] = value;
+            }
+        }
     }
 }

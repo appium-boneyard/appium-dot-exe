@@ -31,6 +31,30 @@ namespace Appium.Models
         /// <summary>true if the given android browser should be used</summary>
         string AndroidBrowser { get; set; }
 
+        /// <summary>use android intent action</summary>
+        bool UseAndroidIntentAction { get; set; }
+
+        /// <summary>android intent action</summary>
+        string AndroidIntentAction { get; set; }
+
+        /// <summary>use android intent category</summary>
+        bool UseAndroidIntentCategory { get; set; }
+
+        /// <summary>android intent category</summary>
+        string AndroidIntentCategory { get; set; }
+
+        /// <summary>use android intent flags</summary>
+        bool UseAndroidIntentFlags { get; set; }
+
+        /// <summary>android intent flags</summary>
+        string AndroidIntentFlags { get; set; }
+
+        /// <summary>use android intent arguments</summary>
+        bool UseAndroidIntentArguments { get; set; }
+
+        /// <summary>android intent arguments</summary>
+        string AndroidIntentArguments { get; set; }
+
         /// <summary>ip address to listen on</summary>
         string IPAddress { get; set; }
 

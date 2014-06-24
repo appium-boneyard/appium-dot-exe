@@ -343,6 +343,136 @@ namespace Appium.ViewModels
         public ReadOnlyCollection<string> AndroidBrowserList { get; private set; }
         #endregion Browser
 
+        #region Intent
+        /// <summary>
+        /// Use Android Intent Action
+        /// </summary>
+        public bool UseAndroidIntentAction
+        {
+            get { return _Settings.UseAndroidIntentAction; }
+            set
+            {
+                if (value != _Settings.UseAndroidIntentAction)
+                {
+                    _Settings.UseAndroidIntentAction = value;
+                    FirePropertyChanged(() => UseAndroidIntentAction);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Android Intent Action
+        /// </summary>
+        public string AndroidIntentAction
+        {
+            get { return _Settings.AndroidIntentAction; }
+            set
+            {
+                if (value != _Settings.AndroidIntentAction)
+                {
+                    _Settings.AndroidIntentAction = value;
+                    FirePropertyChanged(() => AndroidIntentAction);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use Android Intent Category
+        /// </summary>
+        public bool UseAndroidIntentCategory
+        {
+            get { return _Settings.UseAndroidIntentCategory; }
+            set
+            {
+                if (value != _Settings.UseAndroidIntentCategory)
+                {
+                    _Settings.UseAndroidIntentCategory = value;
+                    FirePropertyChanged(() => UseAndroidIntentCategory);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Android Intent Category
+        /// </summary>
+        public string AndroidIntentCategory
+        {
+            get { return _Settings.AndroidIntentCategory; }
+            set
+            {
+                if (value != _Settings.AndroidIntentCategory)
+                {
+                    _Settings.AndroidIntentCategory = value;
+                    FirePropertyChanged(() => AndroidIntentCategory);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use Android Intent Flags
+        /// </summary>
+        public bool UseAndroidIntentFlags
+        {
+            get { return _Settings.UseAndroidIntentFlags; }
+            set
+            {
+                if (value != _Settings.UseAndroidIntentFlags)
+                {
+                    _Settings.UseAndroidIntentFlags = value;
+                    FirePropertyChanged(() => UseAndroidIntentFlags);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Android Intent Flags
+        /// </summary>
+        public string AndroidIntentFlags
+        {
+            get { return _Settings.AndroidIntentFlags; }
+            set
+            {
+                if (value != _Settings.AndroidIntentFlags)
+                {
+                    _Settings.AndroidIntentFlags = value;
+                    FirePropertyChanged(() => AndroidIntentFlags);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use Android Intent Arguments
+        /// </summary>
+        public bool UseAndroidIntentArguments
+        {
+            get { return _Settings.UseAndroidIntentArguments; }
+            set
+            {
+                if (value != _Settings.UseAndroidIntentArguments)
+                {
+                    _Settings.UseAndroidIntentArguments = value;
+                    FirePropertyChanged(() => UseAndroidIntentArguments);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Android Intent Arguments
+        /// </summary>
+        public string AndroidIntentArguments
+        {
+            get { return _Settings.AndroidIntentArguments; }
+            set
+            {
+                if (value != _Settings.AndroidIntentArguments)
+                {
+                    _Settings.AndroidIntentArguments = value;
+                    FirePropertyChanged(() => AndroidIntentArguments);
+                }
+            }
+        }
+        #endregion Intent
+
         #endregion Application Section
 
         #region Launch Section

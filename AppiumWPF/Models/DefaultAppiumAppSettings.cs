@@ -66,6 +66,22 @@ namespace Appium.Models
 
         public string AndroidBrowser { get; set; }
 
+        public bool UseAndroidIntentAction { get; set; }
+
+        public string AndroidIntentAction { get; set; }
+
+        public bool UseAndroidIntentCategory { get; set; }
+
+        public string AndroidIntentCategory { get; set; }
+
+        public bool UseAndroidIntentFlags { get; set; }
+
+        public string AndroidIntentFlags { get; set; }
+
+        public bool UseAndroidIntentArguments { get; set; }
+
+        public string AndroidIntentArguments { get; set; }
+
         public bool UseDeveloperMode { get; set; }
 
         public bool UseExternalNodeJSBinary { get; set; }
