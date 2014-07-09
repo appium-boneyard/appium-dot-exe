@@ -1,4 +1,4 @@
-# A Windows GUI for Appium
+## A Windows GUI for Appium
 
 If you are new to Appium then please see the [Getting started](http://appium.io/getting-started.html) guide for more information
 about the project.
@@ -9,9 +9,9 @@ To install:
 2. Extract the ZIP file.
 3. Launch `appium.exe`.
 
-## Parameter Guide
+### Parameter Guide
 
-### Main Window
+#### Main Window
 
 ![Appium Main Window](/README-files/mainwindow.png "Appium Main Window")
 
@@ -23,7 +23,7 @@ To install:
 * **Launch / Stop Button**: Launches or stops the Appium server.
 * **Clear Button**: Clears the display of all log output.
 
-### Android Settings
+#### Android Settings
 
 * **Application**
  * **App Path**: The path to the Android application (`.apk`) you wish to test.
@@ -58,13 +58,13 @@ To install:
  * **Selendroid Port**: Local port used for communication with Selendroid.
  * **Chromedriver Port**: Port upon which ChromeDriver will run.
 
-## Preference Guide
+### Preference Guide
 
 Preferences can be accessed by clicking on the appropriate button in the main window.
 
 ![Appium Preferences](/README-files/preferences.png "Appium General Settings")
 
-### General Settings
+#### General Settings
 
 * **Server**
  * **Server Address**: The IP address on which you want the Appium server to run (127.0.0.1 is localhost).
@@ -82,7 +82,7 @@ Preferences can be accessed by clicking on the appropriate button in the main wi
  * **Log to File**: Send log output to this file.
  * **Log to WebHook**: Send log output to this HTTP listener.
 
-### Developer Settings
+#### Developer Settings
 
 * **Enabled**: If checked, developer settings will be observed.
 * **Use External NodeJS Binary**: Appium will use the version of NodeJS supplied here instead of the one that ships
@@ -95,7 +95,7 @@ Preferences can be accessed by clicking on the appropriate button in the main wi
 * **Custom Server Flags**: Custom flags to be used when starting the Appium server. This should only be used if there is
   an option that cannot be adjusted using the Appium UI.
 
-## Inspector / Recorder
+### Inspector / Recorder
 
 Inspector can be accessed by clicking the magnifying glass next to the launch button once the Appium server has launched.
 Appium must be running with an app open for inspector to work. Otherwise, it will not work.
