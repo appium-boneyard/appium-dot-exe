@@ -158,6 +158,10 @@ namespace Appium.ViewModels
                 _RootNode.Add(vm);
                 FirePropertyChanged(() => RootNode);
             }
+            else
+            {
+                Message = "Error getting page source";
+            }
 
             if (firstTime)
             {
@@ -167,7 +171,16 @@ namespace Appium.ViewModels
 
             // grab the image
             ImageByteArray = _Driver.GetScreenshot();
-            Message = string.Format("Last updated on {0}", DateTime.Now);
+            if (ImageByteArray == null)
+            {
+                Message = "Error getting screenshot";
+            }
+            
+            // Show success message if the "Updating" message was not changed
+            if (Message.Equals("Updating"))
+            {
+                Message = string.Format("Last successfully updated on {0}", DateTime.Now);
+            }
         }
 
         /// <summary>Clean up all the root nodes</summary>

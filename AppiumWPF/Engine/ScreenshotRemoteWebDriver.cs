@@ -19,7 +19,18 @@ namespace Appium.Engine
         /// <returns>a screenshot</returns>
         public Screenshot GetScreenshot()
         {
-            Response screenshotResponse = this.Execute(DriverCommand.Screenshot, null);
+            Response screenshotResponse = null;
+
+            try
+            {
+                screenshotResponse = this.Execute(DriverCommand.Screenshot, null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error getting screenshot: {0}", e.Message);
+                return null;
+            }
+
             string base64 = screenshotResponse.Value.ToString();
             return new Screenshot(base64);
         }

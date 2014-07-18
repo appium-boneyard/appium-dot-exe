@@ -193,7 +193,15 @@ namespace Appium.Engine
             {
                 if (null != _Driver)
                 {
-                    data = _Driver.PageSource;
+                    try
+                    {
+                        data = _Driver.PageSource;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error getting page source: {0}", e.Message);
+                        return null;
+                    }
                 }
             }
             return data;
@@ -210,7 +218,12 @@ namespace Appium.Engine
             {
                 if (null != _Driver)
                 {
-                    retVal = ((ITakesScreenshot)_Driver).GetScreenshot().AsByteArray;
+                    Screenshot screenshot = ((ITakesScreenshot)_Driver).GetScreenshot();
+
+                    if (screenshot != null)
+                    {
+                        retVal = screenshot.AsByteArray;
+                    }
                 }
             }
             return retVal;
