@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Models\Inspector\NodeTree.cs" />
     <Compile Include="Models\Server\AndroidBrowserArgument.cs" />
     <Compile Include="Models\Capability\Dictionaries.cs" />
     <Compile Include="Models\Inspector\AbstractNode.cs" />

@@ -57,6 +57,27 @@ namespace Appium.ViewModels
                 return _RecordCommand ?? (_RecordCommand = new RelayCommand(() => _ExecuteRecordCommand()));
             }
         }
+
+        private ICommand _TapCommand;
+        /// <summary>Refresh Command to refresh the tree</summary>
+        public ICommand TapCommand
+        {
+            get
+            {
+                return _TapCommand ?? (_TapCommand = new RelayCommand(() => _ExecuteTapCommand()));
+            }
+        }
+
+        private ICommand _SendKeysCommand;
+        /// <summary>Refresh Command to refresh the tree</summary>
+        public ICommand SendKeysCommand
+        {
+            get
+            {
+                return _SendKeysCommand ?? (_SendKeysCommand = new RelayCommand(() => _ExecuteSendKeysCommand(), () => { return (!string.IsNullOrEmpty(TextInput) && (SelectedNode != null)); }));
+            }
+        }
+
         #endregion Commands
         private SeleniumDriver __Driver = null;
         /// <summary>
@@ -64,9 +85,9 @@ namespace Appium.ViewModels
         /// </summary>
         private SeleniumDriver _Driver { get { return __Driver ?? (__Driver = new SeleniumDriver(_Settings)); } }
 
-        private ObservableCollection<UIAutomatorNodeVM> _RootNode;
+        private NodeTree<UIAutomatorNodeVM> _RootNode;
         /// <summary>Collection of root nodes</summary>
-        public ObservableCollection<UIAutomatorNodeVM> RootNode
+        public NodeTree<UIAutomatorNodeVM> RootNode
         {
             get { return _RootNode; }
         }
@@ -118,6 +139,21 @@ namespace Appium.ViewModels
             }
         }
 
+        private string _TextInput;
+        /// <summary>Text to be sent to the App</summary>
+        public string TextInput
+        {
+            get { return _TextInput; }
+            set
+            {
+                if (value != _TextInput)
+                {
+                    _TextInput = value;
+                    FirePropertyChanged((() => TextInput));
+                }
+            }
+        }
+
         #endregion  Properties
 
         #region Private Methods
@@ -129,6 +165,24 @@ namespace Appium.ViewModels
                 new System.Threading.WaitCallback(_RefreshItems));
         }
 
+        private void _ExecuteSendKeysCommand()
+        {
+            UIAutomatorNodeVM vmCurrent = SelectedNode;
+            if (_Driver.SendKeys(SelectedNode, TextInput))
+                _ExecuteRefreshCommand();
+            else
+                Message = "Unable to Send Keys to Element [" + SelectedNode.Name + "]";
+        }
+
+        private void _ExecuteTapCommand()
+        {
+            UIAutomatorNodeVM vmCurrent = SelectedNode;
+            if (_Driver.Tap(SelectedNode))
+                _ExecuteRefreshCommand();
+            else
+                Message = "Unable to complete Tap operation on Element [" + SelectedNode.Name + "]";
+        }
+
         private void _RefreshItems(object state)
         {
             bool firstTime = false;
@@ -137,11 +191,21 @@ namespace Appium.ViewModels
             {
                 firstTime = true;
                 string errorMessage;
-                Message = "Starting Selenium Driver";
+                if (_Settings.UseRemoteServer)
+                {
+                    Message = "Attempting to connect to remote server at " + _Settings.IPAddress;
+                } else
+                    Message = "Starting Selenium Driver";
                 if (!_Driver.Start(out errorMessage))
                 {
                     Console.WriteLine("error: {0}", errorMessage);
-                    Message = "Error Starting Selenium Driver";
+                    if (_Settings.UseRemoteServer)
+                    {
+                        Message = "Failed to connect (please check the configuration and that the remote server is online).";
+                    } else
+                    {
+                        Message = "Error Starting Selenium Driver";
+                    }
                     return;
                 }
             }
@@ -153,7 +217,7 @@ namespace Appium.ViewModels
             {
                 _CleanUpRoot();
                 var root = _ConvertToUIAutomatorNode(pageSource);
-                _RootNode = new ObservableCollection<UIAutomatorNodeVM>();
+                _RootNode = new NodeTree<UIAutomatorNodeVM>();
                 UIAutomatorNodeVM vm = new UIAutomatorNodeVM(root, vm_SelectionChanged);
                 _RootNode.Add(vm);
                 FirePropertyChanged(() => RootNode);

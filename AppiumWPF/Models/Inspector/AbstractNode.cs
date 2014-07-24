@@ -46,6 +46,12 @@ namespace Appium.Models.Inspector
         public abstract string GetDetails();
 
         /// <summary>
+        /// Get Id (Label on Android?)
+        /// </summary>
+        /// <returns>node details</returns>
+        public abstract string GetNameId();
+
+        /// <summary>
         /// Returns a copied list of children
         /// </summary>
         /// <returns>copied list of children</returns>
