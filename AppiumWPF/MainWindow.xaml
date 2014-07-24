@@ -68,86 +68,87 @@
             Margin="6,0,6,0"
             LastChildFill="False">
 
-            <!-- Left side of the Dock -->
-            <Button
+            <StackPanel Orientation="Horizontal" Height="80">
+                <!-- Left side of the Dock -->
+                <Button
                 Name="btnAndroidSettings"
                 DockPanel.Dock="Left"
                 ToolTip="Android Settings"
                 Command="{Binding AndroidSettingsCommand}">
-                <Image
+                    <Image
                     Source="{StaticResource androidImage}" />
-            </Button>
-            <Button
+                </Button>
+                <Button
                 Name="btnGeneralSettings"
                 DockPanel.Dock="Left"
                 ToolTip="General Settings"
                 Command="{Binding GeneralSettingsCommand}">
-                <Image
+                    <Image
                     Source="{StaticResource lightswitchImage}" />
-            </Button>
+                </Button>
 
-            <Button
+                <Button
                 Name="btnDeveloperSettings"
                 DockPanel.Dock="Left"
                 ToolTip="Developer Settings"
                 Command="{Binding DeveloperSettingsCommand}">
-                <Image
+                    <Image
                     Source="{StaticResource developerImage}" />
-            </Button>
-            <Button
+                </Button>
+                <Button
                 Name="btnAbout"
                 DockPanel.Dock="Left"
                 ToolTip="About"
                 Command="{Binding AboutCommand}">
-                <Image
+                    <Image
                     Source="{StaticResource aboutImage}" />
-            </Button>
-
+                </Button>
+            </StackPanel>
             <!-- Right side of the Dock -->
-            <Button
+            <StackPanel Orientation="Horizontal" Height="80" DockPanel.Dock="Right">
+                <Button
                 Name="btnLaunch"
-                DockPanel.Dock="Right"
                 Command="{Binding LaunchCommand}">
-                <Image>
-                    <Image.Style>
-                        <Style
+                    <Image>
+                        <Image.Style>
+                            <Style
                             TargetType="{x:Type Image}">
-                            <Style.Triggers>
-                                <DataTrigger
+                                <Style.Triggers>
+                                    <DataTrigger
                                     Binding="{Binding IsRunning}"
                                     Value="false">
-                                    <Setter
+                                        <Setter
                                         Property="Source"
                                         Value="{StaticResource rocketOnImage}" />
-                                    <Setter
+                                        <Setter
                                         Property="ToolTip"
                                         Value="Launch the Appium Node Server" />
-                                </DataTrigger>
-                                <DataTrigger
+                                    </DataTrigger>
+                                    <DataTrigger
                                     Binding="{Binding IsRunning}"
                                     Value="true">
-                                    <Setter
+                                        <Setter
                                         Property="Source"
                                         Value="{StaticResource stopImage}" />
-                                    <!--Value="{StaticResource rocketOffImage}" />-->
-                                    <Setter
+                                        <!--Value="{StaticResource rocketOffImage}" />-->
+                                        <Setter
                                         Property="ToolTip"
                                         Value="Stop the Appium Node Server" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-            </Button>
-            <Button
-                Name="btnInspector"
-                DockPanel.Dock="Right"
-                ToolTip="Inspector"
-                IsEnabled="{Binding IsInspectorWindowOpen, Converter={StaticResource inverseBoolConv}}"
-                Click="_InspectorClick">
-                <Image
-                    Source="{StaticResource infoImage}" />
-            </Button>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button
+                    Name="btnInspector"
+                    ToolTip="Inspector"
+                    IsEnabled="{Binding IsInspectorWindowOpen, Converter={StaticResource inverseBoolConv}}"
+                    Click="_InspectorClick">
+                    <Image
+                        Source="{StaticResource infoImage}" />
+                </Button>
+            </StackPanel>
 
         </DockPanel>
 

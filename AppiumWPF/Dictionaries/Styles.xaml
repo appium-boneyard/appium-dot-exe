@@ -52,12 +52,6 @@
         BasedOn="{StaticResource {x:Type Button}}"
         TargetType="{x:Type Button}">
         <Setter
-            Property="Height"
-            Value="40" />
-        <Setter
-            Property="Width"
-            Value="40" />
-        <Setter
             Property="VerticalAlignment"
             Value="Center" />
         <Setter

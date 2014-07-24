@@ -60,6 +60,15 @@ namespace Appium.Models.Inspector
         }
 
         /// <summary>
+        /// Get Name or Id of the Node (Name for iOS, ResourceId for Android)
+        /// </summary>
+        /// <returns></returns>
+        public override string GetNameId()
+        {
+            return _Name;
+        }
+       
+        /// <summary>
         /// Get details for this node
         /// </summary>
         /// <returns>detailed string representing this node</returns>

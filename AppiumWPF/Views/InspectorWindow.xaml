@@ -154,20 +154,47 @@
             </DockPanel>
 
             <!-- Bottom Buttons -->
-            <!--
-            TODO: for future implementation
             <TabControl
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Margin="4"
-                Height="80"
+                Height="Auto"
                 DockPanel.Dock="Bottom">
-                <TabItem
-                    Header="Touch" />
-                <TabItem
-                    Header="Text" />
-                <TabItem
-                    Header="Misc" />
-            </TabControl>-->
+                <TabItem Header="Touch">
+                    <Grid>
+                        <StackPanel>
+                            <DockPanel LastChildFill="False">
+                                <Button Command="{Binding TapCommand}">Tap</Button>
+                                <!--    
+                                TODO: For future implementation
+                                <Button Command="{Binding SwipeCommand}">Swipe</Button>
+                                <Button Command="{Binding ShakeCommand}">Shake</Button>     -->
+                            </DockPanel>
+                            <DockPanel LastChildFill="False" Visibility="Hidden">
+                                <Button>Precise Tap</Button>
+                                <Button>Scroll</Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Text" IsEnabled="True">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0">
+                            <StackPanel>
+                                <TextBox Text="{Binding Path=TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </DockPanel>
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Button Command="{Binding SendKeysCommand}">Send Keys</Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Locators" IsEnabled="False"></TabItem>
+                <TabItem Header="Misc" IsEnabled="False"></TabItem>
+            </TabControl>
             <DockPanel
                 DockPanel.Dock="Bottom"
                 LastChildFill="True">

@@ -1,4 +1,5 @@
 ﻿using Appium.Models;
+using Appium.ViewModels;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System;
@@ -228,6 +229,53 @@ namespace Appium.Engine
             }
             return retVal;
         }
+
+        public bool SendKeys(UIAutomatorNodeVM node, string value)
+        {
+            var button = _Driver.FindElementByName(node.Id);
+            try
+            {
+                button.SendKeys(value);
+                return true;
+            }
+            catch (Exception ex)
+            {    // Probably this item does not support keyboard input (the return from Appium 1.0.2 is too generic to recognise difference between unclickable and a system error).
+                Console.WriteLine("Failed to execute click : {0}", ex.Message);
+            }
+            return false;
+        }
+
+        public bool Tap(UIAutomatorNodeVM node)
+        {
+            var button = _Driver.FindElementByName(node.Id);
+            bool SuccessfullTap = false;
+            try
+            {
+                button.Click();
+                SuccessfullTap = true;
+            }
+            catch (Exception ex)
+            {    // It's probable this item does not support tapping.
+                Console.WriteLine("Failed to tap element : {0} (will try alternate method)", ex.Message);
+            }
+            if (!SuccessfullTap)
+            {
+                try
+                {
+                    // TODO: Alternate method of tapping.
+                    /*                    _Driver.Driver.Mouse.Click( button.Location.X);
+                                        d.SingleTap(button);
+                                        _ExecuteRefreshCommand();
+                                        SuccessfullTap = true;  */
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to use mouse to Tap element : {0}", ex.Message);
+                }
+            }
+            return SuccessfullTap;
+        }
+
 
         #endregion Public Methods
 

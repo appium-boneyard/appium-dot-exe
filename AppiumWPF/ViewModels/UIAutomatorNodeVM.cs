@@ -14,7 +14,7 @@ namespace Appium.ViewModels
     public class UIAutomatorNodeVM : BaseVM , IDisposable
     {
         #region Data
-        private readonly ObservableCollection<UIAutomatorNodeVM> _Children;
+        private readonly NodeTree<UIAutomatorNodeVM> _Children;
         private readonly INode _Model;
         private SelectionChangedEventHandler _EH;
         // flag: Has Dispose already been called?
@@ -32,7 +32,7 @@ namespace Appium.ViewModels
             _Model = node;
             _EH = eh;
             SelectionChanged += _EH;
-            _Children = new ObservableCollection<UIAutomatorNodeVM>();
+            _Children = new NodeTree<UIAutomatorNodeVM>();
             _LoadChildren();
         }
         #endregion // Constructors
@@ -49,7 +49,7 @@ namespace Appium.ViewModels
         /// <summary>
         /// Returns the logical child items of this object.
         /// </summary>
-        public ObservableCollection<UIAutomatorNodeVM> Children
+        public NodeTree<UIAutomatorNodeVM> Children
         {
             get { return _Children; }
         }
@@ -77,6 +77,12 @@ namespace Appium.ViewModels
         public string Name
         {
             get { return _Model.GetDisplayName(); }
+        }
+
+        ///<summary></summary>
+        public string Id
+        {
+            get { return _Model.GetNameId(); }
         }
 
         #endregion Properties
