@@ -7,7 +7,7 @@ namespace Appium.Models.Server
 
         public DeviceNameArgument(string deviceName)
         {
-            Init(_CommandSwitch, deviceName);
+            Init(_CommandSwitch, "\"" + deviceName + "\"");
         }
     }
 }
