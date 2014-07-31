@@ -62,6 +62,19 @@
             Value="False" />
     </Style>
 
+    <!-- Default Style for Toolbar Buttons -->
+    <Style
+        BasedOn="{StaticResource {x:Type Button}}"
+        x:Key="ToolBarButtonStyle"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="Height"
+            Value="40" />
+        <Setter
+            Property="Width"
+            Value="40" />
+    </Style>
+
     <!-- Default Style for ComboBox -->
     <Style
         BasedOn="{StaticResource {x:Type ComboBox}}"
