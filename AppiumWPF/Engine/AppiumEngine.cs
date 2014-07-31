@@ -332,7 +332,7 @@ namespace Appium.Engine
         {
             if (null != ErrorDataReceived)
             {
-                ErrorDataReceived(string.Format("ERROR: {0}", data));
+                ErrorDataReceived(string.Format("{0}", data));
             }
         }
 
