@@ -13,7 +13,7 @@ To install:
 
 #### Main Window
 
-![Appium Main Window](/README-files/mainwindow.png "Appium Main Window")
+![Appium Main Window](/README-files/windows-mainwindow.png "Appium Main Window")
 
 * **Android Button**: Displays the Android settings.
 * **Settings Button**: Displays the General settings.
@@ -62,7 +62,7 @@ To install:
 
 Preferences can be accessed by clicking on the appropriate button in the main window.
 
-![Appium Preferences](/README-files/preferences.png "Appium General Settings")
+![Appium Preferences](/README-files/windows-preferences.png "Appium General Settings")
 
 #### General Settings
 
@@ -102,4 +102,4 @@ Appium must be running with an app open for inspector to work. Otherwise, it wil
 
 The Inspector can be use to connect to an external Appium server. This can be specified in the General Settings.
 
-![Appium Inspector](/README-files/inspector.png "Appium Inspector")
+![Appium Inspector](/README-files/windows-inspector.png "Appium Inspector")
