@@ -247,18 +247,23 @@ namespace Appium.Engine
 
         public bool Tap(UIAutomatorNodeVM node)
         {
+            if (node == null)
+            {
+                return false;
+            }
+
             var button = _Driver.FindElementByName(node.Id);
-            bool SuccessfullTap = false;
+            bool SuccessfulTap = false;
             try
             {
                 button.Click();
-                SuccessfullTap = true;
+                SuccessfulTap = true;
             }
             catch (Exception ex)
             {    // It's probable this item does not support tapping.
                 Console.WriteLine("Failed to tap element : {0} (will try alternate method)", ex.Message);
             }
-            if (!SuccessfullTap)
+            if (!SuccessfulTap)
             {
                 try
                 {
@@ -273,7 +278,7 @@ namespace Appium.Engine
                     Console.WriteLine("Failed to use mouse to Tap element : {0}", ex.Message);
                 }
             }
-            return SuccessfullTap;
+            return SuccessfulTap;
         }
 
 
