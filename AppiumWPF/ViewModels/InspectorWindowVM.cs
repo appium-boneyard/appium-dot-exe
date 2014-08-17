@@ -59,7 +59,7 @@ namespace Appium.ViewModels
         }
 
         private ICommand _TapCommand;
-        /// <summary>Refresh Command to refresh the tree</summary>
+        /// <summary>Command to tap on an item</summary>
         public ICommand TapCommand
         {
             get
@@ -69,7 +69,7 @@ namespace Appium.ViewModels
         }
 
         private ICommand _SendKeysCommand;
-        /// <summary>Refresh Command to refresh the tree</summary>
+        /// <summary>Command to send keys to a node</summary>
         public ICommand SendKeysCommand
         {
             get
