@@ -252,18 +252,28 @@ namespace Appium.Engine
                 return false;
             }
 
-            var button = _Driver.FindElementByName(node.Id);
-            bool SuccessfulTap = false;
+            IWebElement element;
+
             try
             {
-                button.Click();
-                SuccessfulTap = true;
+                element = _Driver.FindElementByName(node.Id);
             }
-            catch (Exception ex)
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            bool successfulTap = false;
+            try
+            {
+                element.Click();
+                successfulTap = true;
+            }
+            catch (Exception e)
             {    // It's probable this item does not support tapping.
-                Console.WriteLine("Failed to tap element : {0} (will try alternate method)", ex.Message);
+                Console.WriteLine("Failed to tap element : {0} (will try alternate method)", e.Message);
             }
-            if (!SuccessfulTap)
+            if (!successfulTap)
             {
                 try
                 {
@@ -278,9 +288,8 @@ namespace Appium.Engine
                     Console.WriteLine("Failed to use mouse to Tap element : {0}", ex.Message);
                 }
             }
-            return SuccessfulTap;
+            return successfulTap;
         }
-
 
         #endregion Public Methods
 
