@@ -39,6 +39,10 @@
     <ApplicationIcon>Resources\appium.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="appium-dotnet-driver, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Appium.WebDriver.1.2.0.1\lib\net40\appium-dotnet-driver.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
@@ -50,7 +54,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -64,8 +68,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WebDriver">
-      <HintPath>..\packages\Selenium.WebDriver.2.40.0\lib\net40\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=2.42.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Selenium.WebDriver.2.42.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -115,8 +120,6 @@
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Converters\SelectedNodeToDetailsConverter.cs" />
     <Compile Include="Engine\AppiumEngine.cs" />
-    <Compile Include="Engine\ScreenshotRemoteWebDriver.cs" />
-    <Compile Include="Engine\SeleniumDriver.cs" />
     <Compile Include="Models\AppiumServerRunner.cs" />
     <Compile Include="Models\Capability\Device.cs" />
     <Compile Include="Models\DefaultAppiumAppSettings.cs" />

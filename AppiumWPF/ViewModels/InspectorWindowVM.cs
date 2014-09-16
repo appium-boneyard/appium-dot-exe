@@ -1,16 +1,15 @@
-﻿using Appium.Engine;
-using Appium.Models;
+﻿using Appium.Models;
 using Appium.Models.Inspector;
 using Appium.Utility;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Appium.ViewModels
 {
@@ -79,11 +78,10 @@ namespace Appium.ViewModels
         }
 
         #endregion Commands
-        private SeleniumDriver __Driver = null;
+        private AppiumDriver _Driver;
         /// <summary>
         /// Driver which is lazy loaded
         /// </summary>
-        private SeleniumDriver _Driver { get { return __Driver ?? (__Driver = new SeleniumDriver(_Settings)); } }
 
         private NodeTree<UIAutomatorNodeVM> _RootNode;
         /// <summary>Collection of root nodes</summary>
@@ -168,52 +166,159 @@ namespace Appium.ViewModels
         private void _ExecuteSendKeysCommand()
         {
             UIAutomatorNodeVM vmCurrent = SelectedNode;
-            if (_Driver.SendKeys(SelectedNode, TextInput))
+
+            try
+            {
+                _Driver.FindElementById(SelectedNode.Id).SendKeys(TextInput);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(String.Format("Error performing send keys action: {0}", e.Message), "Inspector Action Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
                 _ExecuteRefreshCommand();
-            else
-                Message = "Unable to Send Keys to Element [" + SelectedNode.Name + "]";
+            }
         }
 
         private void _ExecuteTapCommand()
         {
             UIAutomatorNodeVM vmCurrent = SelectedNode;
-            if (_Driver.Tap(SelectedNode))
+
+            try
+            {
+                _Driver.FindElementById(SelectedNode.Id).Click();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(String.Format("Error performing tap action: {0}", e.Message), "Inspector Action Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
                 _ExecuteRefreshCommand();
-            else
-                Message = "Unable to complete Tap operation on Element [" + SelectedNode.Name + "]";
+            }
         }
 
         private void _RefreshItems(object state)
         {
             bool firstTime = false;
             // start the driver
-            if (!_Driver.IsStarted)
+            if (_Driver == null)
             {
                 firstTime = true;
-                string errorMessage;
-                if (_Settings.UseRemoteServer)
+                Message = "Attempting to connect to Appium";
+
+                try
                 {
-                    Message = "Attempting to connect to remote server at " + _Settings.IPAddress;
-                } else
-                    Message = "Starting Selenium Driver";
-                if (!_Driver.Start(out errorMessage))
+                    Dictionary<string, object> capsDef = new Dictionary<string, object>();
+
+                    // Only set automation name if it isn't equal to the default
+                    if (_Settings.AutomationName != "Appium")
+                    {
+                        capsDef.Add("automationName", _Settings.AutomationName);
+                    }
+
+                    if (_Settings.UseDeviceName && _Settings.DeviceName != "")
+                    {
+                        capsDef.Add("deviceName", _Settings.DeviceName);
+                    }
+
+                    if (!_Settings.UseAndroidBrowser)
+                    {
+                        if (_Settings.UseApplicationPath && _Settings.ApplicationPath != "")
+                        {
+                            capsDef.Add("app", _Settings.ApplicationPath);
+                        }
+
+                        if (_Settings.UseAndroidActivity && _Settings.AndroidActivity != "")
+                        {
+                            capsDef.Add("appActivity", _Settings.AndroidActivity);
+                        }
+
+                        if (_Settings.UseAndroidPackage && _Settings.AndroidPackage != "")
+                        {
+                            capsDef.Add("appPackage", _Settings.AndroidPackage);
+                        }
+
+                        if (_Settings.UseAndroidWaitForActivity && _Settings.AndroidWaitForActivity != "")
+                        {
+                            capsDef.Add("appWaitActivity", _Settings.AndroidWaitForActivity);
+                        }
+
+                        if (_Settings.UseAndroidWaitForPackage && _Settings.AndroidWaitForPackage != "")
+                        {
+                            capsDef.Add("appWaitPackage", _Settings.AndroidWaitForPackage);
+                        }
+                    }
+                    else
+                    {
+                        capsDef.Add("browserName", _Settings.AndroidBrowser);
+                    }
+
+                    if (_Settings.UseAndroidDeviceReadyTimeout && _Settings.AndroidDeviceReadyTimeout.ToString() != "")
+                    {
+                        capsDef.Add("deviceReadyTimeout", _Settings.AndroidDeviceReadyTimeout.ToString());
+                    }
+
+                    if (_Settings.UseCoverageClass && _Settings.CoverageClass != "")
+                    {
+                        capsDef.Add("androidCoverage", _Settings.CoverageClass);
+                    }
+
+                    if (_Settings.UseAndroidIntentAction && _Settings.AndroidIntentAction != "")
+                    {
+                        capsDef.Add("intentAction", _Settings.AndroidIntentAction);
+                    }
+
+                    if (_Settings.UseAndroidIntentCategory && _Settings.AndroidIntentCategory != "")
+                    {
+                        capsDef.Add("intentCategory", _Settings.AndroidIntentCategory);
+                    }
+
+                    if (_Settings.UseAndroidIntentFlags && _Settings.AndroidIntentFlags != "")
+                    {
+                        capsDef.Add("intentFlags", _Settings.AndroidIntentFlags);
+                    }
+
+                    if (_Settings.UseAndroidIntentArguments && _Settings.AndroidIntentArguments != "")
+                    {
+                        capsDef.Add("optionalIntentArguments", _Settings.AndroidIntentArguments);
+                    }
+
+                    // Include the platform if any of the capabilities were set
+                    if (capsDef.Count != 0 && _Settings.PlatformName != "")
+                    {
+                        capsDef.Add("platformName", _Settings.PlatformName);
+                    }
+
+                    _Driver = new AppiumDriver(new Uri(String.Format("http://{0}:{1}/wd/hub", _Settings.IPAddress, _Settings.Port)), new DesiredCapabilities(capsDef));
+                }
+                catch
                 {
-                    Console.WriteLine("error: {0}", errorMessage);
+                    MessageBox.Show("Failed to connect to the server. Please check that it is running.", "Inspector Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Message = "Failed to connect to Appium";
+                }
+
+                if (_Driver == null)
+                {
                     if (_Settings.UseRemoteServer)
                     {
-                        Message = "Failed to connect (please check the configuration and that the remote server is online).";
-                    } else
-                    {
-                        Message = "Error Starting Selenium Driver";
+                        Message = "Failed to connect to remote Appium server";
                     }
+                    else
+                    {
+                        Message = "Failed to connect to Appium";
+                    }
+
                     return;
                 }
             }
+
             Message = "Updating";
 
             string pageSource = null;
             // grab the page source and parse it
-            if (!string.IsNullOrWhiteSpace(pageSource = _Driver.GetPageSource()))
+            if (!string.IsNullOrWhiteSpace(pageSource = _Driver.PageSource))
             {
                 _CleanUpRoot();
                 var root = _ConvertToUIAutomatorNode(pageSource);
@@ -234,10 +339,30 @@ namespace Appium.ViewModels
             }
 
             // grab the image
-            ImageByteArray = _Driver.GetScreenshot();
-            if (ImageByteArray == null)
+            Screenshot screenshot = null;
+            try
             {
-                Message = "Error getting screenshot";
+                screenshot = _Driver.GetScreenshot();
+            }
+            catch (Exception e)
+            {
+                Message = String.Format("Error getting screenshot: {0}", e.Message);
+            }
+            finally
+            {
+                if (screenshot != null)
+                {
+                    ImageByteArray = screenshot.AsByteArray;
+
+                    if (ImageByteArray == null)
+                    {
+                        Message = "Error getting screenshot";
+                    }
+                }
+                else
+                {
+                    Message = "Error getting screenshot";
+                }
             }
             
             // Show success message if the "Updating" message was not changed
