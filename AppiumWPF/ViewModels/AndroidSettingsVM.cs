@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Media;
 using Appium.Models;
 using Appium.Models.Capability;
 using Appium.Utility;
@@ -107,18 +106,33 @@ namespace Appium.ViewModels
             }
         }
 
+        private bool _FirstTime = true;
         /// <summary>
         /// File Path to the application 
         /// </summary>
         public string FilePath
         {
-            get { return _Settings.ApplicationPath; }
+            get
+            {
+                if (_FirstTime)
+                {
+                    _UpdateLists();
+                    _FirstTime = false;
+                }
+                return _Settings.ApplicationPath;
+            }
             set
             {
                 if (value != _Settings.ApplicationPath)
                 {
-                    _Settings.ApplicationPath = value;
+                    var shouldUpdate = (null != value && null != _Settings.ApplicationPath && value.Trim() != _Settings.ApplicationPath.Trim());
+                    _Settings.ApplicationPath = value; 
                     FirePropertyChanged(() => FilePath);
+
+                    if (shouldUpdate)
+                    {
+                        _UpdateLists();
+                    }
                 }
             }
         }
@@ -129,7 +143,7 @@ namespace Appium.ViewModels
         /// </summary>
         public ICommand ChooseFileCommand
         {
-            get { return _ChooseFileCommand ?? (_ChooseFileCommand = new RelayCommand(() => _ExecuteOpenFileDialog(), () => _CanExecuteOpenFileDialog())); }
+            get { return _ChooseFileCommand ?? (_ChooseFileCommand = new RelayCommand(_ExecuteOpenFileDialog, _CanExecuteOpenFileDialog)); }
         }
         #endregion Application Path
 
@@ -165,6 +179,33 @@ namespace Appium.ViewModels
                 }
             }
         }
+
+        private ReadOnlyCollection<string> _PackageList;
+        /// <summary>
+        /// List of Packages for this application
+        /// </summary>
+        public ReadOnlyCollection<string> PackageList
+        {
+            get { return _PackageList; }
+            set
+            {
+                if (value != _PackageList)
+                {
+                    _PackageList = value;
+                    FirePropertyChanged(() => PackageList);
+
+                    if (!_PackageList.Contains(Package) && 0 < _PackageList.Count)
+                    {
+                        Package = _PackageList[0];
+                    }
+
+                    if (!_PackageList.Contains(WaitForPackage) && 0 < _PackageList.Count)
+                    {
+                        WaitForPackage = _PackageList[0];
+                    }
+                }
+            }
+        }
         #endregion Package
 
         #region Activity
@@ -196,6 +237,33 @@ namespace Appium.ViewModels
                 {
                     _Settings.AndroidActivity = value;
                     FirePropertyChanged(() => Activity);
+                }
+            }
+        }
+
+        private ReadOnlyCollection<string> _ActivityList;
+        /// <summary>
+        /// List of Activities for this application
+        /// </summary>
+        public ReadOnlyCollection<string> ActivityList
+        {
+            get { return _ActivityList; }
+            set
+            {
+                if (value != _ActivityList)
+                {
+                    _ActivityList = value;
+                    FirePropertyChanged(() => ActivityList);
+
+                    if (!ActivityList.Contains(Activity) && 0 < ActivityList.Count)
+                    {
+                        Activity = ActivityList[0];
+                    }
+
+                    if (!ActivityList.Contains(WaitForActivity) && 0 < ActivityList.Count)
+                    {
+                        WaitForActivity = ActivityList[0];
+                    }
                 }
             }
         }
@@ -928,6 +996,17 @@ namespace Appium.ViewModels
         private bool _CanExecuteOpenFileDialog()
         {
             return IsAppPathEnabled;
+        }
+
+        /// <summary>
+        /// Update the package and activity list
+        /// </summary>
+        private void _UpdateLists()
+        {
+            List<string> activityList, packageList;
+            AndroidSDKCommands.GetActivitiesAndPackages(_Settings.ApplicationPath, out activityList, out packageList);
+            PackageList = new ReadOnlyCollection<string>(packageList);
+            ActivityList = new ReadOnlyCollection<string>(activityList);
         }
         #endregion Private Methods
 
