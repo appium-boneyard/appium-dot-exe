@@ -116,6 +116,7 @@
     <Compile Include="Models\Server\LocaleArgument.cs" />
     <Compile Include="Models\Server\PlatformNameArgument.cs" />
     <Compile Include="Models\Server\PlatformVersionArgument.cs" />
+    <Compile Include="Utility\AndroidSDKCommands.cs" />
     <Compile Include="Utility\AutomapperConfiguration.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Converters\SelectedNodeToDetailsConverter.cs" />

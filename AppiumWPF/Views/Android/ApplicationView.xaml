@@ -18,21 +18,25 @@
             <sys:Int32
                 x:Key="PackageRow">1</sys:Int32>
             <sys:Int32
-                x:Key="FullResetRow">2</sys:Int32>
+                x:Key="WaitForPackageRow">2</sys:Int32>
             <sys:Int32
-                x:Key="ResetRow">3</sys:Int32>
+                x:Key="ActivityRow">3</sys:Int32>
             <sys:Int32
-            	x:Key="BrowserRow">4</sys:Int32>
+                x:Key="WaitForActivityRow">4</sys:Int32>
             <sys:Int32
-            	x:Key="IntentFirstRow">5</sys:Int32>
+                x:Key="BrowserRow">5</sys:Int32>
             <sys:Int32
-            	x:Key="IntentSecondRow">6</sys:Int32>
+                x:Key="IntentFirstRow">6</sys:Int32>
+            <sys:Int32
+                x:Key="IntentSecondRow">7</sys:Int32>
             <xctk:InverseBoolConverter
                 x:Key="inverseBoolConv" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
                 Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
@@ -65,7 +69,7 @@
             <CheckBox
                 DockPanel.Dock="Left"
                 Name="appPathCheckBox"
-                Content="Application Path:"
+                Content="Application Path"
                 IsChecked="{Binding IsAppPathEnabled}" />
             <Button
                 DockPanel.Dock="Left"
@@ -81,100 +85,129 @@
         <!-- Package Row -->
         <DockPanel
             Grid.Column="0"
+            Grid.ColumnSpan="2"
             Grid.Row="{StaticResource PackageRow}"
             IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
-            LastChildFill="True">
+            LastChildFill="False">
             <CheckBox
                 DockPanel.Dock="Left"
                 Name="cbPackageEnabled"
                 Content="Package"
                 IsChecked="{Binding UsePackage}" />
+            <ComboBox
+                DockPanel.Dock="Right"
+                Width="485"
+                ItemsSource="{Binding PackageList}"
+                SelectedValue="{Binding Package}"
+                IsEnabled="{Binding UsePackage}" />
+            <!--
             <TextBox
                 Text="{Binding Package, UpdateSourceTrigger=PropertyChanged}"
                 IsEnabled="{Binding UsePackage}" />
-        </DockPanel>
-        <DockPanel
-            Grid.Column="1"
-            Grid.Row="{StaticResource PackageRow}"
-            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
-            LastChildFill="True">
-            <CheckBox
-                DockPanel.Dock="Left"
-                Name="cbActivityEnabled"
-                Content="Launch Activity"
-                IsChecked="{Binding UseActivity}" />
-            <TextBox
-                Text="{Binding Activity, UpdateSourceTrigger=PropertyChanged}"
-                IsEnabled="{Binding UseActivity}" />
+                -->
         </DockPanel>
 
-        <!-- Full Reset Row -->
+        <!-- Wait for Package Row -->
         <DockPanel
             Grid.Column="0"
-            Grid.Row="{StaticResource FullResetRow}"
-            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
-            LastChildFill="True">
-            <CheckBox
-                DockPanel.Dock="Left"
-                Name="cbPerformFullReset"
-                Content="Full Reset"
-                IsChecked="{Binding IsPerformFullReset}" />
-        </DockPanel>
-        <DockPanel
-            Grid.Column="1"
-            Grid.Row="{StaticResource FullResetRow}"
+            Grid.ColumnSpan="2"
+            Grid.Row="{StaticResource WaitForPackageRow}"
             IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
-            LastChildFill="True">
-            <CheckBox
-                DockPanel.Dock="Left"
-                Name="cbWaitForActivityEnabled"
-                Content="Wait for Activity"
-                IsChecked="{Binding UseWaitForActivity}" />
-            <TextBox
-                Text="{Binding WaitForActivity, UpdateSourceTrigger=PropertyChanged}"
-                IsEnabled="{Binding UseWaitForActivity}" />
-        </DockPanel>
-
-        <!-- No Reset Row-->
-        <DockPanel
-            Grid.Column="0"
-            Grid.Row="{StaticResource ResetRow}"
-            IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
-            LastChildFill="True">
-            <CheckBox
-                DockPanel.Dock="Left"
-                Name="cbNoReset"
-                Content="No Reset"
-                IsChecked="{Binding NoReset}" />
-        </DockPanel>
-        <DockPanel
-            Grid.Column="1"
-            Grid.Row="{StaticResource ResetRow}"
-            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
-            LastChildFill="True">
+            LastChildFill="False">
             <CheckBox
                 DockPanel.Dock="Left"
                 Name="cbWaitForPackageEnabled"
                 Content="Wait for Package"
                 IsChecked="{Binding UseWaitForPackage}" />
+            <ComboBox
+                DockPanel.Dock="Right"
+                Width="485"
+                ItemsSource="{Binding PackageList}"
+                SelectedValue="{Binding WaitForPackage}"
+                IsEnabled="{Binding UseWaitForPackage}" />
+            <!--
             <TextBox
                 Text="{Binding WaitForPackage, UpdateSourceTrigger=PropertyChanged}"
                 IsEnabled="{Binding UseWaitForPackage}" />
+                -->
         </DockPanel>
-        
+
+        <!-- Activity Row -->
+        <DockPanel
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Grid.Row="{StaticResource ActivityRow}"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
+            LastChildFill="False">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbActivityEnabled"
+                Content="Launch Activity"
+                IsChecked="{Binding UseActivity}" />
+            <ComboBox
+                DockPanel.Dock="Right"
+                Width="485"
+                ItemsSource="{Binding ActivityList}"
+                SelectedValue="{Binding Activity}"
+                IsEnabled="{Binding UseActivity}" />
+            <!--
+            <TextBox
+                Text="{Binding Activity, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseActivity}" />
+                -->
+        </DockPanel>
+
+        <!-- Wait for Activity Row -->
+        <DockPanel
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Grid.Row="{StaticResource WaitForActivityRow}"
+            IsEnabled="{Binding UseAndroidBrowser, Converter={StaticResource inverseBoolConv}}"
+            LastChildFill="False">
+            <CheckBox
+                DockPanel.Dock="Left"
+                Name="cbWaitForActivityEnabled"
+                Content="Wait for Activity"
+                IsChecked="{Binding UseWaitForActivity}" />
+            <ComboBox
+                DockPanel.Dock="Right"
+                Width="485"
+                ItemsSource="{Binding ActivityList}"
+                SelectedValue="{Binding WaitForActivity}"
+                IsEnabled="{Binding UseWaitForActivity}" />
+            <!--
+            <TextBox
+                Text="{Binding WaitForActivity, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding UseWaitForActivity}" />
+                -->
+        </DockPanel>
+
         <!-- Browser Row -->
         <DockPanel
-        	Grid.Row="{StaticResource BrowserRow}"
-        	Grid.Column="0"
-        	LastChildFill="True">
+            Grid.Row="{StaticResource BrowserRow}"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            LastChildFill="True">
             <CheckBox
-        		DockPanel.Dock="Left"
-        		Content="Use Browser"
-        		IsChecked="{Binding UseAndroidBrowser}" />
+                DockPanel.Dock="Right"
+                Name="cbNoReset"
+                Content="No Reset"
+                IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
+                IsChecked="{Binding NoReset}" />
+            <CheckBox
+                DockPanel.Dock="Right"
+                Name="cbPerformFullReset"
+                Content="Full Reset"
+                IsEnabled="{Binding UsingRemoteServer, Converter={StaticResource inverseBoolConv}}"
+                IsChecked="{Binding IsPerformFullReset}" />
+            <CheckBox
+                DockPanel.Dock="Left"
+                Content="Use Browser"
+                IsChecked="{Binding UseAndroidBrowser}" />
             <ComboBox
-        		ItemsSource="{Binding AndroidBrowserList}"
-        		SelectedValue="{Binding AndroidBrowser}"
-        		IsEnabled="{Binding UseAndroidBrowser}" />
+                ItemsSource="{Binding AndroidBrowserList}"
+                SelectedValue="{Binding AndroidBrowser}"
+                IsEnabled="{Binding UseAndroidBrowser}" />
         </DockPanel>
 
         <!-- Intent First Row -->
@@ -184,7 +217,7 @@
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
-                Content="Intent Action:"
+                Content="Intent Action"
                 IsChecked="{Binding UseAndroidIntentAction}" />
             <TextBox
                 Text="{Binding AndroidIntentAction, UpdateSourceTrigger=PropertyChanged}"
@@ -197,7 +230,7 @@
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
-                Content="Intent Category:"
+                Content="Intent Category"
                 IsChecked="{Binding UseAndroidIntentCategory}" />
             <TextBox
                 Text="{Binding AndroidIntentCategory, UpdateSourceTrigger=PropertyChanged}"
@@ -211,7 +244,7 @@
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
-                Content="Intent Flags:"
+                Content="Intent Flags"
                 IsChecked="{Binding UseAndroidIntentFlags}" />
             <TextBox
                 Text="{Binding AndroidIntentFlags, UpdateSourceTrigger=PropertyChanged}"
@@ -224,7 +257,7 @@
             LastChildFill="True">
             <CheckBox
                 DockPanel.Dock="Left"
-                Content="Intent Arguments:"
+                Content="Intent Arguments"
                 IsChecked="{Binding UseAndroidIntentArguments}" />
             <TextBox
                 Text="{Binding AndroidIntentArguments, UpdateSourceTrigger=PropertyChanged}"
