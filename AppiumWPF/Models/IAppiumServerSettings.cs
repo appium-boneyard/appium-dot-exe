@@ -180,9 +180,6 @@ namespace Appium.Models
         /// <summary>pack to external appium node js package</summary>
         string ExternalAppiumPackage { get; set; }
 
-        /// <summary>true if artifacts will be kept after a session</summary>
-        bool KeepArtifacts { get; set; }
-
         /// <summary>port on which the nodejs debugger will run</summary>
         uint NodeJSDebugPort { get; set; }
 
