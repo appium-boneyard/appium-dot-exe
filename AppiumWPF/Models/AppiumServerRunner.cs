@@ -204,6 +204,10 @@ namespace Appium.Models.Server
             {
                 _args.Add(new LogToWebHookArgument(settings.LogToWebHook));
             }
+            if (settings.UseLocalTimezone)
+            {
+                _args.Add(new LocalTimezoneLogArgument());
+            }
             if (settings.OverrideExistingSessions)
             {
                 _args.Add(new OverrideExistingSessionArgument());

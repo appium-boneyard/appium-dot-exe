@@ -19,10 +19,14 @@
                 x:Key="LogToFileRow">1</sys:Int32>
             <sys:Int32
                 x:Key="LogWebHookRow">2</sys:Int32>
+            <sys:Int32
+                x:Key="LocalTimezoneRow">3</sys:Int32>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition
+                Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
                 Height="{StaticResource DefaultRowHeight}" />
             <RowDefinition
@@ -86,5 +90,13 @@
                 Text="{Binding LogToWebHook, UpdateSourceTrigger=PropertyChanged}"
                 IsEnabled="{Binding UseLogToWebHook}" />
         </DockPanel>
+
+        <!-- Local Timezone Row -->
+        <CheckBox
+            Grid.Row="{StaticResource LocalTimezoneRow}"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Content="Use Local Timezone"
+            IsChecked="{Binding UseLocalTimezone}" />
     </Grid>
 </UserControl>

@@ -124,6 +124,8 @@ namespace Appium.Models
 
         public string LogToWebHook { get; set; }
 
+        public bool UseLocalTimezone { get; set; }
+
         public bool OverrideExistingSessions { get; set; }
 
         public bool KillProcessUsingServerPortBeforeLaunch { get; set; }

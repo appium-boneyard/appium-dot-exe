@@ -123,6 +123,7 @@
     <Compile Include="Models\Server\DeviceNameArgument.cs" />
     <Compile Include="Models\Server\LanguageArgument.cs" />
     <Compile Include="Models\Server\LocaleArgument.cs" />
+    <Compile Include="Models\Server\LocalTimezoneLogArgument.cs" />
     <Compile Include="Models\Server\PlatformNameArgument.cs" />
     <Compile Include="Models\Server\PlatformVersionArgument.cs" />
     <Compile Include="Utility\AndroidSDKCommands.cs" />

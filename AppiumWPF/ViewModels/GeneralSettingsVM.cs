@@ -249,6 +249,23 @@ namespace Appium.ViewModels
         }
         #endregion Log To WebHook
 
+        #region Local Timezone
+        /// <summary>
+        /// Use the Local Timezone
+        /// </summary>
+        public bool UseLocalTimezone
+        {
+            get { return _Settings.UseLocalTimezone; }
+            set
+            {
+                if (value != _Settings.UseLocalTimezone)
+                {
+                    _Settings.UseLocalTimezone = value;
+                    FirePropertyChanged(() => UseLocalTimezone);
+                }
+            }
+        }
+        #endregion Local Timezone
 
 
         #endregion Logging
