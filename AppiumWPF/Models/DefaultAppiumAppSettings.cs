@@ -52,8 +52,6 @@ namespace Appium.Models
 
         public string ExternalAppiumPackage { get; set; }
 
-        public bool KeepArtifacts { get; set; }
-
         public uint NodeJSDebugPort { get; set; }
 
         public bool PrelaunchApplication { get; set; }
