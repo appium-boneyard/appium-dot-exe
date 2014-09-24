@@ -38,8 +38,9 @@ namespace Appium.Models.Inspector
         public UIAutomatorAndroidNode(XmlReader reader)
             : base(reader)
         {
-            _Text = reader.GetAttribute("text");
             _Index = reader.GetAttribute("index");
+            _Text = reader.GetAttribute("text");
+            _ResourceId = reader.GetAttribute("resource-id");
             _Class = reader.GetAttribute("class");
             _Package = reader.GetAttribute("package");
             _ContentDescription = reader.GetAttribute("content-desc");
@@ -73,7 +74,7 @@ namespace Appium.Models.Inspector
         {
             return _ResourceId;
         }
-       
+
         /// <summary>
         /// Details for the node
         /// </summary>
