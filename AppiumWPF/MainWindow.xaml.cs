@@ -50,7 +50,7 @@ namespace Appium
             }
             else
             {
-                tb.Select(tb.Text.Length, 0);
+                tb.ScrollToEnd();
             }
         }
         #endregion Call Back Method
