@@ -39,9 +39,9 @@
     <ApplicationIcon>Resources\appium.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="appium-dotnet-driver, Version=1.2.0.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="appium-dotnet-driver, Version=1.2.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\packages\Appium.WebDriver.1.2.0.4\lib\net40\appium-dotnet-driver.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Appium.WebDriver.1.2.0.5\lib\net40\appium-dotnet-driver.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
