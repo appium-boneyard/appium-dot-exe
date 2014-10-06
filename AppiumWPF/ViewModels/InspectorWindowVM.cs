@@ -318,18 +318,25 @@ namespace Appium.ViewModels
 
             string pageSource = null;
             // grab the page source and parse it
-            if (!string.IsNullOrWhiteSpace(pageSource = _Driver.PageSource))
+            try
             {
-                _CleanUpRoot();
-                var root = _ConvertToUIAutomatorNode(pageSource);
-                _RootNode = new NodeTree<UIAutomatorNodeVM>();
-                UIAutomatorNodeVM vm = new UIAutomatorNodeVM(root, vm_SelectionChanged);
-                _RootNode.Add(vm);
-                FirePropertyChanged(() => RootNode);
+                if (!string.IsNullOrWhiteSpace(pageSource = _Driver.PageSource))
+                {
+                    _CleanUpRoot();
+                    var root = _ConvertToUIAutomatorNode(pageSource);
+                    _RootNode = new NodeTree<UIAutomatorNodeVM>();
+                    UIAutomatorNodeVM vm = new UIAutomatorNodeVM(root, vm_SelectionChanged);
+                    _RootNode.Add(vm);
+                    FirePropertyChanged(() => RootNode);
+                }
+                else
+                {
+                    Message = "Error getting page source";
+                }
             }
-            else
+            catch (Exception e)
             {
-                Message = "Error getting page source";
+                Message = String.Format("Error getting source page: {0}", e.Message);
             }
 
             if (firstTime)
