@@ -3,6 +3,9 @@
 If you are new to Appium then please see the [Getting started](http://appium.io/getting-started.html) guide for more information
 about the project.
 
+Pre-req:
+* Need .NET Framework 4.5 redistributable libraries
+
 To install:
 
 1. Download the [latest version](https://bitbucket.org/appium/appium.app/downloads/AppiumForWindows.zip) from [Appium.io](http://appium.io/).
