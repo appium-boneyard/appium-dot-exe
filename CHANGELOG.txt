@@ -1,0 +1,7 @@
+CHANGES IN VERSION 1.2.4.1 (from 1.2.3.1)
+==============================================
+
+- update icons to match appium-dot-app
+- add licenses for icons
+- fixed crash for inspector when getting page source
+- update to support appium 1.2.4
