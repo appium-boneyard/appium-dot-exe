@@ -256,6 +256,53 @@
                                     Value="Center" />
                             </Style>
                         </StackPanel.Resources>
+                        <!-- Icons -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Content="Icons"
+                                VerticalContentAlignment="Center" />
+                            <ListBox
+                                Grid.Column="1"
+                                Height="80"
+                                Width="300"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBoxItem
+                                    FontWeight="Bold"
+                                    Content="Windows 8 Metro Style" />
+                                <ListBoxItem
+                                    Content="Visual Pharm - http://icons8.com/license" />
+                                <ListBoxItem
+                                    Content=" " />
+                                <ListBoxItem
+                                    FontWeight="Bold"
+                                    Content="Freecns Cumuls" />
+                                <ListBoxItem
+                                    Content="Yannick Lung" />
+                                <ListBoxItem
+                                    Content=" " />
+                                <ListBoxItem
+                                    FontWeight="Bold"
+                                    Content="FlatUI Free" />
+                                <ListBoxItem
+                                    Content="http://designmodo.com" />
+                                <ListBoxItem
+                                IsSelected="False"
+                                    Content=" " />
+                                <ListBoxItem
+                                    FontWeight="Bold"
+                                    Content="WPZoom" />
+                                <ListBoxItem>
+                                    <TextBlock
+                                        Text="http://wpzoom.com/wpzoom/new-freebie-wpzoom-developer-icon-set-154-free-icons/" 
+                                        TextWrapping="Wrap"/>
+                                </ListBoxItem>
+                            </ListBox>
+                        </Grid>
+
                         <Label
                             Content="{Binding Copyright}" />
                         <Label
