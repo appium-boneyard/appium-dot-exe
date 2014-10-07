@@ -36,17 +36,19 @@
             <BitmapImage
                 x:Key="developerImage">pack://application:,,,/Resources/developer.png</BitmapImage>
             <BitmapImage
-                x:Key="lightswitchImage">pack://application:,,,/Resources/lightswitch.png</BitmapImage>
+                x:Key="settingsImage">pack://application:,,,/Resources/settings.png</BitmapImage>
             <BitmapImage
-                x:Key="rocketOnImage">pack://application:,,,/Resources/RocketOn.ico</BitmapImage>
+                x:Key="playImage">pack://application:,,,/Resources/play.png</BitmapImage>
             <BitmapImage
-                x:Key="stopImage">pack://application:,,,/Resources/stopsign.ico</BitmapImage>
+                x:Key="stopImage">pack://application:,,,/Resources/stop.png</BitmapImage>
             <BitmapImage
                 x:Key="aboutImage">pack://application:,,,/Resources/help.png</BitmapImage>
             <BitmapImage
                 x:Key="appiumIcon">pack://application:,,,/Resources/appium.ico</BitmapImage>
             <BitmapImage
                 x:Key="appiumLogoImage">pack://application:,,,/Resources/appiumLogo.png</BitmapImage>
+            <BitmapImage
+                x:Key="trashImage">pack://application:,,,/Resources/trash.png</BitmapImage>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -85,7 +87,7 @@
                 ToolTip="General Settings"
                 Command="{Binding GeneralSettingsCommand}">
                 <Image
-                    Source="{StaticResource lightswitchImage}" />
+                    Source="{StaticResource settingsImage}" />
             </Button>
             <Button
                 Name="btnDeveloperSettings"
@@ -122,7 +124,7 @@
                                     Value="false">
                                     <Setter
                                         Property="Source"
-                                        Value="{StaticResource rocketOnImage}" />
+                                        Value="{StaticResource playImage}" />
                                     <Setter
                                         Property="ToolTip"
                                         Value="Launch the Appium Node Server" />
@@ -133,7 +135,6 @@
                                     <Setter
                                         Property="Source"
                                         Value="{StaticResource stopImage}" />
-                                    <!--Value="{StaticResource rocketOffImage}" />-->
                                     <Setter
                                         Property="ToolTip"
                                         Value="Stop the Appium Node Server" />
@@ -274,12 +275,13 @@
                 DockPanel.Dock="Bottom"
                 LastChildFill="True">
                 <Button
+                    Style="{StaticResource ToolBarButtonStyle}"
                     DockPanel.Dock="Right"
-                    Height="22"
-                    Width="50"
-                    Content="Clear"
                     ToolTip="Clear the output log"
-                    Command="{Binding ClearOutputCommand}" />
+                    Command="{Binding ClearOutputCommand}">
+                    <Image
+                        Source="{StaticResource trashImage}" />
+                </Button>
                 <!-- Information output -->
                 <Label
                     Margin="0,10,0,0"
