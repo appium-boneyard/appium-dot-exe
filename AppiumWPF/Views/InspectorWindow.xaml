@@ -192,8 +192,8 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Locators" IsEnabled="False"></TabItem>
-                <TabItem Header="Misc" IsEnabled="False"></TabItem>
+                <TabItem Header="Locators" IsEnabled="False" Visibility="Hidden"></TabItem>
+                <TabItem Header="Misc" IsEnabled="False" Visibility="Hidden"></TabItem>
             </TabControl>
             <DockPanel
                 DockPanel.Dock="Bottom"
