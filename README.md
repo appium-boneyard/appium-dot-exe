@@ -12,6 +12,15 @@ To install:
 2. Extract the ZIP file.
 3. Launch `appium.exe`.
 
+To update Appium Server manually:
+
+1. Close appium-dot-exe
+2. Go appium-dot-exe main directory
+3. Delete `node_modules` folder
+4. Delete `node.exe` file
+5. Launch `appium.exe` 
+6. Download should occur automatically
+
 ### Parameter Guide
 
 #### Main Window
