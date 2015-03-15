@@ -88,6 +88,9 @@ csx
 # Windows Store app package directory
 AppPackages/
 
+# Installer exe
+installer/*.exe
+
 # Others
 [Bb]in
 [Oo]bj

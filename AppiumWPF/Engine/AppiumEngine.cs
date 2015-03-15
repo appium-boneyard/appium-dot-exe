@@ -143,7 +143,7 @@ namespace Appium.Engine
             {
                 if (!File.Exists(this._NodePath) || !File.Exists(this._NPMPath))
                 {
-                    _DownloadAndInstallNodeJS();
+                    DownloadAndInstallNodeJS();
                 }
                 if (!Directory.Exists(this._AppiumPackageFolder))
                 {
@@ -151,7 +151,7 @@ namespace Appium.Engine
                     {
                         Directory.CreateDirectory(this._NodeModulesFolder);
                     }
-                    _NPMInstallAppium();
+                    NPMInstallAppium();
                 }
                 if (!File.Exists(Path.Combine(this._AppiumPackageFolder, ".appiumconfig")))
                 {
@@ -301,7 +301,7 @@ namespace Appium.Engine
         #endregion Call Back Methods
 
         /// <summary>downloads and installs nodejs</summary>
-        private void _DownloadAndInstallNodeJS()
+        public void DownloadAndInstallNodeJS()
         {
             // determine the paths
             string npmZipPath = Path.Combine(this._AppiumRootFolder, "npm.zip");
@@ -336,29 +336,29 @@ namespace Appium.Engine
         }
 
         /// <summary>installs appium using npm</summary>
-        private void _NPMInstallAppium()
+        public void NPMInstallAppium()
         {
-            // npm install appium
-            ProcessStartInfo npmInstallProcessStartInfo = new ProcessStartInfo();
-            npmInstallProcessStartInfo.WorkingDirectory = this._AppiumRootFolder;
-            npmInstallProcessStartInfo.FileName = this._NPMPath;
-            npmInstallProcessStartInfo.Arguments = "install appium";
-            npmInstallProcessStartInfo.UseShellExecute = false;
-            npmInstallProcessStartInfo.CreateNoWindow = true;
-            npmInstallProcessStartInfo.RedirectStandardError = true;
-            npmInstallProcessStartInfo.RedirectStandardOutput = true;
+			// npm install appium
+			ProcessStartInfo npmInstallProcessStartInfo = new ProcessStartInfo();
+			npmInstallProcessStartInfo.WorkingDirectory = this._AppiumRootFolder;
+			npmInstallProcessStartInfo.FileName = this._NPMPath;
+			npmInstallProcessStartInfo.Arguments = "install appium";
+			npmInstallProcessStartInfo.UseShellExecute = false;
+			npmInstallProcessStartInfo.CreateNoWindow = true;
+			npmInstallProcessStartInfo.RedirectStandardError = true;
+			npmInstallProcessStartInfo.RedirectStandardOutput = true;
 
-            var npmInstallProcess = new Process();
-            npmInstallProcess.StartInfo = npmInstallProcessStartInfo;
-            npmInstallProcess.OutputDataReceived += _Process_OutputDataReceived;
-            npmInstallProcess.ErrorDataReceived += _Process_ErrorDataReceived;
+			var npmInstallProcess = new Process();
+			npmInstallProcess.StartInfo = npmInstallProcessStartInfo;
+			npmInstallProcess.OutputDataReceived += _Process_OutputDataReceived;
+			npmInstallProcess.ErrorDataReceived += _Process_ErrorDataReceived;
 
-            _FireOutputData("Installing Appium...");
-            npmInstallProcess.Start();
-            npmInstallProcess.BeginErrorReadLine();
-            npmInstallProcess.BeginOutputReadLine();
-            npmInstallProcess.WaitForExit();
-            _FireOutputData("Done installing Appium...");
+			_FireOutputData("Installing Appium...");
+			npmInstallProcess.Start();
+			npmInstallProcess.BeginErrorReadLine();
+			npmInstallProcess.BeginOutputReadLine();
+			npmInstallProcess.WaitForExit();
+			_FireOutputData("Done installing Appium...");
         }
 
         /// <summary>resets appium</summary>
