@@ -286,6 +286,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="post_build.cmd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -351,16 +352,13 @@
     $(PostBuildEventDependsOn);
     PostBuildMacros;
   </PostBuildEventDependsOn>
-    <PostBuildEvent>echo Deleting old archives...
-del $(SolutionDir)installer\appium-installer.exe
-echo Installing Appium...
-$(ProjectDir)$(OutDir)Appium.exe /installapps
-$(SolutionDir)tools\lmza_sdk_cs\7zr.exe a $(ProjectDir)$(OutDir)node_modules.7z $(ProjectDir)$(OutDir)node_modules
-$(SolutionDir)tools\inno_setup_5\ISCC.exe /dMyAppVersion=@(VersionNumber) $(SolutionDir)installer\Appium-dot-exe.iss</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)post_build.cmd $(ConfigurationName) @(VersionNumber) "$(SolutionDir)" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>rd /S /Q $(ProjectDir)$(OutDir)
-del /F /S /Q $(ProjectDir)$(OutDir)*</PreBuildEvent>
+    <PreBuildEvent>IF $(ConfigurationName)==Release ECHO Cleaning $(ProjectDir)$(OutDir)...
+IF $(ConfigurationName)==Release RD /S /Q "$(ProjectDir)$(OutDir)"
+IF $(ConfigurationName)==Release DEL /F /S /Q "$(ProjectDir)$(OutDir)*"
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
