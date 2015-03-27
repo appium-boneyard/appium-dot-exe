@@ -126,6 +126,17 @@ namespace Appium.Engine
                 return _AVDs;
             }
         }
+
+		public static string AssemblyDirectory
+		{
+			get
+			{
+				string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+				UriBuilder uri = new UriBuilder(codeBase);
+				string path = Uri.UnescapeDataString(uri.Path);
+				return Path.GetDirectoryName(path);
+			}
+		}
         #endregion Public Properties
 
         #region Public Methods
@@ -411,7 +422,7 @@ namespace Appium.Engine
                 var jsonString = new WebClient().DownloadString(@"https://raw.github.com/appium/appium.io/master/autoupdate/update-win.json");
                 dynamic json = JsonConvert.DeserializeObject(jsonString);
                 version = json.latest;
-                url = json.url;
+				url = json.url;
             }
             catch { return; }
 
@@ -428,27 +439,23 @@ namespace Appium.Engine
                 {
                     // download the latest code
                     var zipFileName = Path.GetFileName(url) ?? "AppiumForWindows.zip";
-                    var zipFile = Path.Combine(Path.GetTempPath(), zipFileName);
+					var zipFile = Path.Combine(Path.GetTempPath(), zipFileName);
                     var curFolder = Environment.CurrentDirectory;
 
-                    // download the zip file
-                    if (!File.Exists(zipFile))
-                    {
-                        try
-                        {
-                            _FireOutputData(string.Format("Downloading File from {0}", url));
-                            new WebClient().DownloadFile(url, zipFile);
-                        }
-                        catch
-                        {
-                            _FireErrorData("Unable to download file");
-                            MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error",
-                                MessageBoxButton.OK);
-                            return;
-                        }
-                    }
+					// download the zip file
+					if (!File.Exists(zipFile)) {
+						try {
+							_FireOutputData(string.Format("Downloading File from {0}", url));
+							new WebClient().DownloadFile(url, zipFile);
+						} catch {
+							_FireErrorData("Unable to download file");
+							MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error",
+								MessageBoxButton.OK);
+							return;
+						}
+					}
 
-                    _FireOutputData("Extracting zip file into temporary location");
+					_FireOutputData("Extracting zip file into temporary location");
                     try
                     {
                         // unzip the file into the temp location
@@ -478,8 +485,7 @@ namespace Appium.Engine
                     {
                         // remove the zip file
                         File.Delete(zipFile);
-                    }
-
+                    }	  
 
                     // install and restart the app
                     var restart = MessageBox.Show("Download is complete, would you like to install and restart?\nNOTE: This may take a few seconds", "Update and Restart", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
@@ -488,9 +494,8 @@ namespace Appium.Engine
                         _FireOutputData("Restarting and updating to new version of Appium");
                         var info = new ProcessStartInfo();
                         info.Arguments = curFolder;
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.CreateNoWindow = true;
-                        info.FileName = "update.bat";
+                        info.FileName = "appium-installer.exe";
+						info.Arguments = String.Format("/SP- /silent /noicons /closeapplications \"/dir=expand:{0}\"", AppiumEngine.AssemblyDirectory);
                         Process.Start(info);
 
                         Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
