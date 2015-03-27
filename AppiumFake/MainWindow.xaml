@@ -1,0 +1,56 @@
+﻿<Window
+    x:Class="AppiumFake.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Appium"
+    Height="350"
+    Width="525"
+    Icon="Resources/appium.ico">
+    <Window.Resources>
+        <ResourceDictionary>
+            <BitmapImage
+                x:Key="appiumLogoImage">pack://application:,,,/Resources/appiumLogo.png</BitmapImage>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!--<StackPanel Orientation="Vertical">
+    <Label Content=""></Label>
+        
+    </StackPanel>-->
+
+
+    <DockPanel
+        Background="Black"
+        LastChildFill="True">
+        <TextBlock
+        Padding="30"
+            Foreground="White"
+            xml:space="preserve"
+            TextWrapping="Wrap">
+            <TextBlock.Background>
+                <VisualBrush
+                    Stretch="Uniform">
+                    <VisualBrush.Visual>
+                        <StackPanel>
+                            <Image
+                                Stretch="None"
+                                Source="{StaticResource appiumLogoImage}" />
+                        </StackPanel>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </TextBlock.Background>
+
+           
+This version of appium is no longer compatible with the newer version.
+
+Please go to <Hyperlink Click="Hyperlink_OnClick" NavigateUri="http://appium.io/downloads.html">appium.io</Hyperlink> downloads page and download the latest appium version for your platform.
+            
+To Uninstall:
+*  Remove the parent folder where the Appium.exe file is located
+    -- OR -- (depending on version)
+* Go to Control Panel -> Program and Features -> Uninstall Appium
+        </TextBlock>
+
+    </DockPanel>
+
+</Window>
