@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A411EE32-5E37-413D-8383-45D11776626A}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A411EE
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppiumWPF", "AppiumWPF\AppiumWPF.csproj", "{4F309AAB-0CD9-4744-9C8D-75B4B503CD98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppiumFake", "AppiumFake\AppiumFake.csproj", "{D2620A82-BFC1-43A2-839D-A47F6F666AE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,10 @@ Global
 		{4F309AAB-0CD9-4744-9C8D-75B4B503CD98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F309AAB-0CD9-4744-9C8D-75B4B503CD98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F309AAB-0CD9-4744-9C8D-75B4B503CD98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2620A82-BFC1-43A2-839D-A47F6F666AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2620A82-BFC1-43A2-839D-A47F6F666AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2620A82-BFC1-43A2-839D-A47F6F666AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2620A82-BFC1-43A2-839D-A47F6F666AE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
