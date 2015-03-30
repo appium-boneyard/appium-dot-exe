@@ -21,7 +21,11 @@
 AppId={{9E863C9E-3A59-4D73-B207-2D91E575AC49}
 AppName={#TargetAppName}
 AppVersion={#TargetAppVersion}
+<<<<<<< HEAD
 AppVerName={#TargetAppName}
+=======
+;AppVerName={#TargetAppName} {#TargetAppVersion}
+>>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 AppPublisher={#TargetAppPublisher}
 AppPublisherURL={#TargetAppURL}
 AppSupportURL={#GitHubURL}
@@ -34,7 +38,11 @@ OutputDir=..\..\..\installer
 SourceDir=.\..\AppiumWPF\bin\{#BuildConfig}\
 OutputBaseFilename=appium-installer
 SetupIconFile={#TargetAppIcon}
+<<<<<<< HEAD
 UninstallDisplayIcon={app}\appium.ico
+=======
+UninstallDisplayIcon={uninstallexe}
+>>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 Compression=lzma2
 SolidCompression=yes
 
@@ -52,10 +60,17 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+<<<<<<< HEAD
 Source: "..\..\..\tools\lmza_sdk_cs\7zr.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall
 Source: "node_modules.7z"; DestDir: "{tmp}"; Flags: deleteafterinstall
 Source: "*"; Excludes:"node_modules,*vshost*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 Source: {#TargetAppIcon}; DestDir: "{app}";
+=======
+Source: "..\..\..\tools\lmza_sdk_cs\7zr.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "node_modules.7z"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "*"; Excludes:"node_modules*,*vshost*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: {#TargetAppIcon}; DestDir: "{app}"; Flags: ignoreversion
+>>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
@@ -68,6 +83,7 @@ Name: "{commondesktop}\{#TargetAppName}"; Filename: "{app}\{#TargetAppExeName}";
 
 [Run]
 Filename: "{tmp}\7zr.exe"; Parameters: "x {tmp}\node_modules.7z -o""{app}"" -aoa -y";
+<<<<<<< HEAD
 Filename: "{app}\{#TargetAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(TargetAppName, '&', '&&')}}"; Flags: nowait postinstall
 
 [Code]
@@ -86,4 +102,19 @@ procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
     end;
   end;
 
+=======
+Filename: "{app}\{#TargetAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(TargetAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}\node_modules"
+
+[Code]
+function InitializeUninstall(): Boolean;
+  var ErrorCode: Integer;
+  begin
+    ShellExec('open', 'taskkill.exe', '/f /t /im {#TargetAppExeName}','',SW_HIDE,ewNoWait,ErrorCode);
+    ShellExec('open', 'tskill.exe',' {#TargetAppExeName}','',SW_HIDE,ewNoWait,ErrorCode);
+    result := True;
+end;
+>>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 
