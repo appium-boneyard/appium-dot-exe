@@ -6,10 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-<<<<<<< HEAD
 using System.Runtime.InteropServices;
-=======
->>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -76,13 +73,8 @@ namespace Appium
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnStartup(StartupEventArgs e)
-<<<<<<< HEAD
 		{  
 			string[] archiveTargets = new string[0];
-=======
-		{
-			string archiveTarget = "";
->>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 			string archiveOut = "";
 
 			for (int i = 0; i < e.Args.Length; i++)
@@ -105,7 +97,6 @@ namespace Appium
 				}
 				else if (e.Args[i].StartsWith("/z="))
 				{
-<<<<<<< HEAD
 					archiveTargets = e.Args[i].Split('=')[1].Split(',');
 				}
 				else if (e.Args[i].StartsWith("/zo="))
@@ -145,35 +136,7 @@ namespace Appium
 				{
 					Environment.Exit(0);
 				}	   
-=======
-					archiveTarget = e.Args[i].Split('=')[1];
-				}
-				else if (e.Args[i].StartsWith("/zo="))
-				{
-					archiveOut = e.Args[i].Split('=')[1];
-				}
->>>>>>> 1cb1818dde02eb5efd43a259c51323231a9c89a5
 			}
-
-			if (!String.IsNullOrEmpty(archiveTarget)) 
-			{
-				try 
-				{
-					using (var zip = new ZipFile(archiveOut, Encoding.UTF8)) {
-						zip.AddFile(archiveTarget, "");
-						zip.Save();
-					}
-				} 
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex);
-				}
-				finally 
-				{
-					Environment.Exit(0);
-				}	   
-			}
-
 		}
     }
 }
