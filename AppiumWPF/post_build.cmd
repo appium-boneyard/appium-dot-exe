@@ -17,7 +17,7 @@ ECHO Installing Appium...
 "%_SLN_DIR%tools\inno_setup_5\ISCC.exe" /dTargetAppVersion="%_VER%" "%_SLN_DIR%installer\Appium-dot-exe.iss"
 ECHO Zipping Appium v%_VER%	installer...
 DEL /F /S /Q %_SLN_DIR%installer\AppiumForWindows_*.zip
-"%_OUT_DIR%Appium.exe" /z="%_SLN_DIR%\installer\appium-installer.exe" /zo="%_SLN_DIR%\installer\AppiumForWindows_%_VER%.zip"
+"%_OUT_DIR%Appium.exe" /z="%_SLN_DIR%\installer\appium-installer.exe,%_SLN_DIR%\installer\update.bat" /zo="%_SLN_DIR%\installer\AppiumForWindows_%_VER%.zip"
 "%_SLN_DIR%tools\fart.exe" -f "%_SLN_DIR%installer\AppiumForWindows_%_VER%.zip" . _
 "%_SLN_DIR%tools\fart.exe" -f "%_SLN_DIR%installer\*_zip" _zip .zip
 DEL /F /S /Q %_SLN_DIR%installer\AppiumForWindows_*_zip

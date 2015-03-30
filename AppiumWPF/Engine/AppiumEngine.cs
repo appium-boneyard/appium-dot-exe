@@ -11,7 +11,6 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using Microsoft.Win32;
 
 namespace Appium.Engine
 {
@@ -108,7 +107,7 @@ namespace Appium.Engine
         /// </summary>
         public string AndroidSDKPath
         {
-            get { return null != _Settings && _Settings.UseSDKPath && !string.IsNullOrWhiteSpace(_Settings.SDKPath) ? _Settings.SDKPath : _AndroidSDKPath; } 
+            get { return null != _Settings && _Settings.UseSDKPath && !string.IsNullOrWhiteSpace(_Settings.SDKPath) ? _Settings.SDKPath : _AndroidSDKPath; }
         }
 
         /// <summary>
@@ -127,16 +126,16 @@ namespace Appium.Engine
             }
         }
 
-		public static string AssemblyDirectory
-		{
-			get
-			{
-				string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-				UriBuilder uri = new UriBuilder(codeBase);
-				string path = Uri.UnescapeDataString(uri.Path);
-				return Path.GetDirectoryName(path);
-			}
-		}
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
         #endregion Public Properties
 
         #region Public Methods
@@ -349,27 +348,27 @@ namespace Appium.Engine
         /// <summary>installs appium using npm</summary>
         public void NPMInstallAppium()
         {
-			// npm install appium
-			ProcessStartInfo npmInstallProcessStartInfo = new ProcessStartInfo();
-			npmInstallProcessStartInfo.WorkingDirectory = this._AppiumRootFolder;
-			npmInstallProcessStartInfo.FileName = this._NPMPath;
-			npmInstallProcessStartInfo.Arguments = "install appium";
-			npmInstallProcessStartInfo.UseShellExecute = false;
-			npmInstallProcessStartInfo.CreateNoWindow = true;
-			npmInstallProcessStartInfo.RedirectStandardError = true;
-			npmInstallProcessStartInfo.RedirectStandardOutput = true;
+            // npm install appium
+            ProcessStartInfo npmInstallProcessStartInfo = new ProcessStartInfo();
+            npmInstallProcessStartInfo.WorkingDirectory = this._AppiumRootFolder;
+            npmInstallProcessStartInfo.FileName = this._NPMPath;
+            npmInstallProcessStartInfo.Arguments = "install appium";
+            npmInstallProcessStartInfo.UseShellExecute = false;
+            npmInstallProcessStartInfo.CreateNoWindow = true;
+            npmInstallProcessStartInfo.RedirectStandardError = true;
+            npmInstallProcessStartInfo.RedirectStandardOutput = true;
 
-			var npmInstallProcess = new Process();
-			npmInstallProcess.StartInfo = npmInstallProcessStartInfo;
-			npmInstallProcess.OutputDataReceived += _Process_OutputDataReceived;
-			npmInstallProcess.ErrorDataReceived += _Process_ErrorDataReceived;
+            var npmInstallProcess = new Process();
+            npmInstallProcess.StartInfo = npmInstallProcessStartInfo;
+            npmInstallProcess.OutputDataReceived += _Process_OutputDataReceived;
+            npmInstallProcess.ErrorDataReceived += _Process_ErrorDataReceived;
 
-			_FireOutputData("Installing Appium...");
-			npmInstallProcess.Start();
-			npmInstallProcess.BeginErrorReadLine();
-			npmInstallProcess.BeginOutputReadLine();
-			npmInstallProcess.WaitForExit();
-			_FireOutputData("Done installing Appium...");
+            _FireOutputData("Installing Appium...");
+            npmInstallProcess.Start();
+            npmInstallProcess.BeginErrorReadLine();
+            npmInstallProcess.BeginOutputReadLine();
+            npmInstallProcess.WaitForExit();
+            _FireOutputData("Done installing Appium...");
         }
 
         /// <summary>resets appium</summary>
@@ -419,10 +418,10 @@ namespace Appium.Engine
             {
                 _FireOutputData("Checking if an update is available");
                 // check to see if we have internet connection and what the latest update is
-                var jsonString = new WebClient().DownloadString(@"https://raw.github.com/appium/appium.io/master/autoupdate/update-win.json");
+                var jsonString = new WebClient().DownloadString(@"https://raw.github.com/appium/appium.io/master/autoupdate/update-win-7z.json");
                 dynamic json = JsonConvert.DeserializeObject(jsonString);
                 version = json.latest;
-				url = json.url;
+                url = json.url;
             }
             catch { return; }
 
@@ -439,23 +438,27 @@ namespace Appium.Engine
                 {
                     // download the latest code
                     var zipFileName = Path.GetFileName(url) ?? "AppiumForWindows.zip";
-					var zipFile = Path.Combine(Path.GetTempPath(), zipFileName);
+                    var zipFile = Path.Combine(Path.GetTempPath(), zipFileName);
                     var curFolder = Environment.CurrentDirectory;
 
-					// download the zip file
-					if (!File.Exists(zipFile)) {
-						try {
-							_FireOutputData(string.Format("Downloading File from {0}", url));
-							new WebClient().DownloadFile(url, zipFile);
-						} catch {
-							_FireErrorData("Unable to download file");
-							MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error",
-								MessageBoxButton.OK);
-							return;
-						}
-					}
+                    // download the zip file
+                    if (!File.Exists(zipFile))
+                    {
+                        try
+                        {
+                            _FireOutputData(string.Format("Downloading File from {0}", url));
+                            new WebClient().DownloadFile(url, zipFile);
+                        }
+                        catch
+                        {
+                            _FireErrorData("Unable to download file");
+                            MessageBox.Show("Unable to download file.\nPlease restart Appium", "Error",
+                                MessageBoxButton.OK);
+                            return;
+                        }
+                    }
 
-					_FireOutputData("Extracting zip file into temporary location");
+                    _FireOutputData("Extracting zip file into temporary location");
                     try
                     {
                         // unzip the file into the temp location
@@ -485,7 +488,7 @@ namespace Appium.Engine
                     {
                         // remove the zip file
                         File.Delete(zipFile);
-                    }	  
+                    }
 
                     // install and restart the app
                     var restart = MessageBox.Show("Download is complete, would you like to install and restart?\nNOTE: This may take a few seconds", "Update and Restart", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
@@ -493,9 +496,9 @@ namespace Appium.Engine
                     {
                         _FireOutputData("Restarting and updating to new version of Appium");
                         var info = new ProcessStartInfo();
-                        info.Arguments = curFolder;
-                        info.FileName = "appium-installer.exe";
-						info.Arguments = String.Format("/SP- /silent /noicons /closeapplications \"/dir=expand:{0}\"", AppiumEngine.AssemblyDirectory);
+                        info.CreateNoWindow = true;
+                        info.FileName = "update.bat";
+                        info.Arguments = string.Format("\"{0}\"", curFolder);
                         Process.Start(info);
 
                         Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
