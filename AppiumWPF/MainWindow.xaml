@@ -240,7 +240,7 @@
                         <Label
                             Content="{Binding Version}" />
                         <Label
-                            Content="(Cassiopeia)" />
+                            Content="(Ophiuchus)" />
                     </StackPanel>
                     <StackPanel
                         Orientation="Vertical"
