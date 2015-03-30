@@ -495,10 +495,13 @@ namespace Appium.Engine
                     if (restart)
                     {
                         _FireOutputData("Restarting and updating to new version of Appium");
-                        var info = new ProcessStartInfo();
-                        info.CreateNoWindow = true;
-                        info.FileName = "update.bat";
-                        info.Arguments = string.Format("\"{0}\"", curFolder);
+                        var info = new ProcessStartInfo()
+                        {
+                            CreateNoWindow = true,
+                            WindowStyle = ProcessWindowStyle.Hidden,
+                            FileName = "update.bat",
+                            Arguments = string.Format("\"{0}\"", curFolder)
+                        };
                         Process.Start(info);
 
                         Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
