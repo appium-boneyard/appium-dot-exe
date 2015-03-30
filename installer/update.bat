@@ -1,5 +1,5 @@
 :: use installer to install appium 
-appium-installer.exe /SP- /silent /noicons /closeapplications "/dir=expand:%1"
+appium-installer.exe /SP- /silent /noicons /closeapplications /dir=expand:"%1"
 
 :: delete the installer 
 del appium-installer.exe
