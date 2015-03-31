@@ -239,6 +239,7 @@
                             Content="Version: " />
                         <Label
                             Content="{Binding Version}" />
+                        <!-- Only change version name when the B part of the version number changes A.B.C.D -->
                         <Label
                             Content="(Ophiuchus)" />
                     </StackPanel>
