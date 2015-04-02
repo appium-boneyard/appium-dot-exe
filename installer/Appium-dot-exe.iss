@@ -74,15 +74,15 @@ Filename: "{app}\{#TargetAppExeName}"; Description: "{cm:LaunchProgram,{#StringC
 procedure ExecShelll(Cmd : String; Args : String);
   var ErrorCode: Integer;
   begin
-    ShellExec('open', ExpandConstant(Cmd), ExpandConstant(Args), '',
-    	SW_HIDE, ewWaitUntilTerminated, ErrorCode);
+    ShellExec('open', ExpandConstant(Cmd), ExpandConstant(Args), '', SW_HIDE, ewWaitUntilTerminated, ErrorCode);
   end;
   
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
   var ErrorCode: Integer;
   begin
     if CurUninstallStep = usUninstall then begin
-	ExecShelll('{app}\Appium.exe', '/d="{app}\node_modules"');
+      ExecShelll('taskkill.exe', '/F /T /IM Appium.exe');
+      ExecShelll('{app}\Appium.exe', '/d="{app}\node_modules"');
     end;
   end;
   
