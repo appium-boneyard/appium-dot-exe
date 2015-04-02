@@ -82,9 +82,8 @@ procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
   var ErrorCode: Integer;
   begin
     if CurUninstallStep = usUninstall then begin
-	ExecShelll('{cmd}', 'taskkill /F /T /IM Appium.exe');
 	ExecShelll('{app}\Appium.exe', '/d="{app}\node_modules"');
     end;
   end;
-
+  
 
