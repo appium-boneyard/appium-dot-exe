@@ -114,7 +114,7 @@
       <Value Profile="(Default)">Appium</Value>
     </Setting>
     <Setting Name="PlatformVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">4.3 Jelly Bean (API Level 18)</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AndroidBrowser" Type="System.String" Scope="User">
       <Value Profile="(Default)">Chrome</Value>
