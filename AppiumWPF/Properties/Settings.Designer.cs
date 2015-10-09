@@ -469,7 +469,7 @@ namespace Appium.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4.3 Jelly Bean (API Level 18)")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PlatformVersion {
             get {
                 return ((string)(this["PlatformVersion"]));

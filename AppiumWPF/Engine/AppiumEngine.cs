@@ -219,17 +219,18 @@ namespace Appium.Engine
 
             this._ServerExitMonitorThread = new Thread(() =>
             {
-                _FireOutputData("Starting Node Server");
+                _FireOutputData(string.Format("Launching Appium server with command: {0} {1}", appiumServerProcessStartInfo.FileName, appiumServerProcessStartInfo.Arguments));
                 _OnRunningChanged(true);
                 this._AppiumServerProcess.Start();
                 this._AppiumServerProcess.BeginOutputReadLine();
                 this._AppiumServerProcess.BeginErrorReadLine();
                 this._AppiumServerProcess.WaitForExit();
                 _OnRunningChanged(false);
-                _FireOutputData("Node Server Process Ended");
+                _FireOutputData("Appium server process ended");
             });
             this._ServerExitMonitorThread.Name = "Server Exit Monitor";
             this._ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
+
             this._ServerExitMonitorThread.Start();
         }
 
