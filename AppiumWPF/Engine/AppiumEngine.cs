@@ -219,6 +219,7 @@ namespace Appium.Engine
 
             this._ServerExitMonitorThread = new Thread(() =>
             {
+                _FireOutputData(string.Format("Launching Appium server with command: {0} {1}", appiumServerProcessStartInfo.FileName, appiumServerProcessStartInfo.Arguments));
                 _OnRunningChanged(true);
                 this._AppiumServerProcess.Start();
                 this._AppiumServerProcess.BeginOutputReadLine();
@@ -230,8 +231,6 @@ namespace Appium.Engine
             this._ServerExitMonitorThread.Name = "Server Exit Monitor";
             this._ServerExitMonitorThread.Priority = ThreadPriority.BelowNormal;
 
-            var cmd = string.Format("{0} {1}", appiumServerProcessStartInfo.FileName, appiumServerProcessStartInfo.Arguments);
-            _FireOutputData(string.Format("Launching Appium server with command: {0}", cmd));
             this._ServerExitMonitorThread.Start();
         }
 
