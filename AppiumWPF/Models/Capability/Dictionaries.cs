@@ -154,6 +154,7 @@ namespace Appium.Models.Capability
         /// </summary>
         private static readonly Dictionary<string, string> _PlatformVersions = new Dictionary<string, string>()
         {
+            {"6.0 Marshmallow (API Level 23)", "23"},
             {"5.1 Lollipop (API Level 22)", "22"},
             {"5.0 Lollipop (API Level 21)", "21"},
             {"4.4W KitKat (API Level 20)", "20"},
