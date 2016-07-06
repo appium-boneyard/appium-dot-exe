@@ -1,11 +1,11 @@
-﻿using System.Data;
-using Appium.Engine;
+﻿using Appium.Engine;
 using Appium.Models;
 using Appium.Utility;
 using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace Appium.ViewModels
 {
@@ -294,21 +294,10 @@ namespace Appium.ViewModels
             get { return _AppiumEngine.IsRunning; }
         }
 
-        private string _Output = string.Empty;
-        /// <summary>
-        /// output from running the commands
-        /// </summary>
-        public string Output
+        private ObservableCollection<String> _outputLines = new ObservableCollection<string>();
+        public ObservableCollection<String> OutputLines
         {
-            get { return _Output; }
-            set
-            {
-                if (value != _Output)
-                {
-                    _Output = value;
-                    FirePropertyChanged(() => Output);
-                }
-            }
+            get { return _outputLines; }
         }
 
         private bool _IsInspectorWindowOpen;
@@ -391,7 +380,7 @@ namespace Appium.ViewModels
         /// <summary>Clear the output string</summary>
         private void _ExecuteClearOutput()
         {
-            Output = string.Empty;
+            OutputLines.Clear();
         }
 
         /// <summary>
@@ -434,7 +423,7 @@ namespace Appium.ViewModels
         /// <param name="output">output string to display</param>
         private void _OutputDataReceived(string output)
         {
-            Output += string.Format("> {0}\n", output);
+            OutputLines.Add(output);
         }
 
         /// <summary>
