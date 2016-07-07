@@ -351,9 +351,7 @@
                     TextWrapping="Wrap"
                     Height="Auto"
                     VerticalScrollBarVisibility="Auto"
-                    Margin="0"
-                    TargetUpdated="_ScrollToBottom"
-                    Text="{Binding Output, NotifyOnTargetUpdated=True}">
+                    Margin="0">
                     <TextBox.Background>
                         <VisualBrush
                             Stretch="Uniform">
