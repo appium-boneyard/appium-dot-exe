@@ -1,3 +1,8 @@
+DEPRECATED
+===================
+  		  
+Please see the new GUI Client [Appium Desktop](https://github.com/appium/appium-desktop)
+
 ## A Windows GUI for Appium
 
 If you are new to Appium then please see the [Getting started](http://appium.io/getting-started.html) guide for more information
